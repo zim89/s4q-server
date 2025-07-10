@@ -1,0 +1,400 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
+}
+
+
+/***********************
+ #####    MODELS   #####
+ ***********************/
+
+model User {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  role          UserRole @default(USER)
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  avatarUrl     String?
+  isActive      Boolean
+  lastLogin     DateTime?
+  settings      Json?
+
+  sessions      Session[]
+  folders       Folder[]
+  userSets      UserSet[]
+  userCards     UserCard[]
+  sets          Set[]
+  auditLogs     AuditLog[]
+  progresses    Progress[]
+  
+  @@map("users")
+  @@index([email])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+
+  refreshToken String  @unique
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+ 
+  userId      String
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+  @@index([expiresAt])
+  @@index([userId])
+}
+
+model Language {
+  id         String @id @default(cuid())
+  createdAt  DateTime @default(now())
+  
+  name       String
+  code       String @unique
+  isEnabled  Boolean @default(true)
+
+  cards      Card[]
+  sets       Set[]
+
+  @@map("languages")
+}
+
+model Level {
+  id          String @id @default(cuid())
+  createdAt   DateTime @default(now())
+
+  name        LanguageLevel
+  description String?
+
+  cards       Card[]
+  sets        Set[]
+  verbForms   VerbForm[]
+
+  @@map("levels")
+}
+
+model GrammarRule {
+  id          String @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  name        String
+  slug        String @unique
+  description String?
+
+  cards       Card[]
+
+  @@map("grammar_rules")
+  @@index([slug])
+}
+
+model VerbForm {
+  id              String @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  baseForm        String
+  pastForm        String
+  pastParticiple  String
+  translation     String?
+
+  levelId         String?
+  level           Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
+
+  cards           Card[]
+
+  @@map("verb_forms")
+  @@index([baseForm, pastForm])
+}
+
+model Tag {
+  id         String @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  name       String
+  slug       String @unique
+
+  sets       Set[]
+
+  @@map("tags")
+}
+
+model Set {
+  id          String @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  name        String
+  slug        String
+  description String?
+  type        SetType @default(LANGUAGE)
+  isBase      Boolean @default(false)
+  isPublic    Boolean @default(false)
+
+  userId      String?  
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  languageId  String?
+  language    Language? @relation(fields: [languageId], references: [id], onDelete: SetNull)  
+
+  levelId     String?
+  level       Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
+
+  cards       Card[] @relation("sets_cards")
+  folders     Folder[] @relation("sets_folders")
+  tags        Tag[]
+  userSets    UserSet[]
+
+  originalSetId String?
+  originalSet   Set?     @relation("forked_sets", fields: [originalSetId], references: [id])
+  
+  forkedSets    Set[]    @relation("forked_sets")
+
+  @@map("sets")
+  @@unique([slug, userId], name: "unique_slug_per_user")
+  @@index([userId, languageId])
+}
+
+model UserSet {
+  id        String @id @default(cuid())
+
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  setId     String
+  set       Set    @relation(fields: [setId], references: [id])
+
+  progress  Progress? 
+
+  @@map("user_sets")
+  @@unique([userId, setId])
+  @@index([userId])
+  @@index([setId])
+}
+
+model Folder {
+  id          String @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  name        String
+  description String?
+  
+  userId      String
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sets        Set[] @relation("sets_folders")
+
+  @@map("folders")
+  @@index([userId])
+}
+
+
+model Card {
+  id            String @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  wordOrPhrase  String
+  slug          String
+  partOfSpeech  PartOfSpeech?
+  transcription String?
+  imageUrl      String?
+  audioUrl      String?
+
+  languageId    String?
+  language      Language? @relation(fields: [languageId], references: [id], onDelete: SetNull)
+
+  levelId       String?
+  level         Level? @relation(fields: [levelId], references: [id], onDelete: SetNull)
+
+  ruleId        String?
+  rule          GrammarRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+
+  verbFormId    String?
+  verbForm      VerbForm? @relation(fields: [verbFormId], references: [id], onDelete: SetNull)
+
+  sourceApi     String?
+  externalId    String?
+  usageCount    Int @default(0)
+  lastUsedAt    DateTime?
+
+  definitions   Definition[] @relation("cards_definitions")
+  examples      Example[] @relation("cards_examples")
+  userCards     UserCard[]
+  sets          Set[] @relation("sets_cards")
+
+  @@map("cards")
+  @@unique([slug, languageId, sourceApi, externalId])
+  @@index([languageId, levelId])
+  @@index([wordOrPhrase])
+}
+
+model UserCard {
+  id              String   @id @default(cuid())
+  userId          String
+  cardId          String
+
+  user            User     @relation(fields: [userId], references: [id])
+  card            Card     @relation(fields: [cardId], references: [id])
+
+  userDefinition  String?
+  userExample     String?
+  progressStatus  ProgressStatus @default(NOT_STARTED)
+  isFavorite      Boolean @default(false)
+
+  @@map("user_cards")
+  @@unique([userId, cardId])
+  @@index([userId, progressStatus])
+}
+
+model Definition {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  content    String
+  upVotes    Int @default(0)
+  downVotes  Int @default(0)
+  
+  cards      Card[] @relation("cards_definitions")
+
+  @@map("definitions")
+  @@index([content])
+}
+
+model Example {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  content    String
+  upVotes    Int @default(0)
+  downVotes  Int @default(0)
+  
+  cards      Card[] @relation("cards_examples")
+
+  @@map("examples")
+  @@index([content])
+}
+
+model AuditLog {
+  id          String @id @default(cuid())
+  createdAt   DateTime @default(now())
+  
+  entityType  String   // Например, 'Set', 'Card', 'User'
+  entityId    String   // ID сущности
+  action      String   // Тип действия ('create', 'update', 'delete')
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+  @@index([createdAt])
+}
+
+model Progress {
+  id         String @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId     String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userSetId  String @unique
+  userSet    UserSet @relation(fields: [userSetId], references: [id], onDelete: Cascade)
+
+  // Прогресс по методу "Множественный выбор"
+  multipleChoiceAttempts  Int @default(0)
+  multipleChoiceCorrect   Int @default(0)
+  multipleChoiceStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Перевод"
+  translationAttempts  Int @default(0)
+  translationCorrect   Int @default(0)
+  translationStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Диктовка"
+  dictationAttempts  Int @default(0)
+  dictationCorrect   Int @default(0)
+  dictationStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Произнесение"
+  speakingAttempts  Int @default(0)
+  speakingCorrect   Int @default(0)
+  speakingStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Заполнение пропусков"
+  fillInTheBlanksAttempts Int @default(0)
+  fillInTheBlanksCorrect  Int @default(0)
+  fillInTheBlanksStatus   ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Запись"
+  writingAttempts  Int @default(0)
+  writingCorrect   Int @default(0)
+  writingStatus    ProgressStatus @default(NOT_STARTED)
+
+  @@map("progresses")
+}
+
+
+/***********************
+ #####    ENUMS    #####
+ ***********************/
+
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+
+enum LanguageLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum PartOfSpeech {
+  NOUN
+  PRONOUN
+  VERB
+  ADJECTIVE
+  ADVERB
+  PREPOSITION
+  CONJUNCTION
+  INTERJECTION
+  ARTICLE
+  PARTICLE
+  PHRASE
+}
+
+enum SetType {
+  LANGUAGE
+  CUSTOM
+
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}

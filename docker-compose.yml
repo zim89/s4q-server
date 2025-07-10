@@ -1,0 +1,20 @@
+services:
+  postgres:
+    container_name: s4q_postgres
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    volumes:
+      - s4q_db_data:/var/lib/postgresql/data
+    networks:
+      - s4q_network
+
+volumes:
+  s4q_db_data:
+
+networks:
+  s4q_network:
