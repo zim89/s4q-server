@@ -1,7 +1,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -22,11 +22,11 @@ model User {
   role          UserRole @default(USER)
   email         String   @unique
   emailVerified Boolean  @default(false)
-  passwordHash  String
+  passwordHash      String
   firstName     String?
   lastName      String?
   avatarUrl     String?
-  isActive      Boolean
+  isActive      Boolean? @default(true)
   lastLogin     DateTime?
   settings      Json?
 
