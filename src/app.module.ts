@@ -19,7 +19,6 @@ import { z } from 'zod'
       envFilePath: ['.env.local', '.env'],
       validate: (config: Record<string, any>) => {
         try {
-          // Валидация с помощью Zod
           const validatedConfig = envSchema.parse(config)
           return validatedConfig
         } catch (error) {

@@ -30,7 +30,7 @@ async function bootstrap() {
   })
 
   app.enableCors({
-    origin: config.getOrThrow<string>(EnvKeys.ALLOWED_ORIGINS).split(','),
+    origin: config.getOrThrow<string[]>(EnvKeys.ALLOWED_ORIGINS),
     credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     exposedHeaders: ['Set-Cookie', 'Content-Disposition'],

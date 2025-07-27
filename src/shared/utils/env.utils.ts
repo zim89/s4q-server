@@ -1,5 +1,14 @@
 import { ConfigService } from '@nestjs/config'
+import { EnvKeys } from 'src/config/env/env.constants'
+import type { EnvSchema } from 'src/config/env/env.schema'
 
-export const isDevEnv = (cfg: ConfigService) => cfg.getOrThrow('NODE_ENV') === 'development'
+export const getSameSiteConfig = (cfg: ConfigService<EnvSchema>) => {
+  const env: string = cfg.getOrThrow(EnvKeys.NODE_ENV)
+  return env === 'production' ? 'lax' : 'none'
+}
 
-export const isProdEnv = (cfg: ConfigService) => cfg.getOrThrow('NODE_ENV') === 'production'
+export const isDevEnv = (cfg: ConfigService<EnvSchema>) =>
+  cfg.getOrThrow<string>(EnvKeys.NODE_ENV) === 'development'
+
+export const isProdEnv = (cfg: ConfigService<EnvSchema>) =>
+  cfg.getOrThrow<string>(EnvKeys.NODE_ENV) === 'production'

@@ -8,13 +8,14 @@ import { PrismaService } from 'src/infrastructure/prisma/prisma.service'
 import { argon2id, hash, verify } from 'argon2'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { isDevEnv, isProdEnv } from 'src/shared/utils/env.utils'
+import { getSameSiteConfig, isProdEnv } from 'src/shared/utils/env.utils'
 import { CookieNames, ErrorMsgs } from 'src/shared/constants'
 import type { RegisterDto } from './dto/register.dto'
 import type { LoginDto } from './dto/login.dto'
 import type { Request, Response } from 'express'
 import type { JwtPayload } from './types/jwt-payload'
 import { EnvKeys } from 'src/config/env/env.constants'
+import type { EnvSchema } from 'src/config/env/env.schema'
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
 
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService<EnvSchema>,
     private readonly jwtService: JwtService,
   ) {
     this.JWT_ACCESS_TOKEN_TTL = configService.getOrThrow<string>(EnvKeys.JWT_ACCESS_TOKEN_TTL)
@@ -154,7 +155,7 @@ export class AuthService {
       domain: this.COOKIE_DOMAIN,
       expires,
       secure: isProdEnv(this.configService),
-      sameSite: isDevEnv(this.configService) ? 'none' : 'lax',
+      sameSite: getSameSiteConfig(this.configService),
     })
   }
 }
