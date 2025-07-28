@@ -1,15 +1,20 @@
-import { Module, RequestMethod, type MiddlewareConsumer, type NestModule } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { LoggerMiddleware } from './shared/middlewares'
-import { AuthModule } from './api/auth/auth.module'
-import { SetModule } from './api/set/set.module'
-import { UserModule } from './api/user/user.module'
-import { PrismaModule } from './infrastructure/prisma/prisma.module'
-import { ConfigModule } from '@nestjs/config'
-import { CronModule } from './api/cron/cron.module'
-import { envConfig } from './config/env/env.config'
-import { envSchema } from './config/env/env.schema'
-import { z } from 'zod'
+import {
+  type MiddlewareConsumer,
+  Module,
+  type NestModule,
+  RequestMethod,
+} from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { z } from 'zod';
+import { AuthModule } from './api/auth/auth.module';
+import { CronModule } from './api/cron/cron.module';
+import { SetModule } from './api/set/set.module';
+import { UserModule } from './api/user/user.module';
+import { AppController } from './app.controller';
+import { envConfig } from './config/env/env.config';
+import { envSchema } from './config/env/env.schema';
+import { PrismaModule } from './infrastructure/prisma/prisma.module';
+import { LoggerMiddleware } from './shared/middlewares';
 
 @Module({
   imports: [
@@ -19,13 +24,13 @@ import { z } from 'zod'
       envFilePath: ['.env.local', '.env'],
       validate: (config: Record<string, any>) => {
         try {
-          const validatedConfig = envSchema.parse(config)
-          return validatedConfig
+          const validatedConfig = envSchema.parse(config);
+          return validatedConfig;
         } catch (error) {
           if (error instanceof z.ZodError) {
-            throw new Error(`Config validation error: ${error.message}`)
+            throw new Error(`Config validation error: ${error.message}`);
           }
-          throw error
+          throw error;
         }
       },
     }),
@@ -39,6 +44,8 @@ import { z } from 'zod'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL })
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }

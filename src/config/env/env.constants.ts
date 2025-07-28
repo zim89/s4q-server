@@ -5,4 +5,4 @@ export const EnvKeys = {
   COOKIE_DOMAIN: 'COOKIE_DOMAIN',
   ALLOWED_ORIGINS: 'ALLOWED_ORIGINS',
   NODE_ENV: 'NODE_ENV',
-} as const
+} as const;

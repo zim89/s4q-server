@@ -1,1 +1,1 @@
-export * from './body-required.pipe'
+export * from './body-required.pipe';

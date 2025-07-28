@@ -13,4 +13,4 @@ export const ErrorMsgs = {
     badRequestBody: 'Request body is required',
     unauthorized: 'You are not authorized to perform this action',
   },
-} as const
+} as const;

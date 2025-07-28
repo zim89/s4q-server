@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { EnvKeys } from './env.constants'
+import { z } from 'zod';
+import { EnvKeys } from './env.constants';
 
 export const envSchema = z.object({
   [EnvKeys.JWT_SECRET]: z.string().nonempty('JWT_SECRET is required'),
@@ -9,9 +9,11 @@ export const envSchema = z.object({
   [EnvKeys.ALLOWED_ORIGINS]: z
     .string()
     .optional()
-    .transform((val) => (val ? val.split(',').map((url) => url.trim()) : []))
+    .transform(val => (val ? val.split(',').map(url => url.trim()) : []))
     .pipe(z.array(z.string())),
-  [EnvKeys.NODE_ENV]: z.enum(['development', 'production', 'test']).default('development'),
-})
+  [EnvKeys.NODE_ENV]: z
+    .enum(['development', 'production', 'test'])
+    .default('development'),
+});
 
-export type EnvSchema = z.infer<typeof envSchema>
+export type EnvSchema = z.infer<typeof envSchema>;

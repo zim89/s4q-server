@@ -1,9 +1,11 @@
-import { ConfigService } from '@nestjs/config'
-import type { JwtModuleOptions } from '@nestjs/jwt'
-import { EnvKeys } from './env/env.constants'
-import type { EnvSchema } from './env/env.schema'
+import { ConfigService } from '@nestjs/config';
+import type { JwtModuleOptions } from '@nestjs/jwt';
+import { EnvKeys } from './env/env.constants';
+import type { EnvSchema } from './env/env.schema';
 
-export function getJwtConfig(configService: ConfigService<EnvSchema>): JwtModuleOptions {
+export function getJwtConfig(
+  configService: ConfigService<EnvSchema>
+): JwtModuleOptions {
   return {
     secret: configService.getOrThrow<string>(EnvKeys.JWT_SECRET),
     signOptions: {
@@ -14,5 +16,5 @@ export function getJwtConfig(configService: ConfigService<EnvSchema>): JwtModule
       algorithms: ['HS256'],
       ignoreExpiration: false,
     },
-  }
+  };
 }

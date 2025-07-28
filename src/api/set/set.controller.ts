@@ -1,8 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus } from '@nestjs/common'
-import { SetService } from './set.service'
-import { CreateSetDto } from './dto/create-set.dto'
-import { UpdateSetDto } from './dto/update-set.dto'
-import { ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CreateSetDto } from './dto/create-set.dto';
+import { UpdateSetDto } from './dto/update-set.dto';
+import { SetService } from './set.service';
 
 @ApiTags('Sets')
 @Controller('set')
@@ -22,26 +36,26 @@ export class SetController {
   })
   @Post()
   create(@Body() createSetDto: CreateSetDto) {
-    return this.setService.create(createSetDto)
+    return this.setService.create(createSetDto);
   }
 
   @Get()
   findAll() {
-    return this.setService.findAll()
+    return this.setService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.setService.findOne(+id)
+    return this.setService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSetDto: UpdateSetDto) {
-    return this.setService.update(+id, updateSetDto)
+    return this.setService.update(+id, updateSetDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.setService.remove(+id)
+    return this.setService.remove(+id);
   }
 }

@@ -1,5 +1,5 @@
-import type { INestApplication } from '@nestjs/common'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import type { INestApplication } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function setupSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -8,9 +8,9 @@ export function setupSwaggerDocs(app: INestApplication) {
     .setVersion('1.0.0')
     .setContact('zim89', 'https://github.com/zim89', 'zi89.dev@gmail.com')
     .addBearerAuth()
-    .build()
+    .build();
 
-  const document = SwaggerModule.createDocument(app, config)
+  const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
@@ -18,5 +18,5 @@ export function setupSwaggerDocs(app: INestApplication) {
     jsonDocumentUrl: '/api-docs/swagger.json',
     yamlDocumentUrl: '/api-docs/swagger.yaml',
     // swaggerUrl: '/swagger.json',
-  })
+  });
 }

@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
-import { ValidationMsgTemplates as msg } from 'src/shared/constants'
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { ValidationMsgTemplates as msg } from 'src/shared/constants';
 
 export class LoginDto {
   @ApiProperty({
@@ -10,7 +10,7 @@ export class LoginDto {
   @IsString({ message: msg.mustBeString('Email') })
   @IsNotEmpty({ message: msg.required('Email') })
   @IsEmail({}, { message: msg.emailFormat })
-  email!: string
+  email!: string;
 
   @ApiProperty({
     description: 'Password for the user account',
@@ -20,5 +20,5 @@ export class LoginDto {
   })
   @IsString({ message: msg.mustBeString('Password') })
   @IsNotEmpty({ message: msg.required('Password') })
-  password!: string
+  password!: string;
 }

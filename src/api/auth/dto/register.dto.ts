@@ -1,6 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator'
-import { ValidationMsgTemplates as msg } from 'src/shared/constants'
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { ValidationMsgTemplates as msg } from 'src/shared/constants';
 
 export class RegisterDto {
   @ApiProperty({
@@ -11,7 +17,7 @@ export class RegisterDto {
   @IsString({ message: msg.mustBeString('First name') })
   @IsNotEmpty({ message: msg.required('First name') })
   @MaxLength(50, { message: msg.maxLength('First name', 50) })
-  firstName!: string
+  firstName!: string;
 
   @ApiProperty({
     description: 'Last name of the user',
@@ -21,7 +27,7 @@ export class RegisterDto {
   @IsString({ message: msg.mustBeString('Last name') })
   @IsNotEmpty({ message: msg.required('Last name') })
   @MaxLength(50, { message: msg.maxLength('Last name', 50) })
-  lastName!: string
+  lastName!: string;
 
   @ApiProperty({
     description: 'Email address of the user',
@@ -30,7 +36,7 @@ export class RegisterDto {
   @IsString({ message: msg.mustBeString('Email') })
   @IsNotEmpty({ message: msg.required('Email') })
   @IsEmail({}, { message: msg.emailFormat })
-  email!: string
+  email!: string;
 
   @ApiProperty({
     description: 'Password for the user account',
@@ -42,5 +48,5 @@ export class RegisterDto {
   @IsNotEmpty({ message: msg.required('Password') })
   @MinLength(6, { message: msg.minLength('Password', 6) })
   @MaxLength(20, { message: msg.maxLength('Password', 20) })
-  password!: string
+  password!: string;
 }

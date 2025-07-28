@@ -1,5 +1,13 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Res, Req, Version } from '@nestjs/common'
-import { AuthService } from './auth.service'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  Version,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -8,11 +16,12 @@ import {
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
-} from '@nestjs/swagger'
-import { RegisterDto } from './dto/register.dto'
-import { LoginDto } from './dto/login.dto'
-import type { Request, Response } from 'express'
-import { AuthResponse } from './dto/auth.dto'
+} from '@nestjs/swagger';
+import type { Request, Response } from 'express';
+import { AuthService } from './auth.service';
+import { AuthResponse } from './dto/auth.dto';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('Auth')
 @Controller({ path: 'auth', version: '1' })
@@ -28,8 +37,11 @@ export class AuthController {
   @ApiConflictResponse({ description: 'User already exists' })
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Res({ passthrough: true }) res: Response, @Body() dto: RegisterDto) {
-    return await this.authService.register(res, dto)
+  async register(
+    @Res({ passthrough: true }) res: Response,
+    @Body() dto: RegisterDto
+  ) {
+    return await this.authService.register(res, dto);
   }
 
   @Version('2')
@@ -42,20 +54,29 @@ export class AuthController {
   @ApiNotFoundResponse({ description: 'User not found' })
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Res({ passthrough: true }) res: Response, @Body() dto: LoginDto) {
-    return await this.authService.login(res, dto)
+  async login(
+    @Res({ passthrough: true }) res: Response,
+    @Body() dto: LoginDto
+  ) {
+    return await this.authService.login(res, dto);
   }
 
   @ApiOperation({
     summary: 'Refresh access token',
-    description: 'Refreshes the access token using the refresh token provided in the request.',
+    description:
+      'Refreshes the access token using the refresh token provided in the request.',
   })
   @ApiOkResponse({ type: AuthResponse })
-  @ApiUnauthorizedResponse({ description: 'Refresh token is missing or invalid' })
+  @ApiUnauthorizedResponse({
+    description: 'Refresh token is missing or invalid',
+  })
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    return await this.authService.refresh(req, res)
+  async refresh(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    return await this.authService.refresh(req, res);
   }
 
   @ApiOperation({
@@ -64,6 +85,6 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) res: Response) {
-    return this.authService.logout(res)
+    return this.authService.logout(res);
   }
 }
