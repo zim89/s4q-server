@@ -6,27 +6,27 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from '@prisma/client';
 import { argon2id, hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
 import { EnvKeys } from 'src/config/env/env.constants';
 import type { EnvSchema } from 'src/config/env/env.schema';
 import { PrismaService } from 'src/infrastructure/prisma/prisma.service';
 import { CookieNames, ErrorMsgs } from 'src/shared/constants';
-import { getSameSiteConfig, isProdEnv } from 'src/shared/utils/env.utils';
-import type { LoginDto } from './dto/login.dto';
-import type { RegisterDto } from './dto/register.dto';
-import type { JwtPayload } from './types/jwt-payload';
+import type { LoginDto, RegisterDto } from './dto';
+import type { RefreshTokenService } from './refresh-token.service';
+import type { AuthenticatedUser, JwtPayload } from './types/auth.types';
 
 @Injectable()
 export class AuthService {
   private readonly JWT_ACCESS_TOKEN_TTL: string;
   private readonly JWT_REFRESH_TOKEN_TTL: string;
-  private readonly COOKIE_DOMAIN: string;
 
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly configService: ConfigService<EnvSchema>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly refreshTokenService: RefreshTokenService,
+    readonly configService: ConfigService<EnvSchema>
   ) {
     this.JWT_ACCESS_TOKEN_TTL = configService.getOrThrow<string>(
       EnvKeys.JWT_ACCESS_TOKEN_TTL
@@ -34,14 +34,12 @@ export class AuthService {
     this.JWT_REFRESH_TOKEN_TTL = configService.getOrThrow<string>(
       EnvKeys.JWT_REFRESH_TOKEN_TTL
     );
-    this.COOKIE_DOMAIN = configService.getOrThrow<string>(
-      EnvKeys.COOKIE_DOMAIN
-    );
   }
 
   async register(res: Response, dto: RegisterDto) {
+    // Проверяем существование пользователя
     const existingUser = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
+      where: { email: dto.email.toLowerCase() },
     });
 
     if (existingUser) {
@@ -50,29 +48,53 @@ export class AuthService {
 
     const user = await this.prismaService.user.create({
       data: {
-        email: dto.email,
+        email: dto.email.toLowerCase(),
         firstName: dto.firstName,
         lastName: dto.lastName,
         passwordHash: await hash(dto.password, { type: argon2id }),
       },
+      select: {
+        id: true,
+        rights: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        avatarUrl: true,
+        isActive: true,
+        lastLogin: true,
+        createdAt: true,
+      },
     });
 
-    return this.auth(res, user.id);
+    return this.auth(res, user);
   }
 
   async login(res: Response, dto: LoginDto) {
     const user = await this.prismaService.user.findUnique({
       where: {
-        email: dto.email,
+        email: dto.email.toLowerCase(),
       },
       select: {
         id: true,
         passwordHash: true,
+        email: true,
+        rights: true,
+        firstName: true,
+        lastName: true,
+        avatarUrl: true,
+        isActive: true,
+        lastLogin: true,
+        createdAt: true,
       },
     });
 
     if (!user) {
       throw new NotFoundException(ErrorMsgs.user.invalidCredentials);
+    }
+
+    // Проверяем активность пользователя
+    if (!user.isActive) {
+      throw new UnauthorizedException('Account is deactivated');
     }
 
     const isValidPassword = await verify(user.passwordHash, dto.password);
@@ -81,10 +103,16 @@ export class AuthService {
       throw new NotFoundException(ErrorMsgs.user.invalidCredentials);
     }
 
-    return this.auth(res, user.id);
+    // Обновляем время последнего входа
+    await this.prismaService.user.update({
+      where: { id: user.id },
+      data: { lastLogin: new Date() },
+    });
+
+    return this.auth(res, user);
   }
 
-  async refresh(req: Request, res: Response): Promise<{ accessToken: string }> {
+  async refresh(req: Request, res: Response) {
     const token = req.cookies[CookieNames.REFRESH] as string | undefined;
 
     if (typeof token !== 'string' || token.trim() === '') {
@@ -99,16 +127,46 @@ export class AuthService {
       throw new UnauthorizedException(ErrorMsgs.auth.refreshTokenInvalid);
     }
 
+    const isValid = await this.refreshTokenService.validate(payload.id, token);
+
+    if (!isValid) {
+      throw new UnauthorizedException(ErrorMsgs.auth.refreshTokenInvalid);
+    }
+
     const user = await this.prismaService.user.findUnique({
       where: { id: payload.id },
-      select: { id: true },
+      select: {
+        id: true,
+        rights: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        avatarUrl: true,
+        isActive: true,
+        lastLogin: true,
+        createdAt: true,
+      },
     });
 
     if (!user) {
       throw new NotFoundException(ErrorMsgs.user.notFound);
     }
 
-    return this.auth(res, user.id);
+    return this.auth(res, user);
+  }
+
+  async logout(res: Response, userId: string) {
+    // Получаем refresh token из cookies
+    const token = (res.req.cookies as Record<string, string>)[
+      CookieNames.REFRESH
+    ];
+
+    if (token) {
+      await this.refreshTokenService.invalidate(userId, token);
+    }
+
+    this.refreshTokenService.removeFromResponse(res);
+    return { message: 'Successfully logged out' };
   }
 
   async validate(id: string) {
@@ -125,25 +183,38 @@ export class AuthService {
     return user;
   }
 
-  logout(res: Response) {
-    res.clearCookie(CookieNames.REFRESH);
-    return true;
-  }
+  private async auth(res: Response, user: AuthenticatedUser) {
+    const { accessToken, refreshToken } = this.generateTokens(
+      user.id,
+      user.rights
+    );
 
-  private auth(res: Response, id: string) {
-    const { accessToken, refreshToken } = this.generateTokens(id);
+    res.locals.userId = user.id; // Для RefreshTokenService
 
-    this.setCookies(
+    await this.refreshTokenService.addToResponse(
       res,
       refreshToken,
       new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
     );
 
-    return { accessToken };
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatarUrl: user.avatarUrl || null,
+        rights: user.rights,
+        isActive: user.isActive,
+        lastLogin: user.lastLogin,
+        createdAt: user.createdAt,
+      },
+    };
   }
 
-  private generateTokens(id: string) {
-    const payload: JwtPayload = { id };
+  private generateTokens(id: string, rights: Role[]) {
+    const payload: JwtPayload = { id, rights };
 
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: this.JWT_ACCESS_TOKEN_TTL,
@@ -157,15 +228,5 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
-  }
-
-  private setCookies(res: Response, token: string, expires: Date) {
-    res.cookie(CookieNames.REFRESH, token, {
-      httpOnly: true,
-      domain: this.COOKIE_DOMAIN,
-      expires,
-      secure: isProdEnv(this.configService),
-      sameSite: getSameSiteConfig(this.configService),
-    });
   }
 }

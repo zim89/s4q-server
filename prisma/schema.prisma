@@ -18,20 +18,23 @@ model User {
   id            String   @id @default(cuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  
-  role          UserRole @default(USER)
+
+  rights        Role[] @default([USER])
   email         String   @unique
   emailVerified Boolean  @default(false)
-  passwordHash      String
+  passwordHash  String
   firstName     String?
   lastName      String?
   avatarUrl     String?
   isActive      Boolean? @default(true)
   lastLogin     DateTime?
   settings      Json?
+  googleId      String?  @unique
 
   sessions      Session[]
   folders       Folder[]
+  achievements  Achievement[]
+  cards         Card[]
   userSets      UserSet[]
   userCards     UserCard[]
   sets          Set[]
@@ -46,17 +49,17 @@ model Session {
   id           String   @id @default(cuid())
   createdAt    DateTime @default(now())
 
-  refreshToken String  @unique
-  expiresAt    DateTime
-  ipAddress    String?
-  userAgent    String?
+  refreshToken  String  // Храним хеш refresh token
+  expiresAt     DateTime // Дата истечения токена
+  ipAddress     String?  // IP-адрес для безопасности
+  userAgent     String?  // Устройство/браузер
+  isActive      Boolean  @default(true) // Для инвалидации сессии
  
   userId      String
   user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
-  @@index([expiresAt])
-  @@index([userId])
+  @@index([userId, isActive])
 }
 
 model Language {
@@ -73,19 +76,19 @@ model Language {
   @@map("languages")
 }
 
-model Level {
-  id          String @id @default(cuid())
-  createdAt   DateTime @default(now())
+// model Level {
+//   id          String @id @default(cuid())
+//   createdAt   DateTime @default(now())
 
-  name        LanguageLevel
-  description String?
+//   name        LanguageLevel
+//   description String?
 
-  cards       Card[]
-  sets        Set[]
-  verbForms   VerbForm[]
+//   cards       Card[]
+//   sets        Set[]
+//   verbForms   VerbForm[]
 
-  @@map("levels")
-}
+//   @@map("levels")
+// }
 
 model GrammarRule {
   id          String @id @default(cuid())
@@ -111,9 +114,8 @@ model VerbForm {
   pastForm        String
   pastParticiple  String
   translation     String?
+  level           LanguageLevel?
 
-  levelId         String?
-  level           Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
 
   cards           Card[]
 
@@ -152,8 +154,9 @@ model Set {
   languageId  String?
   language    Language? @relation(fields: [languageId], references: [id], onDelete: SetNull)  
 
-  levelId     String?
-  level       Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
+  // levelId     String?
+  // level       Level?   @relation(fields: [levelId], references: [id], onDelete: SetNull)
+  level        LanguageLevel?
 
   cards       Card[] @relation("sets_cards")
   folders     Folder[] @relation("sets_folders")
@@ -172,6 +175,8 @@ model Set {
 
 model UserSet {
   id        String @id @default(cuid())
+  totalCards     Int @default(0) 
+  completedCards Int @default(0)
 
   userId    String
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -216,12 +221,18 @@ model Card {
   transcription String?
   imageUrl      String?
   audioUrl      String?
+  isGlobal      Boolean  @default(true) 
+  gramGender    String? // Добавлено: для поддержки немецкого (MASCULINE, FEMININE, NEUTER)
+  
+  userId        String?  // Добавлено: для пользовательских карточек
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   languageId    String?
   language      Language? @relation(fields: [languageId], references: [id], onDelete: SetNull)
 
-  levelId       String?
-  level         Level? @relation(fields: [levelId], references: [id], onDelete: SetNull)
+  // levelId       String?
+  // level         Level? @relation(fields: [levelId], references: [id], onDelete: SetNull)
+  level         LanguageLevel?
 
   ruleId        String?
   rule          GrammarRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
@@ -241,7 +252,7 @@ model Card {
 
   @@map("cards")
   @@unique([slug, languageId, sourceApi, externalId])
-  @@index([languageId, levelId])
+  @@index([languageId, level, isGlobal])
   @@index([wordOrPhrase])
 }
 
@@ -257,6 +268,7 @@ model UserCard {
   userExample     String?
   progressStatus  ProgressStatus @default(NOT_STARTED)
   isFavorite      Boolean @default(false)
+  lastReviewedAt  DateTime?
 
   @@map("user_cards")
   @@unique([userId, cardId])
@@ -313,6 +325,9 @@ model Progress {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
+  nextReviewAt DateTime? // Добавлено: для интервального повторения
+  customModes  Json? // Добавлено: для поддержки новых режимов изучения
+
   userId     String
   user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -352,14 +367,32 @@ model Progress {
   @@map("progresses")
 }
 
+// Новая модель для геймификации
+model Achievement {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  
+  name        String   // Например, "Completed 100 Cards"
+  description String?
+  earnedAt    DateTime?
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("achievements")
+  @@index([userId])
+}
+
 
 /***********************
  #####    ENUMS    #####
  ***********************/
 
 
-enum UserRole {
+enum Role {
   USER
+  PREMIUM
+  MANAGER
   ADMIN
 }
 

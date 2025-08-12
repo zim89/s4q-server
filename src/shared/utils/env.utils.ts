@@ -2,7 +2,9 @@ import { ConfigService } from '@nestjs/config';
 import { EnvKeys } from 'src/config/env/env.constants';
 import type { EnvSchema } from 'src/config/env/env.schema';
 
-export const getSameSiteConfig = (cfg: ConfigService<EnvSchema>) => {
+export const getSameSiteConfig = (
+  cfg: ConfigService<EnvSchema>
+): 'lax' | 'none' => {
   const env: string = cfg.getOrThrow(EnvKeys.NODE_ENV);
   return env === 'production' ? 'lax' : 'none';
 };

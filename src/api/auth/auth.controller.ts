@@ -6,35 +6,21 @@ import {
   Post,
   Req,
   Res,
+  UnauthorizedException,
   Version,
 } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiConflictResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { AuthResponse } from './dto/auth.dto';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
+import { AuthSwaggerDocs } from './decorators';
+import { LoginDto, RegisterDto } from './dto';
 
 @ApiTags('Auth')
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOperation({
-    summary: 'Register a new account',
-    description: 'Registers a new user account with the provided details.',
-  })
-  @ApiOkResponse({ type: AuthResponse })
-  @ApiBadRequestResponse({ description: 'Invalid input data' })
-  @ApiConflictResponse({ description: 'User already exists' })
+  @AuthSwaggerDocs.register()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(
@@ -45,13 +31,7 @@ export class AuthController {
   }
 
   @Version('2')
-  @ApiOperation({
-    summary: 'Login to an existing account',
-    description: 'Logs in a user with the provided email and password.',
-  })
-  @ApiOkResponse({ type: AuthResponse })
-  @ApiBadRequestResponse({ description: 'Invalid input data' })
-  @ApiNotFoundResponse({ description: 'User not found' })
+  @AuthSwaggerDocs.login()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
@@ -61,15 +41,7 @@ export class AuthController {
     return await this.authService.login(res, dto);
   }
 
-  @ApiOperation({
-    summary: 'Refresh access token',
-    description:
-      'Refreshes the access token using the refresh token provided in the request.',
-  })
-  @ApiOkResponse({ type: AuthResponse })
-  @ApiUnauthorizedResponse({
-    description: 'Refresh token is missing or invalid',
-  })
+  @AuthSwaggerDocs.refresh()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(
@@ -79,12 +51,14 @@ export class AuthController {
     return await this.authService.refresh(req, res);
   }
 
-  @ApiOperation({
-    summary: 'Logout from the current session',
-  })
+  @AuthSwaggerDocs.logout()
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  logout(@Res({ passthrough: true }) res: Response) {
-    return this.authService.logout(res);
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const user = req.user as { id: string } | undefined;
+    if (!user) {
+      throw new UnauthorizedException('User not authorized');
+    }
+    return await this.authService.logout(res, user.id);
   }
 }

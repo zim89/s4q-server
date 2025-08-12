@@ -1,4 +1,4 @@
 export const CookieNames = {
-  REFRESH: 'refreshToken',
-  ACCESS: 'accessToken',
+  REFRESH: 's4q_refresh_token',
+  ACCESS: 's4q_access_token',
 } as const;
