@@ -1,3 +1,8 @@
-export * from './common';
-export * from './error-msgs';
-export * from './validation-msgs';
+// Cookie names and types
+export * from './cookies';
+
+// Error messages organized by domain
+export * from './errors';
+
+// Validation message templates
+export * from './validation';

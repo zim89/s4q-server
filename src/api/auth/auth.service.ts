@@ -12,7 +12,7 @@ import type { Request, Response } from 'express';
 import { EnvKeys } from 'src/config/env/env.constants';
 import type { EnvSchema } from 'src/config/env/env.schema';
 import { PrismaService } from 'src/infrastructure/prisma/prisma.service';
-import { CookieNames, ErrorMsgs } from 'src/shared/constants';
+import { cookieNames, errorMessages } from 'src/shared/constants';
 import type { LoginDto, RegisterDto } from './dto';
 import type { RefreshTokenService } from './refresh-token.service';
 import type { AuthenticatedUser, JwtPayload } from './types/auth.types';
@@ -43,7 +43,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException(ErrorMsgs.user.alreadyExists(dto.email));
+      throw new ConflictException(errorMessages.user.alreadyExists(dto.email));
     }
 
     const user = await this.prismaService.user.create({
@@ -89,7 +89,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException(ErrorMsgs.user.invalidCredentials);
+      throw new NotFoundException(errorMessages.user.invalidCredentials);
     }
 
     // Проверяем активность пользователя
@@ -100,7 +100,7 @@ export class AuthService {
     const isValidPassword = await verify(user.passwordHash, dto.password);
 
     if (!isValidPassword) {
-      throw new NotFoundException(ErrorMsgs.user.invalidCredentials);
+      throw new NotFoundException(errorMessages.user.invalidCredentials);
     }
 
     // Обновляем время последнего входа
@@ -113,10 +113,10 @@ export class AuthService {
   }
 
   async refresh(req: Request, res: Response) {
-    const token = req.cookies[CookieNames.REFRESH] as string | undefined;
+    const token = req.cookies[cookieNames.refreshToken] as string | undefined;
 
     if (typeof token !== 'string' || token.trim() === '') {
-      throw new UnauthorizedException(ErrorMsgs.auth.refreshTokenMissing);
+      throw new UnauthorizedException(errorMessages.auth.refreshTokenMissing);
     }
 
     let payload: JwtPayload;
@@ -124,13 +124,13 @@ export class AuthService {
     try {
       payload = await this.jwtService.verifyAsync<JwtPayload>(token);
     } catch {
-      throw new UnauthorizedException(ErrorMsgs.auth.refreshTokenInvalid);
+      throw new UnauthorizedException(errorMessages.auth.refreshTokenInvalid);
     }
 
     const isValid = await this.refreshTokenService.validate(payload.id, token);
 
     if (!isValid) {
-      throw new UnauthorizedException(ErrorMsgs.auth.refreshTokenInvalid);
+      throw new UnauthorizedException(errorMessages.auth.refreshTokenInvalid);
     }
 
     const user = await this.prismaService.user.findUnique({
@@ -149,7 +149,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException(ErrorMsgs.user.notFound);
+      throw new NotFoundException(errorMessages.user.notFound);
     }
 
     return this.auth(res, user);
@@ -158,7 +158,7 @@ export class AuthService {
   async logout(res: Response, userId: string) {
     // Получаем refresh token из cookies
     const token = (res.req.cookies as Record<string, string>)[
-      CookieNames.REFRESH
+      cookieNames.refreshToken
     ];
 
     if (token) {
@@ -177,7 +177,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException(ErrorMsgs.user.notFound);
+      throw new NotFoundException(errorMessages.user.notFound);
     }
 
     return user;

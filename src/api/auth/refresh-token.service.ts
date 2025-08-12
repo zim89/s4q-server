@@ -5,7 +5,7 @@ import type { Response } from 'express';
 import { EnvKeys } from 'src/config/env/env.constants';
 import type { EnvSchema } from 'src/config/env/env.schema';
 import type { PrismaService } from 'src/infrastructure/prisma/prisma.service';
-import { CookieNames } from 'src/shared/constants';
+import { cookieNames } from 'src/shared/constants';
 import { getSameSiteConfig, isProdEnv } from 'src/shared/utils/env.utils';
 
 /**
@@ -29,7 +29,7 @@ import { getSameSiteConfig, isProdEnv } from 'src/shared/utils/env.utils';
  */
 @Injectable()
 export class RefreshTokenService {
-  private readonly REFRESH_TOKEN_KEY = CookieNames.REFRESH;
+  private readonly REFRESH_TOKEN_KEY = cookieNames.refreshToken;
   private readonly COOKIE_DOMAIN: string;
 
   constructor(

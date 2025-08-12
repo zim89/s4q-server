@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { ValidationMsgTemplates as msg } from 'src/shared/constants';
+import { validationMessages as msg } from 'src/shared/constants';
 
 export class RegisterDto {
   @ApiProperty({
