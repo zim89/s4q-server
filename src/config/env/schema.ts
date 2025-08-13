@@ -32,6 +32,58 @@ export const envSchema = z.object({
     .default('development'),
   [EnvKeys.PORT]: z.coerce.number().default(3000),
   [EnvKeys.GLOBAL_PREFIX]: z.string().default('api'),
+  // Email Configuration
+  [EnvKeys.SMTP_HOST]: z.string().default('smtp.gmail.com'),
+  [EnvKeys.SMTP_PORT]: z.coerce.number().default(587),
+  [EnvKeys.SMTP_SECURE]: z.coerce.boolean().default(false),
+  [EnvKeys.SMTP_USER]: z.string().optional(),
+  [EnvKeys.SMTP_PASS]: z.string().optional(),
+  [EnvKeys.EMAIL_FROM]: z.string().default('noreply@space4quiz.com'),
+  [EnvKeys.EMAIL_REPLY_TO]: z.string().optional(),
+  [EnvKeys.EMAIL_TEMPLATE_DIR]: z.string().default('./templates/emails'),
+  // S3 Configuration
+  [EnvKeys.AWS_REGION]: z.string().default('us-east-1'),
+  [EnvKeys.AWS_ACCESS_KEY_ID]: z.string().optional(),
+  [EnvKeys.AWS_SECRET_ACCESS_KEY]: z.string().optional(),
+  [EnvKeys.S3_BUCKET_NAME]: z.string().optional(),
+  [EnvKeys.S3_ENDPOINT]: z.string().optional(),
+  [EnvKeys.S3_MAX_FILE_SIZE]: z.coerce.number().default(10 * 1024 * 1024),
+  [EnvKeys.S3_ALLOWED_MIME_TYPES]: z
+    .string()
+    .optional()
+    .transform(val =>
+      val
+        ? val.split(',').map(type => type.trim())
+        : ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']
+    )
+    .pipe(z.array(z.string())),
+  // Stripe Configuration
+  [EnvKeys.STRIPE_PUBLISHABLE_KEY]: z.string().optional(),
+  [EnvKeys.STRIPE_SECRET_KEY]: z.string().optional(),
+  [EnvKeys.STRIPE_WEBHOOK_SECRET]: z.string().optional(),
+  [EnvKeys.STRIPE_CURRENCY]: z.string().default('usd'),
+  [EnvKeys.STRIPE_PAYMENT_METHODS]: z
+    .string()
+    .optional()
+    .transform(val =>
+      val ? val.split(',').map(method => method.trim()) : ['card', 'sepa_debit']
+    )
+    .pipe(z.array(z.string())),
+  [EnvKeys.STRIPE_DEFAULT_TRIAL_DAYS]: z.coerce.number().default(7),
+  [EnvKeys.STRIPE_ENABLE_SUBSCRIPTIONS]: z.coerce.boolean().default(true),
+  [EnvKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS]: z.coerce.boolean().default(true),
+  // Telegram Configuration
+  [EnvKeys.TELEGRAM_BOT_TOKEN]: z.string().optional(),
+  [EnvKeys.TELEGRAM_BOT_USERNAME]: z.string().optional(),
+  [EnvKeys.TELEGRAM_WEBHOOK_URL]: z.string().optional(),
+  [EnvKeys.TELEGRAM_WEBHOOK_SECRET]: z.string().optional(),
+  [EnvKeys.TELEGRAM_ENABLE_WEBHOOK]: z.coerce.boolean().default(true),
+  [EnvKeys.TELEGRAM_ENABLE_POLLING]: z.coerce.boolean().default(false),
+  [EnvKeys.TELEGRAM_DEFAULT_PARSE_MODE]: z
+    .enum(['HTML', 'Markdown', 'MarkdownV2'])
+    .default('HTML'),
+  [EnvKeys.TELEGRAM_ENABLE_NOTIFICATIONS]: z.coerce.boolean().default(true),
+  [EnvKeys.TELEGRAM_ENABLE_COMMANDS]: z.coerce.boolean().default(true),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;
