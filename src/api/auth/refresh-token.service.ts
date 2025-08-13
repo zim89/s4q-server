@@ -4,7 +4,7 @@ import { argon2id, hash, verify } from 'argon2';
 import type { Response } from 'express';
 import { EnvKeys } from 'src/config/env/keys';
 import type { EnvSchema } from 'src/config/env/schema';
-import type { PrismaService } from 'src/infrastructure/prisma/prisma.service';
+import type { PrismaService } from 'src/infrastructure/prisma';
 import { cookieNames } from 'src/shared/constants';
 import { getCookieSameSite, isProduction } from 'src/shared/utils';
 

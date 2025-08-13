@@ -11,7 +11,7 @@ import { argon2id, hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
 import { EnvKeys } from 'src/config/env/keys';
 import type { EnvSchema } from 'src/config/env/schema';
-import { PrismaService } from 'src/infrastructure/prisma/prisma.service';
+import { PrismaService } from 'src/infrastructure/prisma';
 import { cookieNames, errorMessages } from 'src/shared/constants';
 import type { LoginDto, RegisterDto } from './dto';
 import type { RefreshTokenService } from './refresh-token.service';

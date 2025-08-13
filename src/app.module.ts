@@ -12,7 +12,7 @@ import { SetModule } from './api/set/set.module';
 import { UserModule } from './api/user/user.module';
 import { AppController } from './app.controller';
 import { envLoader, envSchema } from './config';
-import { PrismaModule } from './infrastructure/prisma/prisma.module';
+import { PrismaModule } from './infrastructure/prisma';
 import { LoggerMiddleware } from './shared/middlewares';
 
 @Module({
