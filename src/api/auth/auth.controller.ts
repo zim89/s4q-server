@@ -15,6 +15,33 @@ import { AuthService } from './auth.service';
 import { AuthSwaggerDocs } from './decorators';
 import { LoginDto, RegisterDto } from './dto';
 
+/**
+ * Authentication controller for user registration, login, and session management
+ *
+ * Provides endpoints for:
+ * - User registration
+ * - User login
+ * - Token refresh
+ * - User logout
+ *
+ * @example
+ * // Register new user
+ * POST /v1/auth/register
+ * {
+ *   "firstName": "John",
+ *   "lastName": "Doe",
+ *   "email": "john@example.com",
+ *   "password": "password123"
+ * }
+ *
+ * @example
+ * // Login user
+ * POST /v2/auth/login
+ * {
+ *   "email": "john@example.com",
+ *   "password": "password123"
+ * }
+ */
 @ApiTags('Auth')
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {

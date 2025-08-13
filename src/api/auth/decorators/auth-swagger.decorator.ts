@@ -9,6 +9,23 @@ import {
 } from '@nestjs/swagger';
 import { AuthResponseDto } from '../dto';
 
+/**
+ * Swagger documentation decorators for authentication endpoints
+ *
+ * Provides pre-configured Swagger decorators for:
+ * - User registration
+ * - User login
+ * - Token refresh
+ * - User logout
+ *
+ * @example
+ * // Use in controller
+ * @AuthSwaggerDocs.register()
+ * @Post('register')
+ * register(@Body() dto: RegisterDto) {
+ *   return this.authService.register(dto);
+ * }
+ */
 export const AuthSwaggerDocs = {
   register: () =>
     applyDecorators(

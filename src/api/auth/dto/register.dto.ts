@@ -8,6 +8,21 @@ import {
 } from 'class-validator';
 import { validationMessages as msg } from 'src/shared/constants';
 
+/**
+ * Data Transfer Object for user registration
+ *
+ * Contains all required fields for creating a new user account
+ * with validation rules and Swagger documentation
+ *
+ * @example
+ * // Register new user
+ * const registerDto: RegisterDto = {
+ *   firstName: 'John',
+ *   lastName: 'Doe',
+ *   email: 'john.doe@example.com',
+ *   password: 'securePassword123'
+ * };
+ */
 export class RegisterDto {
   @ApiProperty({
     description: 'First name of the user',

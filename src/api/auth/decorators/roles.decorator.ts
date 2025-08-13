@@ -8,7 +8,7 @@ import { Role } from '@prisma/client';
  * @returns Metadata decorator with roles information
  *
  * @example
- * Direct usage (not recommended, use @Auth instead)
+ * // Direct usage (not recommended, use @Auth instead)
  * @Get('admin')
  * @RequireRoles(Role.ADMIN)
  * @UseGuards(JwtGuard, RolesGuard)

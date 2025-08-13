@@ -14,14 +14,14 @@ import type { AuthenticatedUser } from '../types/auth.types';
  * @throws UnauthorizedException if user is not authenticated
  *
  * @example
- * Get full user object
+ * // Get full user object
  * @Get('profile')
  * getProfile(@CurrentUser() user: AuthenticatedUser) {
  *   return user;
  * }
  *
  * @example
- * Get specific field
+ * // Get specific field
  * @Get('profile')
  * getProfile(@CurrentUser('id') userId: string) {
  *   return userId;

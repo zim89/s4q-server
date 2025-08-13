@@ -1,1 +1,2 @@
-export * from './body-required.pipe';
+// Validation and transformation pipes
+export * from './body-required';

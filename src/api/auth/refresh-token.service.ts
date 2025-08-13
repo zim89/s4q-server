@@ -6,7 +6,7 @@ import { EnvKeys } from 'src/config/env/env.constants';
 import type { EnvSchema } from 'src/config/env/env.schema';
 import type { PrismaService } from 'src/infrastructure/prisma/prisma.service';
 import { cookieNames } from 'src/shared/constants';
-import { getSameSiteConfig, isProdEnv } from 'src/shared/utils/env.utils';
+import { getCookieSameSite, isProduction } from 'src/shared/utils';
 
 /**
  * Service for managing refresh tokens and user sessions
@@ -152,8 +152,8 @@ export class RefreshTokenService {
     return {
       httpOnly: true,
       domain: this.COOKIE_DOMAIN,
-      secure: isProdEnv(this.configService),
-      sameSite: getSameSiteConfig(this.configService),
+      secure: isProduction(this.configService),
+      sameSite: getCookieSameSite(this.configService),
       ...(expires && { expires }),
     };
   }

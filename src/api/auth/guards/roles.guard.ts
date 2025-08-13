@@ -16,6 +16,7 @@ import type { AuthenticatedUser } from '../types/auth.types';
  * Reads roles from metadata set by @RequireRoles decorator.
  *
  * @example
+ * // Protect endpoint with role-based authorization
  * @RequireRoles(Role.ADMIN)
  * @UseGuards(JwtGuard, RolesGuard)
  * @Get('admin')

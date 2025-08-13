@@ -9,7 +9,7 @@ import { RequireRoles } from './roles.decorator';
  * @returns Combined decorators for authentication and authorization
  *
  * @example
- * Default protection (USER role)
+ * // Default protection (USER role)
  * @Get('profile')
  * @Auth()
  * getProfile() {
@@ -17,7 +17,7 @@ import { RequireRoles } from './roles.decorator';
  * }
  *
  * @example
- * Specific role
+ * // Specific role
  * @Get('admin')
  * @Auth(Role.ADMIN)
  * getAdminData() {
@@ -25,7 +25,7 @@ import { RequireRoles } from './roles.decorator';
  * }
  *
  * @example
- * Multiple roles
+ * // Multiple roles
  * @Get('moderator')
  * @Auth([Role.MODERATOR, Role.ADMIN])
  * getModeratorData() {

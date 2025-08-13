@@ -14,7 +14,7 @@ import type { AuthenticatedUser, JwtPayload } from '../types/auth.types';
  * Used by JwtGuard to authenticate requests.
  *
  * @example
- * Automatically used by JwtGuard
+ * // Automatically used by JwtGuard
  * @UseGuards(JwtGuard)
  * @Get('protected')
  * getProtectedData(@CurrentUser() user: AuthenticatedUser) {

@@ -7,6 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
  * Extends Passport's AuthGuard with 'jwt' strategy.
  *
  * @example
+ * // Protect endpoint with JWT authentication
  * @UseGuards(JwtGuard)
  * @Get('protected')
  * getProtectedData() {

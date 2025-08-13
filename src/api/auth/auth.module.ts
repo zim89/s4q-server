@@ -7,6 +7,19 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
+/**
+ * Authentication module for user authentication and authorization
+ *
+ * Provides:
+ * - User registration and login
+ * - JWT token management
+ * - Refresh token handling
+ * - Authentication guards and strategies
+ *
+ * @example
+ * // Import in app.module.ts
+ * imports: [AuthModule]
+ */
 @Module({
   imports: [
     PassportModule,

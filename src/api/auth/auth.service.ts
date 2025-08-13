@@ -17,6 +17,28 @@ import type { LoginDto, RegisterDto } from './dto';
 import type { RefreshTokenService } from './refresh-token.service';
 import type { AuthenticatedUser, JwtPayload } from './types/auth.types';
 
+/**
+ * Authentication service for user registration, login, and token management
+ *
+ * Handles:
+ * - User registration with password hashing
+ * - User login with password verification
+ * - JWT token generation and validation
+ * - Refresh token management
+ * - User session management
+ *
+ * @example
+ * // Register new user
+ * const result = await authService.register(res, registerDto);
+ *
+ * @example
+ * // Login user
+ * const result = await authService.login(res, loginDto);
+ *
+ * @example
+ * // Refresh access token
+ * const result = await authService.refresh(res);
+ */
 @Injectable()
 export class AuthService {
   private readonly JWT_ACCESS_TOKEN_TTL: string;
@@ -36,6 +58,13 @@ export class AuthService {
     );
   }
 
+  /**
+   * Registers a new user account
+   * @param res - Express response object for setting cookies
+   * @param dto - User registration data
+   * @returns Authentication response with tokens and user data
+   * @throws ConflictException if user already exists
+   */
   async register(res: Response, dto: RegisterDto) {
     // Проверяем существование пользователя
     const existingUser = await this.prismaService.user.findUnique({
@@ -69,6 +98,14 @@ export class AuthService {
     return this.auth(res, user);
   }
 
+  /**
+   * Authenticates user and creates session
+   * @param res - Express response object for setting cookies
+   * @param dto - User login credentials
+   * @returns Authentication response with tokens and user data
+   * @throws NotFoundException if user not found
+   * @throws UnauthorizedException if password invalid or account deactivated
+   */
   async login(res: Response, dto: LoginDto) {
     const user = await this.prismaService.user.findUnique({
       where: {
@@ -112,6 +149,14 @@ export class AuthService {
     return this.auth(res, user);
   }
 
+  /**
+   * Refreshes access token using refresh token from cookies
+   * @param req - Express request object containing refresh token cookie
+   * @param res - Express response object for setting new cookies
+   * @returns Authentication response with new tokens and user data
+   * @throws UnauthorizedException if refresh token missing or invalid
+   * @throws NotFoundException if user not found
+   */
   async refresh(req: Request, res: Response) {
     const token = req.cookies[cookieNames.refreshToken] as string | undefined;
 
