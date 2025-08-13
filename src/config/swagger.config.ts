@@ -1,6 +1,22 @@
 import type { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+/**
+ * Swagger documentation setup function
+ *
+ * Configures and sets up Swagger/OpenAPI documentation for the application
+ * Includes API metadata, authentication, and UI configuration
+ *
+ * @param app - NestJS application instance
+ *
+ * @example
+ * // Use in main.ts
+ * setupSwaggerDocs(app);
+ *
+ * @example
+ * // Access documentation
+ * // Available at: http://localhost:3000/api-docs
+ */
 export function setupSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('Space4Quiz API')

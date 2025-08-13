@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys } from 'src/config/env/env.constants';
-import type { EnvSchema } from 'src/config/env/env.schema';
+import { EnvKeys } from 'src/config/env/keys';
+import type { EnvSchema } from 'src/config/env/schema';
 
 /**
  * Gets the SameSite configuration for cookies based on environment

@@ -11,8 +11,7 @@ import { CronModule } from './api/cron/cron.module';
 import { SetModule } from './api/set/set.module';
 import { UserModule } from './api/user/user.module';
 import { AppController } from './app.controller';
-import { envConfig } from './config/env/env.config';
-import { envSchema } from './config/env/env.schema';
+import { envLoader, envSchema } from './config';
 import { PrismaModule } from './infrastructure/prisma/prisma.module';
 import { LoggerMiddleware } from './shared/middlewares';
 
@@ -20,7 +19,7 @@ import { LoggerMiddleware } from './shared/middlewares';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [envConfig.load[0]],
+      load: [envLoader.load[0]],
       envFilePath: ['.env.local', '.env'],
       validate: (config: Record<string, any>) => {
         try {

@@ -1,8 +1,25 @@
 import { ConfigService } from '@nestjs/config';
 import type { JwtModuleOptions } from '@nestjs/jwt';
-import { EnvKeys } from './env/env.constants';
-import type { EnvSchema } from './env/env.schema';
+import { EnvKeys } from './env/keys';
+import type { EnvSchema } from './env/schema';
 
+/**
+ * JWT configuration factory for NestJS JWT module
+ *
+ * Creates JWT module options with environment-based configuration
+ * Includes signing and verification options
+ *
+ * @param configService - NestJS ConfigService instance
+ * @returns JWT module configuration options
+ *
+ * @example
+ * // Use in auth.module.ts
+ * JwtModule.registerAsync({
+ *   imports: [ConfigModule],
+ *   useFactory: getJwtConfig,
+ *   inject: [ConfigService]
+ * })
+ */
 export function getJwtConfig(
   configService: ConfigService<EnvSchema>
 ): JwtModuleOptions {
