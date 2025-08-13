@@ -1,0 +1,38 @@
+/// Форма глагола
+/// 
+/// Модель для хранения различных форм глаголов.
+/// Содержит базовую форму, прошедшее время, причастие прошедшего времени.
+/// Связывает карточки с соответствующими формами глаголов.
+model VerbForm {
+  /// Уникальный идентификатор формы глагола
+  id              String @id @default(cuid())
+  
+  /// Дата и время создания записи
+  createdAt       DateTime @default(now())
+  
+  /// Дата и время последнего обновления записи
+  updatedAt       DateTime @updatedAt
+
+  /// Инфинитив глагола (базовая форма)
+  infinitive      String
+  
+  /// Простое прошедшее время (Past Simple)
+  pastSimple      String
+  
+  /// Причастие прошедшего времени (Past Participle)
+  pastParticiple  String
+  
+  /// Перевод на русский язык
+  translation     String?
+  
+  /// Уровень сложности (A1, A2, B1, B2, C1, C2)
+  level           LanguageLevel?
+
+  /// Карточки, связанные с этой формой глагола
+  cards           Card[]
+
+  @@map("verb_forms")
+  @@index([infinitive, pastSimple])
+  @@index([level])
+  @@index([translation])
+}

@@ -1,0 +1,102 @@
+/// Прогресс изучения набора карточек
+/// 
+/// Модель для отслеживания прогресса пользователя в изучении набора.
+/// Поддерживает различные методы изучения и интервальное повторение.
+/// Хранит статистику по каждому методу изучения.
+model Progress {
+  /// Уникальный идентификатор прогресса
+  id         String @id @default(cuid())
+  
+  /// Дата и время создания записи
+  createdAt  DateTime @default(now())
+  
+  /// Дата и время последнего обновления записи
+  updatedAt  DateTime @updatedAt
+
+  /// Дата следующего повторения (для интервального повторения)
+  nextReviewAt DateTime?
+  
+  /// Настройки пользовательских режимов изучения в формате JSON
+  customModes  Json?
+
+  /// ID пользователя
+  userId     String
+  
+  /// Связь с пользователем
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// ID набора пользователя
+  userSetId  String @unique
+  
+  /// Связь с набором пользователя
+  userSet    UserSet @relation(fields: [userSetId], references: [id], onDelete: Cascade)
+
+  // Прогресс по методу "Множественный выбор"
+  /// Количество попыток множественного выбора
+  multipleChoiceAttempts  Int @default(0)
+  
+  /// Количество правильных ответов множественного выбора
+  multipleChoiceCorrect   Int @default(0)
+  
+  /// Статус прогресса множественного выбора
+  multipleChoiceStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Перевод"
+  /// Количество попыток перевода
+  translationAttempts  Int @default(0)
+  
+  /// Количество правильных переводов
+  translationCorrect   Int @default(0)
+  
+  /// Статус прогресса перевода
+  translationStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Диктовка"
+  /// Количество попыток диктовки
+  dictationAttempts  Int @default(0)
+  
+  /// Количество правильных диктовок
+  dictationCorrect   Int @default(0)
+  
+  /// Статус прогресса диктовки
+  dictationStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Произнесение"
+  /// Количество попыток произнесения
+  speakingAttempts  Int @default(0)
+  
+  /// Количество правильных произнесений
+  speakingCorrect   Int @default(0)
+  
+  /// Статус прогресса произнесения
+  speakingStatus    ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Заполнение пропусков"
+  /// Количество попыток заполнения пропусков
+  fillInTheBlanksAttempts Int @default(0)
+  
+  /// Количество правильных заполнений пропусков
+  fillInTheBlanksCorrect  Int @default(0)
+  
+  /// Статус прогресса заполнения пропусков
+  fillInTheBlanksStatus   ProgressStatus @default(NOT_STARTED)
+
+  // Прогресс по методу "Запись"
+  /// Количество попыток записи
+  writingAttempts  Int @default(0)
+  
+  /// Количество правильных записей
+  writingCorrect   Int @default(0)
+  
+  /// Статус прогресса записи
+  writingStatus    ProgressStatus @default(NOT_STARTED)
+
+  @@map("progresses")
+  @@index([userId, nextReviewAt])
+  @@index([multipleChoiceStatus])
+  @@index([translationStatus])
+  @@index([dictationStatus])
+  @@index([speakingStatus])
+  @@index([fillInTheBlanksStatus])
+  @@index([writingStatus])
+}

@@ -84,6 +84,16 @@ export const envSchema = z.object({
     .default('HTML'),
   [EnvKeys.TELEGRAM_ENABLE_NOTIFICATIONS]: z.coerce.boolean().default(true),
   [EnvKeys.TELEGRAM_ENABLE_COMMANDS]: z.coerce.boolean().default(true),
+  // Database Configuration
+  [EnvKeys.POSTGRES_URI]: z.string().nonempty('POSTGRES_URI is required'),
+  [EnvKeys.POSTGRES_SHADOW_URI]: z.string().optional(),
+  [EnvKeys.DB_POOL_MIN]: z.coerce.number().default(2),
+  [EnvKeys.DB_POOL_MAX]: z.coerce.number().default(10),
+  [EnvKeys.DB_IDLE_TIMEOUT]: z.coerce.number().default(30000),
+  [EnvKeys.DB_CONNECTION_TIMEOUT]: z.coerce.number().default(2000),
+  [EnvKeys.DB_LOGGING_ENABLED]: z.coerce.boolean().default(true),
+  [EnvKeys.DB_SLOW_QUERY_THRESHOLD]: z.coerce.number().default(1000),
+  [EnvKeys.DB_SEED_ENABLED]: z.coerce.boolean().default(false),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;

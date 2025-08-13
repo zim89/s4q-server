@@ -1,0 +1,27 @@
+enum LanguageLevel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum PartOfSpeech {
+  NOUN
+  PRONOUN
+  VERB
+  ADJECTIVE
+  ADVERB
+  PREPOSITION
+  CONJUNCTION
+  INTERJECTION
+  ARTICLE
+  PARTICLE
+  PHRASE
+}
+
+enum SetType {
+  LANGUAGE
+  CUSTOM
+}

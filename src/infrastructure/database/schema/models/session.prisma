@@ -1,0 +1,38 @@
+/// Сессия пользователя
+/// 
+/// Модель для управления сессиями пользователей.
+/// Хранит refresh токены и информацию о сессиях для безопасности.
+/// Поддерживает множественные сессии для одного пользователя.
+model Session {
+  /// Уникальный идентификатор сессии
+  id           String   @id @default(cuid())
+  
+  /// Дата и время создания сессии
+  createdAt    DateTime @default(now())
+
+  /// Хеш refresh токена
+  refreshToken  String
+  
+  /// Дата и время истечения токена
+  expiresAt     DateTime
+  
+  /// IP-адрес устройства (для безопасности)
+  ipAddress     String?
+  
+  /// User-Agent устройства/браузера
+  userAgent     String?
+  
+  /// Активна ли сессия (для инвалидации)
+  isActive      Boolean  @default(true)
+ 
+  /// ID пользователя
+  userId      String
+  
+  /// Связь с пользователем
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+  @@index([userId, isActive])
+  @@index([expiresAt])
+  @@index([refreshToken])
+}
