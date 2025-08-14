@@ -11,11 +11,17 @@ model Achievement {
   /// Дата и время создания записи
   createdAt   DateTime @default(now())
   
+  /// Тип достижения
+  type        AchievementType
+  
   /// Название достижения (например, "Completed 100 Cards")
   name        String
   
   /// Описание достижения
   description String?
+  
+  /// Дополнительные данные достижения в формате JSON
+  data        Json?
   
   /// Дата и время получения достижения
   earnedAt    DateTime?

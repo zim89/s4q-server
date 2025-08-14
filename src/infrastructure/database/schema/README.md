@@ -6,26 +6,30 @@
 src/infrastructure/database/schema/
 ├── schema.prisma          # Основной файл (generator + datasource)
 ├── enums/                 # Енумы по доменам
-│   ├── user.enums.prisma
-│   ├── language.enums.prisma
-│   └── progress.enums.prisma
+│   ├── user.enums.prisma      # Роли пользователей
+│   ├── language.enums.prisma  # Языковые характеристики
+│   ├── progress.enums.prisma  # Статусы прогресса
+│   ├── learning.enums.prisma  # Обучение и достижения
+│   ├── content.enums.prisma   # Контент и медиа
+│   └── system.enums.prisma    # Системные функции
 ├── models/                # Модели по доменам
-│   ├── user.model.prisma
-│   ├── session.model.prisma
-│   ├── achievement.model.prisma
-│   ├── language.model.prisma
-│   ├── grammar-rule.model.prisma
-│   ├── verb-form.model.prisma
-│   ├── card.model.prisma
-│   ├── definition.model.prisma
-│   ├── example.model.prisma
-│   ├── tag.model.prisma
-│   ├── set.model.prisma
-│   ├── user-set.model.prisma
-│   ├── folder.model.prisma
-│   ├── user-card.model.prisma
-│   ├── progress.model.prisma
-│   └── audit-log.model.prisma
+│   ├── user.prisma           # Пользователи
+│   ├── session.prisma        # Сессии пользователей
+│   ├── achievement.prisma    # Достижения
+│   ├── language.prisma       # Языки
+│   ├── grammar-rule.prisma   # Грамматические правила
+│   ├── irregular-verb.prisma # Неправильные глаголы
+│   ├── card.prisma           # Карточки
+│   ├── definition.prisma     # Определения
+│   ├── example.prisma        # Примеры
+│   ├── tag.prisma            # Теги
+│   ├── set.prisma            # Наборы карточек
+│   ├── user-set.prisma       # Наборы пользователей
+│   ├── folder.prisma         # Папки
+│   ├── user-card.prisma      # Карточки пользователей
+│   ├── progress.prisma       # Прогресс изучения
+│   ├── exercise-progress.prisma # Прогресс по упражнениям
+│   └── audit-log.prisma      # Логи аудита
 ├── migrations/            # Миграции базы данных
 │   └── README.md
 └── README.md
@@ -65,34 +69,45 @@ npm run prisma:studio
 
 ### User Domain
 
-- `User` - пользователи
-- `Session` - сессии пользователей
-- `Achievement` - достижения
+Управление пользователями, аутентификация и профили
+
+- `User` - пользователи системы с ролями и настройками
+- `Session` - сессии пользователей для безопасности
+- `Achievement` - достижения пользователей
 
 ### Language Domain
 
-- `Language` - языки
+Языковые характеристики и грамматика
+
+- `Language` - поддерживаемые языки
 - `GrammarRule` - грамматические правила
-- `VerbForm` - формы глаголов
+- `IrregularVerb` - неправильные глаголы с формами
 
 ### Content Domain
 
-- `Card` - карточки
-- `Definition` - определения
-- `Example` - примеры
-- `Tag` - теги
+Контент для изучения
+
+- `Card` - карточки с словами, фразами и глаголами
+- `Definition` - определения к карточкам
+- `Example` - примеры использования
+- `Tag` - теги для категоризации
 
 ### Learning Domain
 
+Организация обучения
+
 - `Set` - наборы карточек
-- `UserSet` - наборы пользователей
-- `Folder` - папки
-- `UserCard` - карточки пользователей
+- `UserSet` - наборы пользователей с прогрессом
+- `Folder` - папки для организации
+- `UserCard` - персональные данные карточек пользователей
 
 ### Progress Domain
 
-- `Progress` - прогресс изучения
-- `AuditLog` - логи аудита
+Отслеживание прогресса и аналитика
+
+- `Progress` - общий прогресс изучения наборов
+- `ExerciseProgress` - детальный прогресс по упражнениям
+- `AuditLog` - логи действий пользователей
 
 ## ⚠️ Важные замечания
 

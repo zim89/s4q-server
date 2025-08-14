@@ -35,7 +35,16 @@ model Card {
   isGlobal      Boolean  @default(true) 
   
   /// Грамматический род (для немецкого: MASCULINE, FEMININE, NEUTER)
-  gramGender    String?
+  grammaticalGender String?
+  
+  /// Сложность карточки
+  difficulty    CardDifficulty?
+  
+  /// Тип контента карточки
+  contentType   ContentType?
+  
+  /// Статус контента карточки
+  contentStatus ContentStatus? @default(DRAFT)
   
   /// ID пользователя, создавшего карточку (для пользовательских карточек)
   userId        String?
@@ -58,23 +67,29 @@ model Card {
   /// Связь с грамматическим правилом
   rule          GrammarRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
 
-  /// ID формы глагола
-  verbFormId    String?
+  /// Тип глагола (только для partOfSpeech = VERB)
+  verbType        VerbType?
   
-  /// Связь с формой глагола
-  verbForm      VerbForm? @relation(fields: [verbFormId], references: [id], onDelete: SetNull)
+  /// ID неправильного глагола (только для IRREGULAR/MIXED/MODAL/AUXILIARY/PHRASAL/COMPOUND)
+  irregularVerbId String?
+  
+  /// Связь с неправильным глаголом
+  irregularVerb   IrregularVerb? @relation(fields: [irregularVerbId], references: [id], onDelete: SetNull)
 
-  /// Источник API (например, "dictionary-api")
-  sourceApi     String?
+  /// Провайдер источника данных (например, "dictionary-api")
+  sourceProvider String?
   
-  /// Внешний ID в источнике
-  externalId    String?
+  /// ID в источнике данных
+  sourceId       String?
   
-  /// Количество использований карточки
-  usageCount    Int @default(0)
+  /// Количество добавлений карточки в наборы для изучения
+  studyCount     Int @default(0)
+  
+  /// Количество просмотров карточки
+  viewCount      Int @default(0)
   
   /// Дата и время последнего использования
-  lastUsedAt    DateTime?
+  lastUsedAt     DateTime?
 
   // Связи с другими моделями
   /// Определения карточки
@@ -90,9 +105,10 @@ model Card {
   sets          Set[] @relation("sets_cards")
 
   @@map("cards")
-  @@unique([slug, languageId, sourceApi, externalId])
+  @@unique([slug, languageId, sourceProvider, sourceId])
   @@index([languageId, level, isGlobal])
   @@index([wordOrPhrase])
   @@index([userId, isGlobal])
-  @@index([usageCount])
+  @@index([studyCount])
+  @@index([viewCount])
 }

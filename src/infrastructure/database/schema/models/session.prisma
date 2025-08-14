@@ -16,11 +16,17 @@ model Session {
   /// Дата и время истечения токена
   expiresAt     DateTime
   
-  /// IP-адрес устройства (для безопасности)
-  ipAddress     String?
+  /// IP-адрес клиента (для безопасности)
+  clientIp      String?
   
   /// User-Agent устройства/браузера
   userAgent     String?
+  
+  /// Тип устройства
+  deviceType    DeviceType? @default(UNKNOWN)
+  
+  /// Тип сессии
+  sessionType   SessionType? @default(WEB)
   
   /// Активна ли сессия (для инвалидации)
   isActive      Boolean  @default(true)

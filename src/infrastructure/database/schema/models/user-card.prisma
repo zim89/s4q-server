@@ -19,14 +19,20 @@ model UserCard {
   /// Связь с карточкой
   card            Card     @relation(fields: [cardId], references: [id])
 
-  /// Собственное определение пользователя
-  userDefinition  String?
+  /// Пользовательское определение карточки
+  customDefinition String?
   
-  /// Собственный пример пользователя
-  userExample     String?
+  /// Пользовательский пример использования
+  customExample    String?
   
   /// Статус прогресса изучения карточки
   progressStatus  ProgressStatus @default(NOT_STARTED)
+  
+  /// Режим изучения карточки
+  studyMode       StudyMode?
+  
+  /// Персональная сложность карточки для пользователя
+  difficulty      CardDifficulty?
   
   /// Добавлена ли карточка в избранное
   isFavorite      Boolean @default(false)

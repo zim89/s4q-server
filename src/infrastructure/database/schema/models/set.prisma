@@ -45,6 +45,12 @@ model Set {
 
   /// Уровень сложности набора (A1, A2, B1, B2, C1, C2)
   level       LanguageLevel?
+  
+  /// Категория контента набора
+  contentCategory ContentCategory?
+  
+  /// Статус контента набора
+  contentStatus   ContentStatus? @default(DRAFT)
 
   // Связи с другими моделями
   /// Карточки в наборе

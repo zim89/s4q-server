@@ -19,6 +19,15 @@ model AuditLog {
   /// Тип действия ('create', 'update', 'delete', 'view')
   action      String
   
+  /// Детальный тип действия
+  actionType  ActionType?
+  
+  /// Тип ресурса
+  resourceType ResourceType?
+  
+  /// Дополнительные данные действия в формате JSON
+  data        Json?
+  
   /// ID пользователя, выполнившего действие
   userId      String
   

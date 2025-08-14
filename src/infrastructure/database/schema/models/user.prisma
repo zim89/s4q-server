@@ -14,7 +14,7 @@ model User {
   updatedAt     DateTime @updatedAt
 
   /// Роли пользователя в системе (USER, PREMIUM, MANAGER, ADMIN)
-  rights        Role[] @default([USER])
+  rights        UserRole[] @default([USER])
   
   /// Email адрес пользователя (уникальный)
   email         String   @unique
@@ -38,13 +38,16 @@ model User {
   isActive      Boolean? @default(true)
   
   /// Дата и время последнего входа
-  lastLogin     DateTime?
+  lastLoginAt   DateTime?
   
   /// Настройки пользователя в формате JSON
-  settings      Json?
+  userSettings  Json?
   
   /// ID пользователя в Google (для OAuth)
   googleId      String?  @unique
+  
+  /// Предпочитаемый режим изучения
+  preferredStudyMode StudyMode?
 
   // Связи с другими моделями
   /// Сессии пользователя
@@ -77,5 +80,5 @@ model User {
   @@map("users")
   @@index([email])
   @@index([isActive])
-  @@index([lastLogin])
+  @@index([lastLoginAt])
 }

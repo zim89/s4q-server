@@ -12,6 +12,12 @@ model UserSet {
   
   /// Количество изученных карточек
   completedCards Int @default(0)
+  
+  /// Статус изучения набора
+  status    ProgressStatus? @default(NOT_STARTED)
+  
+  /// Режим изучения набора
+  studyMode StudyMode?
 
   /// ID пользователя
   userId    String
