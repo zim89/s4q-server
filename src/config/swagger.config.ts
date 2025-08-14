@@ -15,7 +15,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
  *
  * @example
  * // Access documentation
- * // Available at: http://localhost:3000/api-docs
+ * // Available at: http://localhost:3001/api-docs
  */
 export function setupSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()

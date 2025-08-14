@@ -3,13 +3,34 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { EnvKeys } from './config/env/keys';
-import { setupSwaggerDocs } from './config/swagger.config';
+import {
+  EnvKeys,
+  getDatabaseConfig,
+  getPrismaConfig,
+  setupSwaggerDocs,
+} from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = app.get(ConfigService);
+
+  // Инициализация конфигурации базы данных
+  const dbConfig = getDatabaseConfig(config);
+  const prismaConfig = getPrismaConfig(config);
+
+  // Логирование настроек БД (только в development)
+  if (config.get(EnvKeys.NODE_ENV) === 'development') {
+    console.log('📊 Database Configuration:', {
+      connection: dbConfig.connection,
+      pool: dbConfig.pool,
+      logging: dbConfig.logging,
+    });
+    console.log('🔧 Prisma Configuration:', {
+      client: prismaConfig.client,
+      databaseUrl: prismaConfig.databaseUrl ? 'configured' : 'not configured',
+    });
+  }
 
   app.use(cookieParser());
 

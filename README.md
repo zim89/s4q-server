@@ -21,78 +21,226 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## 🚀 Описание
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Space4Quizlet Server - это NestJS приложение для изучения языков с использованием современных технологий:
 
-## Project setup
+- **NestJS** - прогрессивный Node.js фреймворк
+- **Bun** - быстрый JavaScript runtime
+- **Prisma** - современный ORM для TypeScript
+- **PostgreSQL** - надежная реляционная БД
+- **Docker** - контейнеризация для разработки
 
-```bash
-$ yarn install
-```
+## 📋 Требования
 
-## Compile and run the project
+- **Bun** - [Установка Bun](https://bun.sh/docs/installation)
+- **Docker** - [Установка Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose** - обычно идет с Docker
 
-```bash
-# development
-$ yarn run start
+## 🚀 Быстрый старт
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Run tests
+### 1. Клонирование репозитория
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+git clone <repository-url>
+cd s4q-server
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Установка зависимостей
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+bun install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Настройка окружения
 
-## Resources
+```bash
+# Скопируйте пример файла окружения
+cp env.example .env.local
 
-Check out a few resources that may come in handy when working with NestJS:
+# Отредактируйте переменные окружения
+nano .env.local
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 4. Запуск базы данных
 
-## Support
+```bash
+# Запуск PostgreSQL
+docker-compose up -d
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Проверка статуса
+docker-compose ps
+```
 
-## Stay in touch
+### 5. Настройка базы данных
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Генерация Prisma Client
+bun run prisma:generate
 
-## License
+# Применение схемы к БД
+bun run prisma:db:push
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Заполнение тестовыми данными (опционально)
+bun run db:seed
+```
+
+### 6. Запуск приложения
+
+```bash
+# Development режим
+bun run dev
+
+# Или production режим
+bun run start:prod
+```
+
+### 7. Проверка работы
+
+- API: http://localhost:3001
+- Swagger документация: http://localhost:3001/api-docs
+
+## 🐳 Docker Setup
+
+### Quick Start
+
+```bash
+# Development
+docker-compose up -d
+
+# Production
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+### Documentation
+
+- [📚 Полная документация](docs/README.md)
+- [🚀 Быстрая установка](docs/setup.md)
+- [🐳 Docker](docs/docker/README.md)
+- [🗄️ База данных](docs/database/README.md)
+- [🔧 Разработка](docs/development/README.md)
+
+## 🗄️ База данных
+
+### Prisma команды
+
+```bash
+# Генерация Prisma Client
+bun run prisma:generate
+
+# Применение схемы к БД
+bun run prisma:db:push
+
+# Создание миграции
+bun run prisma:migrate:dev
+
+# Сброс БД (осторожно!)
+bun run prisma:db:reset
+
+# Просмотр данных
+bun run prisma:studio
+```
+
+### Управление данными
+
+```bash
+# Заполнение тестовыми данными
+bun run db:seed
+
+# Бэкап БД
+./scripts/docker-volumes.sh backup
+
+# Восстановление БД
+./scripts/docker-volumes.sh restore backup_file.sql
+```
+
+## 🔧 Команды разработки
+
+```bash
+# Development режим (с hot reload)
+bun run dev
+
+# Production режим
+bun run start:prod
+
+# Сборка проекта
+bun run build
+
+# Линтинг
+bun run lint
+
+# Форматирование кода
+bun run format
+```
+
+## 🧪 Тестирование
+
+```bash
+# Unit тесты
+bun run test
+
+# E2E тесты
+bun run test:e2e
+
+# Покрытие тестами
+bun run test:cov
+
+# Запуск тестов в watch режиме
+bun run test:watch
+```
+
+## 🚀 Развертывание
+
+### Подготовка к production
+
+```bash
+# Сборка приложения
+bun run build
+
+# Проверка production сборки
+bun run start:prod
+```
+
+### Переменные окружения для production
+
+```env
+NODE_ENV=production
+POSTGRES_URI=postgresql://user:password@host:5432/database
+JWT_SECRET=your_jwt_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+```
+
+### Docker для production
+
+```bash
+# Запуск с production конфигурацией
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+## 📚 Полезные ресурсы
+
+### Документация
+
+- [NestJS Documentation](https://docs.nestjs.com) - официальная документация NestJS
+- [Bun Documentation](https://bun.sh/docs) - документация Bun runtime
+- [Prisma Documentation](https://www.prisma.io/docs) - документация Prisma ORM
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/) - документация PostgreSQL
+
+### Сообщество
+
+- [NestJS Discord](https://discord.gg/G7Qnnhy) - сообщество NestJS
+- [Bun Discord](https://bun.sh/discord) - сообщество Bun
+- [Prisma Discord](https://discord.gg/prisma) - сообщество Prisma
+
+### Инструменты разработки
+
+- [NestJS Devtools](https://devtools.nestjs.com) - инструменты для разработки
+- [Prisma Studio](https://www.prisma.io/studio) - GUI для работы с БД
+
+## 🤝 Поддержка
+
+Этот проект использует MIT лицензию. Если у вас есть вопросы или предложения, создайте issue в репозитории.
+
+## 📄 Лицензия
+
+MIT License - см. файл [LICENSE](LICENSE) для подробностей.

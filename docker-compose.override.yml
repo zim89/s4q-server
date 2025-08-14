@@ -1,0 +1,17 @@
+# Development overrides
+# Этот файл автоматически применяется в development окружении
+# Используется для переопределения настроек в dev окружении
+version: '3.8'
+
+name: s4q-dev
+
+services:
+  postgres:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dev_password
+      - POSTGRES_DB=s4q_db_dev
+    ports:
+      - '5433:5432'
+    volumes:
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro

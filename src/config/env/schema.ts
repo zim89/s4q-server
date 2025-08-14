@@ -94,6 +94,14 @@ export const envSchema = z.object({
   [EnvKeys.DB_LOGGING_ENABLED]: z.coerce.boolean().default(true),
   [EnvKeys.DB_SLOW_QUERY_THRESHOLD]: z.coerce.number().default(1000),
   [EnvKeys.DB_SEED_ENABLED]: z.coerce.boolean().default(false),
+  // Database Monitoring Configuration
+  [EnvKeys.DB_METRICS_ENABLED]: z.coerce.boolean().default(false),
+  [EnvKeys.DB_METRICS_INTERVAL]: z.coerce.number().default(60),
+  [EnvKeys.DB_ALERT_SLOW_QUERY]: z.coerce.number().default(5000),
+  [EnvKeys.DB_ALERT_CONNECTION_ERRORS]: z.coerce.number().default(10),
+  [EnvKeys.DB_LOG_QUERIES]: z.coerce.boolean().default(false),
+  [EnvKeys.DB_LOG_PARAMETERS]: z.coerce.boolean().default(false),
+  [EnvKeys.DB_LOG_QUERY_TIME]: z.coerce.boolean().default(true),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;

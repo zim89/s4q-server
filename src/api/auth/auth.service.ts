@@ -13,7 +13,7 @@ import { EnvKeys, EnvSchema } from 'src/config';
 import { PrismaService } from 'src/infrastructure/database/prisma';
 import { cookieNames, errorMessages } from 'src/shared/constants';
 import type { LoginDto, RegisterDto } from './dto';
-import type { RefreshTokenService } from './refresh-token.service';
+import { RefreshTokenService } from './refresh-token.service';
 import type { AuthenticatedUser, JwtPayload } from './types/auth.types';
 
 /**

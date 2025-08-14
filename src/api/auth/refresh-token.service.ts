@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import type { ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { argon2id, hash, verify } from 'argon2';
 import type { Response } from 'express';
 import { EnvKeys, EnvSchema } from 'src/config';

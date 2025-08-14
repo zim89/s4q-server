@@ -60,7 +60,7 @@ import { setupSwaggerDocs } from 'src/config';
 
 // В main.ts
 setupSwaggerDocs(app);
-// Доступно по адресу: http://localhost:3000/api-docs
+// Доступно по адресу: http://localhost:3001/api-docs
 ```
 
 ### database.config.ts
