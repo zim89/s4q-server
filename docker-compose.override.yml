@@ -1,7 +1,6 @@
 # Development overrides
 # Этот файл автоматически применяется в development окружении
 # Используется для переопределения настроек в dev окружении
-version: '3.8'
 
 name: s4q-dev
 

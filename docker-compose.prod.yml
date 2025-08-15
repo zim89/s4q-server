@@ -1,6 +1,5 @@
 # Production configuration
 # Используйте: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-version: '3.8'
 
 name: s4q-prod
 
