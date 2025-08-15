@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Role } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 import { argon2id, hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
 import { EnvKeys, EnvSchema } from 'src/config';
@@ -89,7 +89,7 @@ export class AuthService {
         lastName: true,
         avatarUrl: true,
         isActive: true,
-        lastLogin: true,
+        lastLoginAt: true,
         createdAt: true,
       },
     });
@@ -119,7 +119,7 @@ export class AuthService {
         lastName: true,
         avatarUrl: true,
         isActive: true,
-        lastLogin: true,
+        lastLoginAt: true,
         createdAt: true,
       },
     });
@@ -142,7 +142,7 @@ export class AuthService {
     // Обновляем время последнего входа
     await this.prismaService.user.update({
       where: { id: user.id },
-      data: { lastLogin: new Date() },
+      data: { lastLoginAt: new Date() },
     });
 
     return this.auth(res, user);
@@ -187,7 +187,7 @@ export class AuthService {
         lastName: true,
         avatarUrl: true,
         isActive: true,
-        lastLogin: true,
+        lastLoginAt: true,
         createdAt: true,
       },
     });
@@ -251,13 +251,13 @@ export class AuthService {
         avatarUrl: user.avatarUrl || null,
         rights: user.rights,
         isActive: user.isActive,
-        lastLogin: user.lastLogin,
+        lastLoginAt: user.lastLoginAt,
         createdAt: user.createdAt,
       },
     };
   }
 
-  private generateTokens(id: string, rights: Role[]) {
+  private generateTokens(id: string, rights: UserRole[]) {
     const payload: JwtPayload = { id, rights };
 
     const accessToken = this.jwtService.sign(payload, {

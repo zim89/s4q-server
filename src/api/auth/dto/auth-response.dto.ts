@@ -41,7 +41,7 @@ export class AuthResponseDto {
       avatarUrl: null,
       rights: ['USER'],
       isActive: true,
-      lastLogin: '2024-01-15T10:30:00.000Z',
+      lastLoginAt: '2024-01-15T10:30:00.000Z',
       createdAt: '2024-01-01T00:00:00.000Z',
     },
   })

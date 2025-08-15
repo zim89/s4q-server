@@ -1,5 +1,5 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
-import { Role } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 import { JwtGuard, RolesGuard } from '../guards';
 import { RequireRoles } from './roles.decorator';
 
@@ -32,7 +32,7 @@ import { RequireRoles } from './roles.decorator';
  *   return 'Moderator or Admin';
  * }
  */
-export function Auth(roles: Role | Role[] = [Role.USER]) {
+export function Auth(roles: UserRole | UserRole[] = [UserRole.USER]) {
   const roleArray = Array.isArray(roles) ? roles : [roles];
 
   return applyDecorators(

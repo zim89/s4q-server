@@ -1,4 +1,4 @@
-import type { Role } from '@prisma/client';
+import type { UserRole } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 
 /**
@@ -8,7 +8,7 @@ export interface JwtPayload {
   /** User unique identifier */
   id: string;
   /** User roles and permissions */
-  rights: Role[];
+  rights: UserRole[];
 }
 
 /**
@@ -24,7 +24,7 @@ export type AuthenticatedUser = Prisma.UserGetPayload<{
     lastName: true;
     avatarUrl: true;
     isActive: true;
-    lastLogin: true;
+    lastLoginAt: true;
     createdAt: true;
   };
 }>;
