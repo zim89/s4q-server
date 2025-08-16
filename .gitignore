@@ -98,6 +98,7 @@ data/
 
 # Development files
 notes.md
+.coding-standards.md
 
 # Templates (uncomment to ignore)
 # templates/

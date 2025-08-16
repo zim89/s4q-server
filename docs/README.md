@@ -34,6 +34,7 @@
 - [**Docker**](docker/README.md) - работа с контейнерами
 - [**База данных**](database/README.md) - Prisma и PostgreSQL
 - [**Разработка**](development/README.md) - команды и инструменты
+- [**Версионирование**](versioning/README.md) - система версионирования
 - [**Пакеты и зависимости**](development/packages.md) - информация о всех пакетах
 
 ## 🗂️ Структура документации
@@ -48,15 +49,29 @@ docs/
 │   └── guide.md                # Подробный гайд
 ├── database/                    # Документация по БД
 │   └── README.md               # Основная документация
+├── versioning/                  # Версионирование
+│   ├── README.md               # Основная документация
+│   ├── versioning-guide.md     # Руководство по версионированию
+│   ├── versioning-examples.md  # Примеры версионирования
+│   ├── simple-versioning.md    # Простое версионирование API
+│   └── auto-versioning.md      # Автоматическое получение версии
 └── development/                 # Разработка
     ├── README.md               # Основная документация
     ├── packages.md             # Пакеты и зависимости
     ├── api-docs.md             # API документация
-    ├── architecture-guide.md   # Архитектурный гайд
-    ├── coding-standards.md     # Стандарты кодирования
-    ├── husky-setup.md          # Настройка Git hooks
-    ├── password-setup.md       # Настройка паролей
-    └── ports.md                # Порты и конфигурация
+    ├── architecture/           # Архитектура
+    │   ├── README.md           # Основная документация
+    │   ├── architecture-guide.md # Архитектурный гайд
+    │   ├── api-versioning.md   # Версионирование API
+    │   └── auto-versioning-example.md # Примеры
+    ├── standards/              # Стандарты
+    │   ├── README.md           # Основная документация
+    │   ├── coding-standards.md # Стандарты кодирования
+    │   └── husky-setup.md      # Настройка Git hooks
+    └── setup/                  # Настройка
+        ├── README.md           # Основная документация
+        ├── password-setup.md   # Настройка паролей
+        └── ports.md            # Порты и конфигурация
 ```
 
 ## 🔗 Полезные ссылки

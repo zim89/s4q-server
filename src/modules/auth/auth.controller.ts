@@ -7,10 +7,10 @@ import {
   Req,
   Res,
   UnauthorizedException,
-  Version,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
+import { apiVersions } from 'src/shared/constants';
 import { BodyRequiredPipe } from 'src/shared/pipes';
 import { AuthService } from './auth.service';
 import { AuthSwaggerDocs } from './decorators';
@@ -28,7 +28,7 @@ import { LoginDto, RegisterDto } from './dto';
  *
  * @example
  * // Register new user (automatically logs in)
- * POST /v1/auth/register
+ * POST /v0/auth/register
  * {
  *   "firstName": "John",
  *   "lastName": "Doe",
@@ -38,14 +38,14 @@ import { LoginDto, RegisterDto } from './dto';
  *
  * @example
  * // Login user
- * POST /v2/auth/login
+ * POST /v0/auth/login
  * {
  *   "email": "john@example.com",
  *   "password": "password123"
  * }
  */
 @ApiTags('Auth')
-@Controller({ path: 'auth', version: '1' })
+@Controller({ path: 'auth', version: apiVersions.v0 })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -59,7 +59,6 @@ export class AuthController {
     return await this.authService.register(res, dto);
   }
 
-  @Version('2')
   @AuthSwaggerDocs.login()
   @Post('login')
   @HttpCode(HttpStatus.OK)

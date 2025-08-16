@@ -11,6 +11,7 @@ import { SetModule } from './modules/set/set.module';
 import { UserModule } from './modules/user/user.module';
 import { AppThrottlerGuard } from './shared/guards';
 import { LoggingInterceptor } from './shared/interceptors';
+import { VersionService } from './shared/services';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { LoggingInterceptor } from './shared/interceptors';
   ],
   controllers: [AppController],
   providers: [
+    VersionService,
     // 🛡️ Глобальный Rate Limiting Guard
     {
       provide: APP_GUARD,

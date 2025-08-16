@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { VersionService } from 'src/shared/services';
 
 /**
  * Основной контроллер приложения
@@ -12,6 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('App')
 @Controller()
 export class AppController {
+  constructor(private readonly versionService: VersionService) {}
   /**
    * Расширенная проверка состояния приложения
    *
@@ -24,17 +26,7 @@ export class AppController {
    */
   @Get('health')
   healthCheck() {
-    return {
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV ?? 'development',
-      version: process.env.npm_package_version ?? '1.0.0',
-      memory: {
-        used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
-        total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
-      },
-    };
+    return this.versionService.getHealthInfo();
   }
 
   /**
@@ -48,20 +40,7 @@ export class AppController {
    */
   @Get('info')
   getAppInfo() {
-    return {
-      name: 'Space4Quiz API',
-      version: process.env.npm_package_version ?? '1.0.0',
-      environment: process.env.NODE_ENV ?? 'development',
-      description: 'API для изучения языков с карточками',
-      database: 'connected', // TODO: добавить проверку подключения к БД
-      features: [
-        'Authentication',
-        'User Management',
-        'Flashcards',
-        'Study Sessions',
-        'Progress Tracking',
-      ],
-    };
+    return this.versionService.getAppInfo();
   }
 
   /**
@@ -71,9 +50,6 @@ export class AppController {
    */
   @Get('version')
   version() {
-    return {
-      version: process.env.npm_package_version ?? '1.0.0',
-      build: process.env.BUILD_ID ?? 'local',
-    };
+    return this.versionService.getVersionInfo();
   }
 }
