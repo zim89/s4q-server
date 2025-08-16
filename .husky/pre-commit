@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Проверка и исправление кода (lint-staged)..."
+bunx lint-staged
+
+echo "🔧 Проверка типов TypeScript..."
+bun run build
+
+echo "✅ Pre-commit проверки пройдены!"
