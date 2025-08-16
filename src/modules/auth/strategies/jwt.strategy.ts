@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 import { AuthService } from '../auth.service';
 import type { AuthenticatedUser, JwtPayload } from '../types/auth.types';
 
@@ -29,7 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.getOrThrow<string>(EnvKeys.JWT_SECRET),
+      secretOrKey: configService.getOrThrow<string>(envKeys.JWT_SECRET),
       algorithms: ['HS256'],
     });
   }

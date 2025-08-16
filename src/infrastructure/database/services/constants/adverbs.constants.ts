@@ -11,7 +11,7 @@ export interface AdverbData {
   languageCode: string;
 }
 
-export const ADVERBS_DATA: AdverbData[] = [
+export const adverbsData: AdverbData[] = [
   // A1 Level - Basic Adverbs
   {
     wordOrPhrase: 'very',

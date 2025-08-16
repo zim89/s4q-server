@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys } from './env/keys';
+import { envKeys } from './env/keys';
 import type { EnvSchema } from './env/schema';
 
 /**
@@ -127,14 +127,14 @@ interface DatabaseMonitoringConfig {
 export function getDatabaseConfig(
   configService: ConfigService<EnvSchema>
 ): DatabaseConfig {
-  const nodeEnv = configService.get(EnvKeys.NODE_ENV) as string;
+  const nodeEnv = configService.get(envKeys.NODE_ENV) as string;
   const isProduction = nodeEnv === 'production';
 
   return {
     // Настройки подключения к базе данных
     connection: {
       // URL подключения к PostgreSQL
-      url: (configService.get(EnvKeys.POSTGRES_URI) as string) || '',
+      url: (configService.get(envKeys.POSTGRES_URI) as string) || '',
       // SSL настройки (требуются в production)
       ssl: isProduction ? { rejectUnauthorized: false } : false,
     },
@@ -142,25 +142,25 @@ export function getDatabaseConfig(
     // Настройки пула соединений
     pool: {
       // Минимальное количество соединений в пуле
-      min: (configService.get(EnvKeys.DB_POOL_MIN) as number) || 2,
+      min: (configService.get(envKeys.DB_POOL_MIN) as number) || 2,
       // Максимальное количество соединений в пуле
-      max: (configService.get(EnvKeys.DB_POOL_MAX) as number) || 10,
+      max: (configService.get(envKeys.DB_POOL_MAX) as number) || 10,
       // Время неактивности соединения перед закрытием (мс)
       idleTimeoutMillis:
-        (configService.get(EnvKeys.DB_IDLE_TIMEOUT) as number) || 30000,
+        (configService.get(envKeys.DB_IDLE_TIMEOUT) as number) || 30000,
       // Таймаут установки соединения (мс)
       connectionTimeoutMillis:
-        (configService.get(EnvKeys.DB_CONNECTION_TIMEOUT) as number) || 2000,
+        (configService.get(envKeys.DB_CONNECTION_TIMEOUT) as number) || 2000,
     },
 
     // Настройки логирования запросов
     logging: {
       // Включить/выключить логирование
       enabled:
-        (configService.get(EnvKeys.DB_LOGGING_ENABLED) as boolean) ?? true,
+        (configService.get(envKeys.DB_LOGGING_ENABLED) as boolean) ?? true,
       // Порог для медленных запросов (мс)
       slowQueryThreshold:
-        (configService.get(EnvKeys.DB_SLOW_QUERY_THRESHOLD) as number) || 1000,
+        (configService.get(envKeys.DB_SLOW_QUERY_THRESHOLD) as number) || 1000,
     },
 
     // Настройки миграций
@@ -174,7 +174,7 @@ export function getDatabaseConfig(
     // Настройки заполнения начальными данными
     seed: {
       // Включить/выключить автоматическое заполнение
-      enabled: (configService.get(EnvKeys.DB_SEED_ENABLED) as boolean) ?? false,
+      enabled: (configService.get(envKeys.DB_SEED_ENABLED) as boolean) ?? false,
       // Путь к файлу с начальными данными
       file: './src/infrastructure/database/services/seed.service.ts',
     },
@@ -204,7 +204,7 @@ export function getDatabaseConfig(
 export function getPrismaConfig(
   configService: ConfigService<EnvSchema>
 ): PrismaConfig {
-  const isProduction = configService.get(EnvKeys.NODE_ENV) === 'production';
+  const isProduction = configService.get(envKeys.NODE_ENV) === 'production';
 
   return {
     // Настройки Prisma Client
@@ -218,11 +218,11 @@ export function getPrismaConfig(
     },
 
     // URL основной базы данных
-    databaseUrl: (configService.get(EnvKeys.POSTGRES_URI) as string) || '',
+    databaseUrl: (configService.get(envKeys.POSTGRES_URI) as string) || '',
 
     // URL shadow базы данных для миграций (опционально)
     shadowDatabaseUrl:
-      (configService.get(EnvKeys.POSTGRES_SHADOW_URI) as string) || '',
+      (configService.get(envKeys.POSTGRES_SHADOW_URI) as string) || '',
   };
 }
 
@@ -250,33 +250,33 @@ export function getDatabaseMonitoringConfig(
     metrics: {
       // Включить сбор метрик
       enabled:
-        (configService.get(EnvKeys.DB_METRICS_ENABLED) as boolean) ?? false,
+        (configService.get(envKeys.DB_METRICS_ENABLED) as boolean) ?? false,
       // Интервал сбора метрик (секунды)
       interval:
-        (configService.get(EnvKeys.DB_METRICS_INTERVAL) as number) || 60,
+        (configService.get(envKeys.DB_METRICS_INTERVAL) as number) || 60,
     },
 
     // Настройки алертов
     alerts: {
       // Порог для алерта на медленные запросы (мс)
       slowQueryThreshold:
-        (configService.get(EnvKeys.DB_ALERT_SLOW_QUERY) as number) || 5000,
+        (configService.get(envKeys.DB_ALERT_SLOW_QUERY) as number) || 5000,
       // Порог для алерта на ошибки подключения
       connectionErrorThreshold:
-        (configService.get(EnvKeys.DB_ALERT_CONNECTION_ERRORS) as number) || 10,
+        (configService.get(envKeys.DB_ALERT_CONNECTION_ERRORS) as number) || 10,
     },
 
     // Настройки логирования
     logging: {
       // Логировать все SQL запросы
       logQueries:
-        (configService.get(EnvKeys.DB_LOG_QUERIES) as boolean) ?? false,
+        (configService.get(envKeys.DB_LOG_QUERIES) as boolean) ?? false,
       // Логировать параметры запросов
       logParameters:
-        (configService.get(EnvKeys.DB_LOG_PARAMETERS) as boolean) ?? false,
+        (configService.get(envKeys.DB_LOG_PARAMETERS) as boolean) ?? false,
       // Логировать время выполнения запросов
       logQueryTime:
-        (configService.get(EnvKeys.DB_LOG_QUERY_TIME) as boolean) ?? true,
+        (configService.get(envKeys.DB_LOG_QUERY_TIME) as boolean) ?? true,
     },
   };
 }

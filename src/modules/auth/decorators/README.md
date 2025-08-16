@@ -10,7 +10,7 @@
 
 ```typescript
 import { Auth, CurrentUser } from '../decorators';
-import { Role } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 
 @Controller('profile')
 export class ProfileController {
@@ -23,14 +23,14 @@ export class ProfileController {
 
   // Защита конкретной ролью
   @Get('admin')
-  @Auth(Role.ADMIN)
+  @Auth(UserRole.ADMIN)
   getAdminData() {
     return 'Admin only data';
   }
 
   // Защита несколькими ролями
   @Get('moderator')
-  @Auth([Role.MODERATOR, Role.ADMIN])
+  @Auth([UserRole.MODERATOR, UserRole.ADMIN])
   getModeratorData() {
     return 'Moderator or Admin data';
   }
@@ -78,7 +78,7 @@ import { Roles } from '../decorators';
 
 // Прямое использование (не рекомендуется, используйте @Auth)
 @Get('admin')
-@Roles(Role.ADMIN)
+@Roles(UserRole.ADMIN)
 @UseGuards(JwtGuard, RolesGuard)
 getAdminData() {
   return 'Admin only';

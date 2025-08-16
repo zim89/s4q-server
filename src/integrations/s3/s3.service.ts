@@ -81,7 +81,7 @@ export class S3Service {
   async generatePresignedUrl(
     key: string,
     operation: 'getObject' | 'putObject',
-    expiresIn: number = 3600
+    expiresIn = 3600
   ): Promise<string> {
     // TODO: Implement presigned URL generation
     console.log(`Generating presigned URL for ${operation}: ${key}`);

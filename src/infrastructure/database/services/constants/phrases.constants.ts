@@ -11,7 +11,7 @@ export interface PhraseData {
   languageCode: string;
 }
 
-export const PHRASES_DATA: PhraseData[] = [
+export const phrasesData: PhraseData[] = [
   // A1 Level - Basic Phrases
   {
     wordOrPhrase: 'hello',

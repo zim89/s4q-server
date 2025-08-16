@@ -1,5 +1,8 @@
 import { LanguageLevel, VerbType } from '@prisma/client';
 
+/**
+ * Тип для данных модальных глаголов
+ */
 export interface ModalVerbData {
   infinitive: string;
   pastSimple: string;
@@ -13,7 +16,10 @@ export interface ModalVerbData {
   languageCode: string;
 }
 
-export const MODAL_VERBS_DATA: ModalVerbData[] = [
+/**
+ * Данные модальных глаголов английского языка
+ */
+export const modalVerbsData: ModalVerbData[] = [
   // A1 Level - Basic Modal Verbs
   {
     infinitive: 'can',

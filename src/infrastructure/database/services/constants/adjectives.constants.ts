@@ -11,7 +11,7 @@ export interface AdjectiveData {
   languageCode: string;
 }
 
-export const ADJECTIVES_DATA: AdjectiveData[] = [
+export const adjectivesData: AdjectiveData[] = [
   // A1 Level - Basic Adjectives
   {
     wordOrPhrase: 'big',

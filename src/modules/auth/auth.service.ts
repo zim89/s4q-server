@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRole } from '@prisma/client';
 import { argon2id, hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 import { PrismaService } from 'src/infrastructure/database/prisma';
 import { cookieNames, errorMessages } from 'src/shared/constants';
 import type { LoginDto, RegisterDto } from './dto';
@@ -20,14 +20,14 @@ import type { AuthenticatedUser, JwtPayload } from './types/auth.types';
  * Authentication service for user registration, login, and token management
  *
  * Handles:
- * - User registration with password hashing
+ * - User registration with password hashing and automatic login
  * - User login with password verification
  * - JWT token generation and validation
  * - Refresh token management
- * - User session management
+ * - User session management (single session per user)
  *
  * @example
- * // Register new user
+ * // Register new user (automatically logs in)
  * const result = await authService.register(res, registerDto);
  *
  * @example
@@ -50,15 +50,15 @@ export class AuthService {
     readonly configService: ConfigService<EnvSchema>
   ) {
     this.JWT_ACCESS_TOKEN_TTL = configService.getOrThrow<string>(
-      EnvKeys.JWT_ACCESS_TOKEN_TTL
+      envKeys.JWT_ACCESS_TOKEN_TTL
     );
     this.JWT_REFRESH_TOKEN_TTL = configService.getOrThrow<string>(
-      EnvKeys.JWT_REFRESH_TOKEN_TTL
+      envKeys.JWT_REFRESH_TOKEN_TTL
     );
   }
 
   /**
-   * Registers a new user account
+   * Registers a new user account and automatically logs them in
    * @param res - Express response object for setting cookies
    * @param dto - User registration data
    * @returns Authentication response with tokens and user data
@@ -80,6 +80,8 @@ export class AuthService {
         firstName: dto.firstName,
         lastName: dto.lastName,
         passwordHash: await hash(dto.password, { type: argon2id }),
+        emailVerified: true, // Автоматически подтверждаем email
+        lastLoginAt: new Date(), // Устанавливаем время последнего входа
       },
       select: {
         id: true,
@@ -199,6 +201,12 @@ export class AuthService {
     return this.auth(res, user);
   }
 
+  /**
+   * Logs out user by invalidating their session
+   * @param res - Express response object for clearing cookies
+   * @param userId - User ID to logout
+   * @returns Success message
+   */
   async logout(res: Response, userId: string) {
     // Получаем refresh token из cookies
     const token = (res.req.cookies as Record<string, string>)[
@@ -211,6 +219,18 @@ export class AuthService {
 
     this.refreshTokenService.removeFromResponse(res);
     return { message: 'Successfully logged out' };
+  }
+
+  /**
+   * Logs out user from all devices by invalidating all sessions
+   * @param res - Express response object for clearing cookies
+   * @param userId - User ID to logout from all devices
+   * @returns Success message
+   */
+  async logoutAllDevices(res: Response, userId: string) {
+    await this.refreshTokenService.invalidateAllSessions(userId);
+    this.refreshTokenService.removeFromResponse(res);
+    return { message: 'Successfully logged out from all devices' };
   }
 
   async validate(id: string) {
@@ -248,7 +268,7 @@ export class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        avatarUrl: user.avatarUrl || null,
+        avatarUrl: user.avatarUrl ?? null,
         rights: user.rights,
         isActive: user.isActive,
         lastLoginAt: user.lastLoginAt,

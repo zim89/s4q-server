@@ -1,15 +1,15 @@
 /**
- * Cookie names used throughout the application
- * All cookies are prefixed with 's4q_' to avoid conflicts
+ * Имена cookies, используемые во всем приложении
+ * Все cookies имеют префикс 's4q_' для избежания конфликтов
  */
 export const cookieNames = {
-  /** Refresh token cookie for authentication */
+  /** Cookie для refresh токена аутентификации */
   refreshToken: 's4q_refresh_token',
-  /** Access token cookie (if needed in future) */
+  /** Cookie для access токена (если понадобится в будущем) */
   accessToken: 's4q_access_token',
 } as const;
 
 /**
- * Type for cookie names
+ * Тип для имен cookies
  */
 export type CookieName = (typeof cookieNames)[keyof typeof cookieNames];

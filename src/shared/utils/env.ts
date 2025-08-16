@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys } from 'src/config/env/keys';
+import { envKeys } from 'src/config/env/keys';
 import type { EnvSchema } from 'src/config/env/schema';
 
 /**
@@ -14,7 +14,7 @@ import type { EnvSchema } from 'src/config/env/schema';
 export const getCookieSameSite = (
   cfg: ConfigService<EnvSchema>
 ): 'lax' | 'none' => {
-  const env: string = cfg.getOrThrow(EnvKeys.NODE_ENV);
+  const env: string = cfg.getOrThrow(envKeys.NODE_ENV);
   return env === 'production' ? 'lax' : 'none';
 };
 
@@ -30,7 +30,7 @@ export const getCookieSameSite = (
  * }
  */
 export const isDevelopment = (cfg: ConfigService<EnvSchema>): boolean =>
-  cfg.getOrThrow<string>(EnvKeys.NODE_ENV) === 'development';
+  cfg.getOrThrow<string>(envKeys.NODE_ENV) === 'development';
 
 /**
  * Checks if the current environment is production
@@ -44,7 +44,7 @@ export const isDevelopment = (cfg: ConfigService<EnvSchema>): boolean =>
  * }
  */
 export const isProduction = (cfg: ConfigService<EnvSchema>): boolean =>
-  cfg.getOrThrow<string>(EnvKeys.NODE_ENV) === 'production';
+  cfg.getOrThrow<string>(envKeys.NODE_ENV) === 'production';
 
 /**
  * Checks if the current environment is test
@@ -58,7 +58,7 @@ export const isProduction = (cfg: ConfigService<EnvSchema>): boolean =>
  * }
  */
 export const isTest = (cfg: ConfigService<EnvSchema>): boolean =>
-  cfg.getOrThrow<string>(EnvKeys.NODE_ENV) === 'test';
+  cfg.getOrThrow<string>(envKeys.NODE_ENV) === 'test';
 
 /**
  * Gets the current environment name
@@ -71,4 +71,4 @@ export const isTest = (cfg: ConfigService<EnvSchema>): boolean =>
  * console.log(`Current environment: ${env}`);
  */
 export const getEnvironment = (cfg: ConfigService<EnvSchema>): string =>
-  cfg.getOrThrow<string>(EnvKeys.NODE_ENV);
+  cfg.getOrThrow<string>(envKeys.NODE_ENV);

@@ -122,13 +122,13 @@ export class SomeService {
 import { Auth } from 'src/api/auth/decorators';
 
 @Get('admin')
-@Auth(Role.ADMIN) // Только для администраторов
+@Auth(UserRole.ADMIN) // Только для администраторов
 getAdminData() {
   return 'Admin only data';
 }
 
 @Get('moderator')
-@Auth([Role.MODERATOR, Role.ADMIN]) // Для модераторов и администраторов
+@Auth([UserRole.MODERATOR, UserRole.ADMIN]) // Для модераторов и администраторов
 getModeratorData() {
   return 'Moderator data';
 }
@@ -255,7 +255,7 @@ getProfile() {
 }
 
 @Get('admin')
-@Auth(Role.ADMIN) // Только для администраторов
+@Auth(UserRole.ADMIN) // Только для администраторов
 getAdminData() {
   return 'Admin only';
 }

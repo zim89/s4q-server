@@ -11,7 +11,7 @@ export interface NounData {
   languageCode: string;
 }
 
-export const NOUNS_DATA: NounData[] = [
+export const nounsData: NounData[] = [
   // A1 Level - Basic Nouns
   {
     wordOrPhrase: 'house',

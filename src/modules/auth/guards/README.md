@@ -48,7 +48,7 @@ import { RequireRoles } from '../decorators';
 @Controller('admin')
 export class AdminController {
   @Get()
-  @RequireRoles(Role.ADMIN)
+  @RequireRoles(UserRole.ADMIN)
   @UseGuards(JwtGuard, RolesGuard)
   getAdminData() {
     return 'Admin only data';
@@ -75,22 +75,22 @@ export class AdminController {
 **Они дополняют друг друга:**
 
 ```typescript
-@RequireRoles(Role.ADMIN)  // ← Устанавливает метаданные
+@RequireRoles(UserRole.ADMIN)  // ← Устанавливает метаданные
 @UseGuards(RolesGuard)     // ← Читает метаданные и проверяет
 ```
 
 ### Порядок выполнения
 
 ```typescript
-@Auth(Role.ADMIN) // Это комбинация:
+@Auth(UserRole.ADMIN) // Это комбинация:
 
-// 1. @RequireRoles(Role.ADMIN) - устанавливает метаданные
+// 1. @RequireRoles(UserRole.ADMIN) - устанавливает метаданные
 // 2. @UseGuards(JwtGuard, RolesGuard) - применяет guards
 
 // Порядок выполнения:
 // 1. JwtGuard проверяет токен → req.user = { id, rights: [...] }
-// 2. RolesGuard читает метаданные 'roles' → [Role.ADMIN]
-// 3. RolesGuard проверяет req.user.rights.includes(Role.ADMIN)
+// 2. RolesGuard читает метаданные 'roles' → [UserRole.ADMIN]
+// 3. RolesGuard проверяет req.user.rights.includes(UserRole.ADMIN)
 ```
 
 ## Рекомендации
@@ -99,11 +99,11 @@ export class AdminController {
 
 ```typescript
 // Используйте @Auth для простых случаев
-@Auth(Role.ADMIN)
+@Auth(UserRole.ADMIN)
 getAdminData() { }
 
 // Используйте комбинацию для сложных случаев
-@RequireRoles([Role.ADMIN, Role.MODERATOR])
+@RequireRoles([UserRole.ADMIN, UserRole.MODERATOR])
 @UseGuards(JwtGuard, RolesGuard)
 getModeratorData() { }
 ```
@@ -115,7 +115,7 @@ getModeratorData() { }
 @UseGuards(RolesGuard) // ← Не будет работать
 
 // Не используйте RequireRoles без guards
-@RequireRoles(Role.ADMIN) // ← Не будет проверяться
+@RequireRoles(UserRole.ADMIN) // ← Не будет проверяться
 ```
 
 ## Импорт

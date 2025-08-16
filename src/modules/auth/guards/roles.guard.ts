@@ -17,7 +17,7 @@ import type { AuthenticatedUser } from '../types/auth.types';
  *
  * @example
  * // Protect endpoint with role-based authorization
- * @RequireRoles(Role.ADMIN)
+ * @RequireRoles(UserRole.ADMIN)
  * @UseGuards(JwtGuard, RolesGuard)
  * @Get('admin')
  * getAdminData() {

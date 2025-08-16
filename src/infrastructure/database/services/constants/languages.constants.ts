@@ -1,3 +1,6 @@
+/**
+ * Тип для данных языка
+ */
 export interface LanguageData {
   code: string;
   name: string;
@@ -7,7 +10,10 @@ export interface LanguageData {
   isDefault: boolean;
 }
 
-export const LANGUAGES_DATA: LanguageData[] = [
+/**
+ * Данные языков, поддерживаемых приложением
+ */
+export const languagesData: LanguageData[] = [
   {
     code: 'en',
     name: 'English',

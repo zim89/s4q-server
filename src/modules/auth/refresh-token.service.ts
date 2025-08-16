@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { argon2id, hash, verify } from 'argon2';
 import type { Response } from 'express';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 import { PrismaService } from 'src/infrastructure/database/prisma';
 import { cookieNames } from 'src/shared/constants';
 import { getCookieSameSite, isProduction } from 'src/shared/utils';
@@ -15,6 +15,7 @@ import { getCookieSameSite, isProduction } from 'src/shared/utils';
  * - Validating refresh tokens against database
  * - Invalidating refresh tokens on logout
  * - Managing user sessions with IP and User-Agent tracking
+ * - Single session per user (removes old sessions when creating new ones)
  *
  * @example
  * // Add refresh token to response
@@ -36,12 +37,13 @@ export class RefreshTokenService {
     private readonly configService: ConfigService<EnvSchema>
   ) {
     this.COOKIE_DOMAIN = configService.getOrThrow<string>(
-      EnvKeys.COOKIE_DOMAIN
+      envKeys.COOKIE_DOMAIN
     );
   }
 
   /**
    * Adds refresh token to HTTP-only cookie and saves session to database
+   * Removes any existing active sessions for the user (single session policy)
    * @param res - Express response object
    * @param refreshToken - Plain refresh token to store
    * @param expires - Expiration date for the token
@@ -62,14 +64,23 @@ export class RefreshTokenService {
       // Hash the refresh token for secure storage
       const refreshTokenHash = await hash(refreshToken, { type: argon2id });
 
-      // Save session to database
+      // Remove any existing active sessions for this user (single session policy)
+      await this.prismaService.session.updateMany({
+        where: {
+          userId,
+          isActive: true,
+        },
+        data: { isActive: false },
+      });
+
+      // Save new session to database
       await this.prismaService.session.create({
         data: {
           userId,
           refreshToken: refreshTokenHash,
           expiresAt: expires,
-          ipAddress: res.req.ip || 'unknown',
-          userAgent: res.req.get('User-Agent') || 'unknown',
+          clientIp: res.req.ip ?? 'unknown',
+          userAgent: res.req.get('User-Agent') ?? 'unknown',
         },
       });
 
@@ -131,6 +142,25 @@ export class RefreshTokenService {
       });
     } catch (error) {
       console.error('Failed to invalidate refresh token:', error);
+      // Don't throw error to avoid breaking logout flow
+    }
+  }
+
+  /**
+   * Invalidates all active sessions for a user
+   * @param userId - User ID to invalidate all sessions for
+   */
+  async invalidateAllSessions(userId: string): Promise<void> {
+    try {
+      await this.prismaService.session.updateMany({
+        where: {
+          userId,
+          isActive: true,
+        },
+        data: { isActive: false },
+      });
+    } catch (error) {
+      console.error('Failed to invalidate all sessions:', error);
       // Don't throw error to avoid breaking logout flow
     }
   }

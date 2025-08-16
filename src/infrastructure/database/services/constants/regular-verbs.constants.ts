@@ -11,7 +11,7 @@ export interface RegularVerbData {
   languageCode: string;
 }
 
-export const REGULAR_VERBS_DATA: RegularVerbData[] = [
+export const regularVerbsData: RegularVerbData[] = [
   // A1 Level - Basic Actions
   {
     wordOrPhrase: 'work',

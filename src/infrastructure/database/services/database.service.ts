@@ -133,7 +133,7 @@ export class DatabaseService {
   /**
    * Clean up old audit logs
    */
-  async cleanupOldAuditLogs(daysToKeep: number = 90): Promise<number> {
+  async cleanupOldAuditLogs(daysToKeep = 90): Promise<number> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysToKeep);
 
@@ -164,7 +164,7 @@ export class DatabaseService {
   /**
    * Get slow queries (if logging is enabled)
    */
-  async getSlowQueries(thresholdMs: number = 1000): Promise<any[]> {
+  async getSlowQueries(thresholdMs = 1000): Promise<unknown[]> {
     // This would require additional setup with query logging
     // For now, return empty array
     this.logger.warn('Slow query logging not implemented');

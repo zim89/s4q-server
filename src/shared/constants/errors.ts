@@ -1,47 +1,53 @@
 /**
- * Error messages used throughout the application
- * Organized by domain/module for better maintainability
+ * Сообщения об ошибках, используемые во всем приложении
+ * Организованы по доменам/модулям для лучшей поддерживаемости
  */
 export const errorMessages = {
-  /** User-related error messages */
+  /** Сообщения об ошибках, связанные с пользователями */
   user: {
-    /** User already exists with given email */
-    alreadyExists: (email: string) => `User with email ${email} already exists`,
-    /** User not found in database */
-    notFound: 'User not found',
-    /** Invalid credentials during login */
-    invalidCredentials: 'Invalid email or password',
-    /** User account is deactivated */
-    accountDeactivated: 'Account is deactivated',
-    /** User account is not verified */
-    accountNotVerified: 'Email address is not verified',
+    /** Пользователь уже существует с указанным email */
+    alreadyExists: (email: string) =>
+      `Пользователь с email ${email} уже существует`,
+    /** Пользователь не найден в базе данных */
+    notFound: 'Пользователь не найден',
+    /** Неверные учетные данные при входе */
+    invalidCredentials: 'Неверный email или пароль',
+    /** Аккаунт пользователя деактивирован */
+    accountDeactivated: 'Аккаунт деактивирован',
+    /** Email адрес пользователя не подтвержден */
+    accountNotVerified: 'Email адрес не подтвержден',
   },
 
-  /** Authentication-related error messages */
+  /** Сообщения об ошибках аутентификации */
   auth: {
-    /** Refresh token is missing from request */
-    refreshTokenMissing: 'Refresh token is missing or invalid',
-    /** Refresh token is invalid or expired */
-    refreshTokenInvalid: 'Refresh token is invalid or expired',
-    /** Access token is invalid or expired */
-    accessTokenInvalid: 'Access token is invalid or expired',
-    /** User is not authenticated */
-    notAuthenticated: 'User not authenticated',
-    /** User is not authorized for this action */
-    notAuthorized: 'You are not authorized to perform this action',
+    /** Refresh токен отсутствует в запросе */
+    refreshTokenMissing: 'Refresh токен отсутствует или недействителен',
+    /** Refresh токен недействителен или истек */
+    refreshTokenInvalid: 'Refresh токен недействителен или истек',
+    /** Access токен недействителен или истек */
+    accessTokenInvalid: 'Access токен недействителен или истек',
+    /** Пользователь не аутентифицирован */
+    notAuthenticated: 'Пользователь не аутентифицирован',
+    /** Пользователь не авторизован для этого действия */
+    notAuthorized: 'Вы не авторизованы для выполнения этого действия',
   },
 
-  /** Common error messages */
+  /** Общие сообщения об ошибках */
   common: {
-    /** Request body is missing or invalid */
-    badRequestBody: 'Request body is required',
-    /** Generic unauthorized error */
-    unauthorized: 'You are not authorized to perform this action',
-    /** Generic forbidden error */
-    forbidden: 'Access forbidden',
-    /** Generic not found error */
-    notFound: 'Resource not found',
-    /** Generic validation error */
-    validationError: 'Validation failed',
+    /** Тело запроса отсутствует или недействительно */
+    badRequestBody: 'Тело запроса обязательно',
+    /** Общая ошибка неавторизованного доступа */
+    unauthorized: 'Вы не авторизованы для выполнения этого действия',
+    /** Общая ошибка запрещенного доступа */
+    forbidden: 'Доступ запрещен',
+    /** Общая ошибка "не найдено" */
+    notFound: 'Ресурс не найден',
+    /** Общая ошибка валидации */
+    validationError: 'Ошибка валидации',
   },
 } as const;
+
+/**
+ * Тип для сообщений об ошибках
+ */
+export type ErrorMessage = (typeof errorMessages)[keyof typeof errorMessages];

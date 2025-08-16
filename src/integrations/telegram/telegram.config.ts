@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 
 /**
  * Telegram Bot configuration factory
@@ -21,32 +21,32 @@ import { EnvKeys, EnvSchema } from 'src/config';
 export function getTelegramConfig(configService: ConfigService<EnvSchema>) {
   return {
     // Bot Configuration
-    token: configService.get<string>(EnvKeys.TELEGRAM_BOT_TOKEN),
-    username: configService.get<string>(EnvKeys.TELEGRAM_BOT_USERNAME),
+    token: configService.get<string>(envKeys.TELEGRAM_BOT_TOKEN),
+    username: configService.get<string>(envKeys.TELEGRAM_BOT_USERNAME),
     // Webhook Configuration
-    webhookUrl: configService.get<string>(EnvKeys.TELEGRAM_WEBHOOK_URL),
-    webhookSecret: configService.get<string>(EnvKeys.TELEGRAM_WEBHOOK_SECRET),
+    webhookUrl: configService.get<string>(envKeys.TELEGRAM_WEBHOOK_URL),
+    webhookSecret: configService.get<string>(envKeys.TELEGRAM_WEBHOOK_SECRET),
     // Bot Settings
     enableWebhook: configService.get<boolean>(
-      EnvKeys.TELEGRAM_ENABLE_WEBHOOK,
+      envKeys.TELEGRAM_ENABLE_WEBHOOK,
       true
     ),
     enablePolling: configService.get<boolean>(
-      EnvKeys.TELEGRAM_ENABLE_POLLING,
+      envKeys.TELEGRAM_ENABLE_POLLING,
       false
     ),
     // Message Configuration
     defaultParseMode: configService.get<'HTML' | 'Markdown' | 'MarkdownV2'>(
-      EnvKeys.TELEGRAM_DEFAULT_PARSE_MODE,
+      envKeys.TELEGRAM_DEFAULT_PARSE_MODE,
       'HTML'
     ),
     // Feature flags
     enableNotifications: configService.get<boolean>(
-      EnvKeys.TELEGRAM_ENABLE_NOTIFICATIONS,
+      envKeys.TELEGRAM_ENABLE_NOTIFICATIONS,
       true
     ),
     enableCommands: configService.get<boolean>(
-      EnvKeys.TELEGRAM_ENABLE_COMMANDS,
+      envKeys.TELEGRAM_ENABLE_COMMANDS,
       true
     ),
   };

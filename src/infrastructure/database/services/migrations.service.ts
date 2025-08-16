@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { exec } from 'child_process';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 import { promisify } from 'util';
 
 const execAsync = promisify(exec);
@@ -74,7 +74,7 @@ export class MigrationsService {
    * Reset database (development only)
    */
   async resetDatabase(): Promise<string> {
-    const nodeEnv = this.configService.get(EnvKeys.NODE_ENV) as string;
+    const nodeEnv = this.configService.get(envKeys.NODE_ENV) as string;
     if (nodeEnv === 'production') {
       throw new Error('Cannot reset database in production');
     }
@@ -120,7 +120,7 @@ export class MigrationsService {
    * Push schema changes directly (development only)
    */
   async pushSchema(): Promise<string> {
-    const nodeEnv = this.configService.get(EnvKeys.NODE_ENV) as string;
+    const nodeEnv = this.configService.get(envKeys.NODE_ENV) as string;
     if (nodeEnv === 'production') {
       throw new Error('Cannot push schema in production');
     }

@@ -14,6 +14,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { BodyRequiredPipe } from 'src/shared/pipes';
 import { CreateSetDto } from './dto/create-set.dto';
 import { UpdateSetDto } from './dto/update-set.dto';
 import { SetService } from './set.service';
@@ -35,7 +36,7 @@ export class SetController {
     description: 'Set not found.',
   })
   @Post()
-  create(@Body() createSetDto: CreateSetDto) {
+  create(@Body(BodyRequiredPipe) createSetDto: CreateSetDto) {
     return this.setService.create(createSetDto);
   }
 
@@ -50,7 +51,10 @@ export class SetController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSetDto: UpdateSetDto) {
+  update(
+    @Param('id') id: string,
+    @Body(BodyRequiredPipe) updateSetDto: UpdateSetDto
+  ) {
     return this.setService.update(+id, updateSetDto);
   }
 

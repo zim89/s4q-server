@@ -1,14 +1,14 @@
 /**
- * Environment variable keys
+ * Ключи переменных окружения
  *
- * Centralized constants for environment variable names
- * Used throughout the application for type-safe access to env vars
+ * Централизованные константы для имен переменных окружения
+ * Используются во всем приложении для типобезопасного доступа к env переменным
  *
  * @example
- * // Use in config service
- * const jwtSecret = configService.getOrThrow<string>(EnvKeys.JWT_SECRET);
+ * // Использование в config service
+ * const jwtSecret = configService.getOrThrow<string>(envKeys.JWT_SECRET);
  */
-export const EnvKeys = {
+export const envKeys = {
   JWT_SECRET: 'JWT_SECRET',
   JWT_ACCESS_TOKEN_TTL: 'JWT_ACCESS_TOKEN_TTL',
   JWT_REFRESH_TOKEN_TTL: 'JWT_REFRESH_TOKEN_TTL',
@@ -17,7 +17,7 @@ export const EnvKeys = {
   NODE_ENV: 'NODE_ENV',
   PORT: 'PORT',
   GLOBAL_PREFIX: 'GLOBAL_PREFIX',
-  // Email Configuration
+  // Конфигурация Email
   SMTP_HOST: 'SMTP_HOST',
   SMTP_PORT: 'SMTP_PORT',
   SMTP_SECURE: 'SMTP_SECURE',
@@ -26,7 +26,7 @@ export const EnvKeys = {
   EMAIL_FROM: 'EMAIL_FROM',
   EMAIL_REPLY_TO: 'EMAIL_REPLY_TO',
   EMAIL_TEMPLATE_DIR: 'EMAIL_TEMPLATE_DIR',
-  // S3 Configuration
+  // Конфигурация S3
   AWS_REGION: 'AWS_REGION',
   AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID',
   AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY',
@@ -34,7 +34,7 @@ export const EnvKeys = {
   S3_ENDPOINT: 'S3_ENDPOINT',
   S3_MAX_FILE_SIZE: 'S3_MAX_FILE_SIZE',
   S3_ALLOWED_MIME_TYPES: 'S3_ALLOWED_MIME_TYPES',
-  // Stripe Configuration
+  // Конфигурация Stripe
   STRIPE_PUBLISHABLE_KEY: 'STRIPE_PUBLISHABLE_KEY',
   STRIPE_SECRET_KEY: 'STRIPE_SECRET_KEY',
   STRIPE_WEBHOOK_SECRET: 'STRIPE_WEBHOOK_SECRET',
@@ -43,7 +43,7 @@ export const EnvKeys = {
   STRIPE_DEFAULT_TRIAL_DAYS: 'STRIPE_DEFAULT_TRIAL_DAYS',
   STRIPE_ENABLE_SUBSCRIPTIONS: 'STRIPE_ENABLE_SUBSCRIPTIONS',
   STRIPE_ENABLE_ONE_TIME_PAYMENTS: 'STRIPE_ENABLE_ONE_TIME_PAYMENTS',
-  // Telegram Configuration
+  // Конфигурация Telegram
   TELEGRAM_BOT_TOKEN: 'TELEGRAM_BOT_TOKEN',
   TELEGRAM_BOT_USERNAME: 'TELEGRAM_BOT_USERNAME',
   TELEGRAM_WEBHOOK_URL: 'TELEGRAM_WEBHOOK_URL',
@@ -53,7 +53,7 @@ export const EnvKeys = {
   TELEGRAM_DEFAULT_PARSE_MODE: 'TELEGRAM_DEFAULT_PARSE_MODE',
   TELEGRAM_ENABLE_NOTIFICATIONS: 'TELEGRAM_ENABLE_NOTIFICATIONS',
   TELEGRAM_ENABLE_COMMANDS: 'TELEGRAM_ENABLE_COMMANDS',
-  // Database Configuration
+  // Конфигурация базы данных
   POSTGRES_URI: 'POSTGRES_URI',
   POSTGRES_SHADOW_URI: 'POSTGRES_SHADOW_URI',
   DB_POOL_MIN: 'DB_POOL_MIN',
@@ -63,7 +63,7 @@ export const EnvKeys = {
   DB_LOGGING_ENABLED: 'DB_LOGGING_ENABLED',
   DB_SLOW_QUERY_THRESHOLD: 'DB_SLOW_QUERY_THRESHOLD',
   DB_SEED_ENABLED: 'DB_SEED_ENABLED',
-  // Database Monitoring Configuration
+  // Конфигурация мониторинга базы данных
   DB_METRICS_ENABLED: 'DB_METRICS_ENABLED',
   DB_METRICS_INTERVAL: 'DB_METRICS_INTERVAL',
   DB_ALERT_SLOW_QUERY: 'DB_ALERT_SLOW_QUERY',
@@ -72,3 +72,8 @@ export const EnvKeys = {
   DB_LOG_PARAMETERS: 'DB_LOG_PARAMETERS',
   DB_LOG_QUERY_TIME: 'DB_LOG_QUERY_TIME',
 } as const;
+
+/**
+ * Тип для ключей переменных окружения
+ */
+export type EnvKey = (typeof envKeys)[keyof typeof envKeys];

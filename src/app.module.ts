@@ -1,19 +1,16 @@
-import {
-  type MiddlewareConsumer,
-  Module,
-  type NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { z } from 'zod';
-import { AuthModule } from './api/auth/auth.module';
-import { CronModule } from './api/cron/cron.module';
-import { SetModule } from './api/set/set.module';
-import { UserModule } from './api/user/user.module';
 import { AppController } from './app.controller';
 import { envLoader, envSchema } from './config';
 import { PrismaModule } from './infrastructure/database';
-import { LoggerMiddleware } from './shared/middlewares';
+import { AuthModule } from './modules/auth/auth.module';
+import { SetModule } from './modules/set/set.module';
+import { UserModule } from './modules/user/user.module';
+import { AppThrottlerGuard } from './shared/guards';
+import { LoggingInterceptor } from './shared/interceptors';
 
 @Module({
   imports: [
@@ -21,7 +18,7 @@ import { LoggerMiddleware } from './shared/middlewares';
       isGlobal: true,
       load: [envLoader.load[0]],
       envFilePath: ['.env.local', '.env'],
-      validate: (config: Record<string, any>) => {
+      validate: (config: Record<string, unknown>) => {
         try {
           const validatedConfig = envSchema.parse(config);
           return validatedConfig;
@@ -33,18 +30,30 @@ import { LoggerMiddleware } from './shared/middlewares';
         }
       },
     }),
+    // 🛡️ Rate Limiting: защита от DDoS атак
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // 1 минута
+        limit: 100, // максимум 100 запросов в минуту
+      },
+    ]),
     PrismaModule,
     AuthModule,
     SetModule,
     UserModule,
-    CronModule,
   ],
   controllers: [AppController],
+  providers: [
+    // 🛡️ Глобальный Rate Limiting Guard
+    {
+      provide: APP_GUARD,
+      useClass: AppThrottlerGuard,
+    },
+    // 📝 Глобальный Logging Interceptor
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+export class AppModule {}

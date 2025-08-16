@@ -4,7 +4,7 @@ import { UpdateSetDto } from './dto/update-set.dto';
 
 @Injectable()
 export class SetService {
-  create(createSetDto: CreateSetDto) {
+  create(_createSetDto: CreateSetDto) {
     return 'This action adds a new set';
   }
 
@@ -16,7 +16,7 @@ export class SetService {
     return `This action returns a #${id} set`;
   }
 
-  update(id: number, updateSetDto: UpdateSetDto) {
+  update(id: number, _updateSetDto: UpdateSetDto) {
     return `This action updates a #${id} set`;
   }
 

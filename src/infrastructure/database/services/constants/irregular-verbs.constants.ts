@@ -13,7 +13,7 @@ export interface IrregularVerbData {
   languageCode: string;
 }
 
-export const IRREGULAR_VERBS_DATA: IrregularVerbData[] = [
+export const irregularVerbsData: IrregularVerbData[] = [
   // A1 Level - Essential Irregular Verbs
   {
     infinitive: 'be',

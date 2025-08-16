@@ -18,7 +18,32 @@ export default tseslint.config(
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      // Правила сортировки импортов
+      // 🔒 Запрет any - строгая типизация
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unsafe-assignment': 'error',
+      '@typescript-eslint/no-unsafe-call': 'error',
+      '@typescript-eslint/no-unsafe-member-access': 'error',
+      '@typescript-eslint/no-unsafe-return': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'error',
+
+      // 🚫 Неиспользуемые переменные и импорты
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+        },
+      ],
+      'no-unused-vars': 'off', // Отключаем базовое правило в пользу TypeScript версии
+      'import/no-unused-modules': 'error',
+
+      // 🔄 Promise и async/await
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/await-thenable': 'error',
+
+      // 📝 Сортировка импортов
       'simple-import-sort/imports': [
         'error',
         {
@@ -33,8 +58,8 @@ export default tseslint.config(
             ['^src/infrastructure/'],
             // 5. Абсолютные импорты из integrations (например, src/integrations/*)
             ['^src/integrations/'],
-            // 6. Абсолютные импорты из api (например, src/api/auth/auth.module)
-            ['^src/api/'],
+            // 6. Абсолютные импорты из modules (например, src/modules/auth/auth.module)
+            ['^src/modules/'],
             // 7. Относительные импорты (./, ../) для локальных файлов
             ['^\\./', '^\\../'],
             // 8. Импорты типов (внешние и локальные)
@@ -46,10 +71,22 @@ export default tseslint.config(
       'import/first': 'error', // Импорты должны быть в начале файла
       'import/newline-after-import': 'error', // Пустая строка после импортов
       'import/no-duplicates': 'error', // Запрет дублирующихся импортов
-      // Существующие правила
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn',
+
+      // 🛡️ Дополнительные правила безопасности
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+
+      // 📋 Стиль кода
+      'prefer-const': 'error',
+      '@typescript-eslint/no-var-requires': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off', // Можно включить для строгости
+      '@typescript-eslint/explicit-module-boundary-types': 'off', // Можно включить для строгости
+      '@typescript-eslint/no-empty-function': 'warn',
+      '@typescript-eslint/no-inferrable-types': 'error',
+
+      // 🔍 Логические ошибки
+      '@typescript-eslint/no-unnecessary-type-constraint': 'warn',
     },
     languageOptions: {
       globals: {

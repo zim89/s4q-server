@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { Role } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 
 /**
  * Decorator to set required roles for endpoint access
@@ -10,10 +10,11 @@ import { Role } from '@prisma/client';
  * @example
  * // Direct usage (not recommended, use @Auth instead)
  * @Get('admin')
- * @RequireRoles(Role.ADMIN)
+ * @RequireRoles(UserRole.ADMIN)
  * @UseGuards(JwtGuard, RolesGuard)
  * getAdminData() {
  *   return 'Admin only';
  * }
  */
-export const RequireRoles = (...roles: Role[]) => SetMetadata('roles', roles);
+export const RequireRoles = (...roles: UserRole[]) =>
+  SetMetadata('roles', roles);

@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { BodyRequiredPipe } from 'src/shared/pipes';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -16,7 +17,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body(BodyRequiredPipe) createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
@@ -31,7 +32,10 @@ export class UserController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id') id: string,
+    @Body(BodyRequiredPipe) updateUserDto: UpdateUserDto
+  ) {
     return this.userService.update(+id, updateUserDto);
   }
 

@@ -19,7 +19,7 @@ import { RequireRoles } from './roles.decorator';
  * @example
  * // Specific role
  * @Get('admin')
- * @Auth(Role.ADMIN)
+ * @Auth(UserRole.ADMIN)
  * getAdminData() {
  *   return 'Admin only';
  * }
@@ -27,7 +27,7 @@ import { RequireRoles } from './roles.decorator';
  * @example
  * // Multiple roles
  * @Get('moderator')
- * @Auth([Role.MODERATOR, Role.ADMIN])
+ * @Auth([UserRole.MODERATOR, UserRole.ADMIN])
  * getModeratorData() {
  *   return 'Moderator or Admin';
  * }

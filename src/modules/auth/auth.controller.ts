@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
+import { BodyRequiredPipe } from 'src/shared/pipes';
 import { AuthService } from './auth.service';
 import { AuthSwaggerDocs } from './decorators';
 import { LoginDto, RegisterDto } from './dto';
@@ -19,13 +20,14 @@ import { LoginDto, RegisterDto } from './dto';
  * Authentication controller for user registration, login, and session management
  *
  * Provides endpoints for:
- * - User registration
+ * - User registration (with automatic login)
  * - User login
  * - Token refresh
  * - User logout
+ * - Logout from all devices
  *
  * @example
- * // Register new user
+ * // Register new user (automatically logs in)
  * POST /v1/auth/register
  * {
  *   "firstName": "John",
@@ -52,7 +54,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   async register(
     @Res({ passthrough: true }) res: Response,
-    @Body() dto: RegisterDto
+    @Body(BodyRequiredPipe) dto: RegisterDto
   ) {
     return await this.authService.register(res, dto);
   }
@@ -63,7 +65,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Res({ passthrough: true }) res: Response,
-    @Body() dto: LoginDto
+    @Body(BodyRequiredPipe) dto: LoginDto
   ) {
     return await this.authService.login(res, dto);
   }
@@ -87,5 +89,19 @@ export class AuthController {
       throw new UnauthorizedException('User not authorized');
     }
     return await this.authService.logout(res, user.id);
+  }
+
+  @AuthSwaggerDocs.logout()
+  @Post('logout-all')
+  @HttpCode(HttpStatus.OK)
+  async logoutAllDevices(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const user = req.user as { id: string } | undefined;
+    if (!user) {
+      throw new UnauthorizedException('User not authorized');
+    }
+    return await this.authService.logoutAllDevices(res, user.id);
   }
 }

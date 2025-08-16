@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 
 /**
  * Email configuration factory
@@ -21,22 +21,22 @@ import { EnvKeys, EnvSchema } from 'src/config';
 export function getEmailConfig(configService: ConfigService<EnvSchema>) {
   return {
     // SMTP Configuration
-    host: configService.get<string>(EnvKeys.SMTP_HOST, 'smtp.gmail.com'),
-    port: configService.get<number>(EnvKeys.SMTP_PORT, 587),
-    secure: configService.get<boolean>(EnvKeys.SMTP_SECURE, false),
+    host: configService.get<string>(envKeys.SMTP_HOST, 'smtp.gmail.com'),
+    port: configService.get<number>(envKeys.SMTP_PORT, 587),
+    secure: configService.get<boolean>(envKeys.SMTP_SECURE, false),
     auth: {
-      user: configService.get<string>(EnvKeys.SMTP_USER),
-      pass: configService.get<string>(EnvKeys.SMTP_PASS),
+      user: configService.get<string>(envKeys.SMTP_USER),
+      pass: configService.get<string>(envKeys.SMTP_PASS),
     },
     // Email Configuration
     from: configService.get<string>(
-      EnvKeys.EMAIL_FROM,
+      envKeys.EMAIL_FROM,
       'noreply@space4quiz.com'
     ),
-    replyTo: configService.get<string>(EnvKeys.EMAIL_REPLY_TO),
+    replyTo: configService.get<string>(envKeys.EMAIL_REPLY_TO),
     // Template Configuration
     templateDir: configService.get<string>(
-      EnvKeys.EMAIL_TEMPLATE_DIR,
+      envKeys.EMAIL_TEMPLATE_DIR,
       './templates/emails'
     ),
   };

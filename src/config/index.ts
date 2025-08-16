@@ -9,6 +9,6 @@ export { getJwtConfig } from './jwt.config';
 export { setupSwaggerDocs } from './swagger.config';
 
 // Environment configuration
-export { EnvKeys } from './env/keys';
+export { type EnvKey, envKeys } from './env/keys';
 export { envLoader } from './env/loader';
 export { type EnvSchema, envSchema } from './env/schema';

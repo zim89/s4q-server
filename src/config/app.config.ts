@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys } from './env/keys';
+import { envKeys } from './env/keys';
 import type { EnvSchema } from './env/schema';
 
 /**
@@ -19,8 +19,8 @@ import type { EnvSchema } from './env/schema';
 export function getAppConfig(configService: ConfigService<EnvSchema>) {
   return {
     // Application configuration options
-    port: configService.get<number>(EnvKeys.PORT, 3000),
-    globalPrefix: configService.get<string>(EnvKeys.GLOBAL_PREFIX, 'api'),
+    port: configService.get<number>(envKeys.PORT, 3000),
+    globalPrefix: configService.get<string>(envKeys.GLOBAL_PREFIX, 'api'),
     // Add more app-specific configurations as needed
   };
 }

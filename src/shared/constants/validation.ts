@@ -1,49 +1,55 @@
 /**
- * Validation message templates for form validation
- * Used with class-validator decorators
+ * Шаблоны сообщений валидации для форм
+ * Используются с декораторами class-validator
  */
 export const validationMessages = {
-  /** Field is required */
-  required: (field: string) => `${field} is required`,
+  /** Поле обязательно для заполнения */
+  required: (field: string) => `${field} обязательно для заполнения`,
 
-  /** Field must be a string */
-  mustBeString: (field: string) => `${field} must be a string`,
+  /** Поле должно быть строкой */
+  mustBeString: (field: string) => `${field} должно быть строкой`,
 
-  /** Field must be a number */
-  mustBeNumber: (field: string) => `${field} must be a number`,
+  /** Поле должно быть числом */
+  mustBeNumber: (field: string) => `${field} должно быть числом`,
 
-  /** Field must be a boolean */
-  mustBeBoolean: (field: string) => `${field} must be a boolean`,
+  /** Поле должно быть булевым значением */
+  mustBeBoolean: (field: string) => `${field} должно быть булевым значением`,
 
-  /** Field must be a valid email */
-  emailFormat: 'Email must be a valid email address',
+  /** Поле должно быть валидным email */
+  emailFormat: 'Email должен быть валидным адресом',
 
-  /** Field must be a valid URL */
-  urlFormat: 'Must be a valid URL',
+  /** Поле должно быть валидным URL */
+  urlFormat: 'Должен быть валидным URL',
 
-  /** Field minimum length validation */
+  /** Валидация минимальной длины поля */
   minLength: (field: string, len: number) =>
-    `${field} must be at least ${len} characters long`,
+    `${field} должно содержать минимум ${len} символов`,
 
-  /** Field maximum length validation */
+  /** Валидация максимальной длины поля */
   maxLength: (field: string, len: number) =>
-    `${field} must be less than ${len} characters`,
+    `${field} должно содержать максимум ${len} символов`,
 
-  /** Field minimum value validation */
+  /** Валидация минимального значения поля */
   minValue: (field: string, value: number) =>
-    `${field} must be at least ${value}`,
+    `${field} должно быть не менее ${value}`,
 
-  /** Field maximum value validation */
+  /** Валидация максимального значения поля */
   maxValue: (field: string, value: number) =>
-    `${field} must be less than ${value}`,
+    `${field} должно быть не более ${value}`,
 
-  /** Field must be a positive number */
-  positive: (field: string) => `${field} must be a positive number`,
+  /** Поле должно быть положительным числом */
+  positive: (field: string) => `${field} должно быть положительным числом`,
 
-  /** Field must be a valid date */
-  validDate: (field: string) => `${field} must be a valid date`,
+  /** Поле должно быть валидной датой */
+  validDate: (field: string) => `${field} должно быть валидной датой`,
 
-  /** Field must match pattern */
+  /** Поле должно соответствовать паттерну */
   pattern: (field: string, pattern: string) =>
-    `${field} must match pattern: ${pattern}`,
+    `${field} должно соответствовать паттерну: ${pattern}`,
 } as const;
+
+/**
+ * Тип для сообщений валидации
+ */
+export type ValidationMessage =
+  (typeof validationMessages)[keyof typeof validationMessages];

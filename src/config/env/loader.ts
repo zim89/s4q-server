@@ -1,4 +1,4 @@
-import { EnvKeys } from './keys';
+import { envKeys } from './keys';
 
 /**
  * Environment variables loader configuration
@@ -16,65 +16,65 @@ import { EnvKeys } from './keys';
 export const envLoader = {
   load: [
     () => ({
-      [EnvKeys.JWT_SECRET]: process.env[EnvKeys.JWT_SECRET],
-      [EnvKeys.JWT_ACCESS_TOKEN_TTL]: process.env[EnvKeys.JWT_ACCESS_TOKEN_TTL],
-      [EnvKeys.JWT_REFRESH_TOKEN_TTL]:
-        process.env[EnvKeys.JWT_REFRESH_TOKEN_TTL],
-      [EnvKeys.COOKIE_DOMAIN]: process.env[EnvKeys.COOKIE_DOMAIN],
-      [EnvKeys.ALLOWED_ORIGINS]: process.env[EnvKeys.ALLOWED_ORIGINS],
-      [EnvKeys.PORT]: process.env[EnvKeys.PORT],
-      [EnvKeys.GLOBAL_PREFIX]: process.env[EnvKeys.GLOBAL_PREFIX],
+      [envKeys.JWT_SECRET]: process.env[envKeys.JWT_SECRET],
+      [envKeys.JWT_ACCESS_TOKEN_TTL]: process.env[envKeys.JWT_ACCESS_TOKEN_TTL],
+      [envKeys.JWT_REFRESH_TOKEN_TTL]:
+        process.env[envKeys.JWT_REFRESH_TOKEN_TTL],
+      [envKeys.COOKIE_DOMAIN]: process.env[envKeys.COOKIE_DOMAIN],
+      [envKeys.ALLOWED_ORIGINS]: process.env[envKeys.ALLOWED_ORIGINS],
+      [envKeys.PORT]: process.env[envKeys.PORT],
+      [envKeys.GLOBAL_PREFIX]: process.env[envKeys.GLOBAL_PREFIX],
       // Email Configuration
-      [EnvKeys.SMTP_HOST]: process.env[EnvKeys.SMTP_HOST],
-      [EnvKeys.SMTP_PORT]: process.env[EnvKeys.SMTP_PORT],
-      [EnvKeys.SMTP_SECURE]: process.env[EnvKeys.SMTP_SECURE],
-      [EnvKeys.SMTP_USER]: process.env[EnvKeys.SMTP_USER],
-      [EnvKeys.SMTP_PASS]: process.env[EnvKeys.SMTP_PASS],
-      [EnvKeys.EMAIL_FROM]: process.env[EnvKeys.EMAIL_FROM],
-      [EnvKeys.EMAIL_REPLY_TO]: process.env[EnvKeys.EMAIL_REPLY_TO],
-      [EnvKeys.EMAIL_TEMPLATE_DIR]: process.env[EnvKeys.EMAIL_TEMPLATE_DIR],
+      [envKeys.SMTP_HOST]: process.env[envKeys.SMTP_HOST],
+      [envKeys.SMTP_PORT]: process.env[envKeys.SMTP_PORT],
+      [envKeys.SMTP_SECURE]: process.env[envKeys.SMTP_SECURE],
+      [envKeys.SMTP_USER]: process.env[envKeys.SMTP_USER],
+      [envKeys.SMTP_PASS]: process.env[envKeys.SMTP_PASS],
+      [envKeys.EMAIL_FROM]: process.env[envKeys.EMAIL_FROM],
+      [envKeys.EMAIL_REPLY_TO]: process.env[envKeys.EMAIL_REPLY_TO],
+      [envKeys.EMAIL_TEMPLATE_DIR]: process.env[envKeys.EMAIL_TEMPLATE_DIR],
       // S3 Configuration
-      [EnvKeys.AWS_REGION]: process.env[EnvKeys.AWS_REGION],
-      [EnvKeys.AWS_ACCESS_KEY_ID]: process.env[EnvKeys.AWS_ACCESS_KEY_ID],
-      [EnvKeys.AWS_SECRET_ACCESS_KEY]:
-        process.env[EnvKeys.AWS_SECRET_ACCESS_KEY],
-      [EnvKeys.S3_BUCKET_NAME]: process.env[EnvKeys.S3_BUCKET_NAME],
-      [EnvKeys.S3_ENDPOINT]: process.env[EnvKeys.S3_ENDPOINT],
-      [EnvKeys.S3_MAX_FILE_SIZE]: process.env[EnvKeys.S3_MAX_FILE_SIZE],
-      [EnvKeys.S3_ALLOWED_MIME_TYPES]:
-        process.env[EnvKeys.S3_ALLOWED_MIME_TYPES],
+      [envKeys.AWS_REGION]: process.env[envKeys.AWS_REGION],
+      [envKeys.AWS_ACCESS_KEY_ID]: process.env[envKeys.AWS_ACCESS_KEY_ID],
+      [envKeys.AWS_SECRET_ACCESS_KEY]:
+        process.env[envKeys.AWS_SECRET_ACCESS_KEY],
+      [envKeys.S3_BUCKET_NAME]: process.env[envKeys.S3_BUCKET_NAME],
+      [envKeys.S3_ENDPOINT]: process.env[envKeys.S3_ENDPOINT],
+      [envKeys.S3_MAX_FILE_SIZE]: process.env[envKeys.S3_MAX_FILE_SIZE],
+      [envKeys.S3_ALLOWED_MIME_TYPES]:
+        process.env[envKeys.S3_ALLOWED_MIME_TYPES],
       // Stripe Configuration
-      [EnvKeys.STRIPE_PUBLISHABLE_KEY]:
-        process.env[EnvKeys.STRIPE_PUBLISHABLE_KEY],
-      [EnvKeys.STRIPE_SECRET_KEY]: process.env[EnvKeys.STRIPE_SECRET_KEY],
-      [EnvKeys.STRIPE_WEBHOOK_SECRET]:
-        process.env[EnvKeys.STRIPE_WEBHOOK_SECRET],
-      [EnvKeys.STRIPE_CURRENCY]: process.env[EnvKeys.STRIPE_CURRENCY],
-      [EnvKeys.STRIPE_PAYMENT_METHODS]:
-        process.env[EnvKeys.STRIPE_PAYMENT_METHODS],
-      [EnvKeys.STRIPE_DEFAULT_TRIAL_DAYS]:
-        process.env[EnvKeys.STRIPE_DEFAULT_TRIAL_DAYS],
-      [EnvKeys.STRIPE_ENABLE_SUBSCRIPTIONS]:
-        process.env[EnvKeys.STRIPE_ENABLE_SUBSCRIPTIONS],
-      [EnvKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS]:
-        process.env[EnvKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS],
+      [envKeys.STRIPE_PUBLISHABLE_KEY]:
+        process.env[envKeys.STRIPE_PUBLISHABLE_KEY],
+      [envKeys.STRIPE_SECRET_KEY]: process.env[envKeys.STRIPE_SECRET_KEY],
+      [envKeys.STRIPE_WEBHOOK_SECRET]:
+        process.env[envKeys.STRIPE_WEBHOOK_SECRET],
+      [envKeys.STRIPE_CURRENCY]: process.env[envKeys.STRIPE_CURRENCY],
+      [envKeys.STRIPE_PAYMENT_METHODS]:
+        process.env[envKeys.STRIPE_PAYMENT_METHODS],
+      [envKeys.STRIPE_DEFAULT_TRIAL_DAYS]:
+        process.env[envKeys.STRIPE_DEFAULT_TRIAL_DAYS],
+      [envKeys.STRIPE_ENABLE_SUBSCRIPTIONS]:
+        process.env[envKeys.STRIPE_ENABLE_SUBSCRIPTIONS],
+      [envKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS]:
+        process.env[envKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS],
       // Telegram Configuration
-      [EnvKeys.TELEGRAM_BOT_TOKEN]: process.env[EnvKeys.TELEGRAM_BOT_TOKEN],
-      [EnvKeys.TELEGRAM_BOT_USERNAME]:
-        process.env[EnvKeys.TELEGRAM_BOT_USERNAME],
-      [EnvKeys.TELEGRAM_WEBHOOK_URL]: process.env[EnvKeys.TELEGRAM_WEBHOOK_URL],
-      [EnvKeys.TELEGRAM_WEBHOOK_SECRET]:
-        process.env[EnvKeys.TELEGRAM_WEBHOOK_SECRET],
-      [EnvKeys.TELEGRAM_ENABLE_WEBHOOK]:
-        process.env[EnvKeys.TELEGRAM_ENABLE_WEBHOOK],
-      [EnvKeys.TELEGRAM_ENABLE_POLLING]:
-        process.env[EnvKeys.TELEGRAM_ENABLE_POLLING],
-      [EnvKeys.TELEGRAM_DEFAULT_PARSE_MODE]:
-        process.env[EnvKeys.TELEGRAM_DEFAULT_PARSE_MODE],
-      [EnvKeys.TELEGRAM_ENABLE_NOTIFICATIONS]:
-        process.env[EnvKeys.TELEGRAM_ENABLE_NOTIFICATIONS],
-      [EnvKeys.TELEGRAM_ENABLE_COMMANDS]:
-        process.env[EnvKeys.TELEGRAM_ENABLE_COMMANDS],
+      [envKeys.TELEGRAM_BOT_TOKEN]: process.env[envKeys.TELEGRAM_BOT_TOKEN],
+      [envKeys.TELEGRAM_BOT_USERNAME]:
+        process.env[envKeys.TELEGRAM_BOT_USERNAME],
+      [envKeys.TELEGRAM_WEBHOOK_URL]: process.env[envKeys.TELEGRAM_WEBHOOK_URL],
+      [envKeys.TELEGRAM_WEBHOOK_SECRET]:
+        process.env[envKeys.TELEGRAM_WEBHOOK_SECRET],
+      [envKeys.TELEGRAM_ENABLE_WEBHOOK]:
+        process.env[envKeys.TELEGRAM_ENABLE_WEBHOOK],
+      [envKeys.TELEGRAM_ENABLE_POLLING]:
+        process.env[envKeys.TELEGRAM_ENABLE_POLLING],
+      [envKeys.TELEGRAM_DEFAULT_PARSE_MODE]:
+        process.env[envKeys.TELEGRAM_DEFAULT_PARSE_MODE],
+      [envKeys.TELEGRAM_ENABLE_NOTIFICATIONS]:
+        process.env[envKeys.TELEGRAM_ENABLE_NOTIFICATIONS],
+      [envKeys.TELEGRAM_ENABLE_COMMANDS]:
+        process.env[envKeys.TELEGRAM_ENABLE_COMMANDS],
     }),
   ],
 };

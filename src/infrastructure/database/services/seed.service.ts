@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys, EnvSchema } from 'src/config';
+import { envKeys, EnvSchema } from 'src/config';
 import { PrismaService } from '../prisma/prisma.service';
 
 /**
@@ -59,7 +59,7 @@ export class SeedService {
    * Clear all data (development only)
    */
   async clearAllData(): Promise<void> {
-    const nodeEnv = this.configService.get(EnvKeys.NODE_ENV) as string;
+    const nodeEnv = this.configService.get(envKeys.NODE_ENV) as string;
     if (nodeEnv === 'production') {
       throw new Error('Cannot clear data in production');
     }
