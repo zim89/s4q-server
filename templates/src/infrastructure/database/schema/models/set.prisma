@@ -1,0 +1,82 @@
+/// Набор карточек для изучения
+/// 
+/// Модель для организации карточек в наборы.
+/// Поддерживает базовые наборы (системные) и пользовательские наборы.
+/// Позволяет создавать форки (копии) наборов.
+model Set {
+  /// Уникальный идентификатор набора
+  id          String @id @default(cuid())
+  
+  /// Дата и время создания набора
+  createdAt   DateTime @default(now())
+  
+  /// Дата и время последнего обновления набора
+  updatedAt   DateTime @updatedAt
+
+  /// Название набора
+  name        String
+  
+  /// URL-дружественный идентификатор
+  slug        String
+  
+  /// Описание набора
+  description String?
+  
+  /// Тип набора (LANGUAGE, CUSTOM)
+  type        SetType @default(LANGUAGE)
+  
+  /// Базовый набор (системный)
+  isBase      Boolean @default(false)
+  
+  /// Публичный набор (доступен всем)
+  isPublic    Boolean @default(false)
+
+  /// ID пользователя, создавшего набор
+  userId      String?  
+  
+  /// Связь с пользователем
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// ID языка набора
+  languageId  String?
+  
+  /// Связь с языком
+  language    Language? @relation(fields: [languageId], references: [id], onDelete: SetNull)  
+
+  /// Уровень сложности набора (A1, A2, B1, B2, C1, C2)
+  level       LanguageLevel?
+  
+  /// Категория контента набора
+  contentCategory ContentCategory?
+  
+  /// Статус контента набора
+  contentStatus   ContentStatus? @default(DRAFT)
+
+  // Связи с другими моделями
+  /// Карточки в наборе
+  cards       Card[] @relation("sets_cards")
+  
+  /// Папки, содержащие этот набор
+  folders     Folder[] @relation("sets_folders")
+  
+  /// Теги набора
+  tags        Tag[]
+  
+  /// Наборы пользователей
+  userSets    UserSet[]
+
+  /// ID оригинального набора (для форков)
+  originalSetId String?
+  
+  /// Связь с оригинальным набором
+  originalSet   Set?     @relation("forked_sets", fields: [originalSetId], references: [id])
+  
+  /// Форки этого набора
+  forkedSets    Set[]    @relation("forked_sets")
+
+  @@map("sets")
+  @@unique([slug, userId], name: "unique_slug_per_user")
+  @@index([userId, languageId])
+  @@index([isBase, isPublic])
+  @@index([type, level])
+}

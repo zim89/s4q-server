@@ -1,0 +1,42 @@
+/// Набор пользователя
+/// 
+/// Модель для связи пользователей с наборами карточек.
+/// Отслеживает прогресс пользователя в изучении конкретного набора.
+/// Позволяет пользователям добавлять наборы в свой список для изучения.
+model UserSet {
+  /// Уникальный идентификатор записи
+  id        String @id @default(cuid())
+  
+  /// Общее количество карточек в наборе
+  totalCards     Int @default(0) 
+  
+  /// Количество изученных карточек
+  completedCards Int @default(0)
+  
+  /// Статус изучения набора
+  status    ProgressStatus? @default(NOT_STARTED)
+  
+  /// Режим изучения набора
+  studyMode StudyMode?
+
+  /// ID пользователя
+  userId    String
+  
+  /// Связь с пользователем
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// ID набора
+  setId     String
+  
+  /// Связь с набором
+  set       Set    @relation(fields: [setId], references: [id])
+
+  /// Прогресс изучения набора
+  progress  Progress? 
+
+  @@map("user_sets")
+  @@unique([userId, setId])
+  @@index([userId])
+  @@index([setId])
+  @@index([completedCards])
+}

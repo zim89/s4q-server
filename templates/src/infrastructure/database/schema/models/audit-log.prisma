@@ -1,0 +1,42 @@
+/// Лог аудита действий пользователей
+/// 
+/// Модель для отслеживания действий пользователей в системе.
+/// Записывает все важные операции: создание, изменение, удаление сущностей.
+/// Используется для безопасности, отладки и аналитики.
+model AuditLog {
+  /// Уникальный идентификатор записи лога
+  id          String @id @default(cuid())
+  
+  /// Дата и время создания записи
+  createdAt   DateTime @default(now())
+  
+  /// Тип сущности (например, 'Set', 'Card', 'User')
+  entityType  String
+  
+  /// ID сущности, с которой производилось действие
+  entityId    String
+  
+  /// Тип действия ('create', 'update', 'delete', 'view')
+  action      String
+  
+  /// Детальный тип действия
+  actionType  ActionType?
+  
+  /// Тип ресурса
+  resourceType ResourceType?
+  
+  /// Дополнительные данные действия в формате JSON
+  data        Json?
+  
+  /// ID пользователя, выполнившего действие
+  userId      String
+  
+  /// Связь с пользователем
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+  @@index([createdAt])
+  @@index([entityType, entityId])
+  @@index([userId, action])
+  @@index([action])
+}

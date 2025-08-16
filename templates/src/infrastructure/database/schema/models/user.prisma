@@ -1,0 +1,84 @@
+/// Пользователь системы
+/// 
+/// Основная модель для хранения информации о пользователях.
+/// Поддерживает аутентификацию через email/password и Google OAuth.
+/// Содержит профиль пользователя, настройки и связи с другими сущностями.
+model User {
+  /// Уникальный идентификатор пользователя
+  id            String   @id @default(cuid())
+  
+  /// Дата и время создания записи
+  createdAt     DateTime @default(now())
+  
+  /// Дата и время последнего обновления записи
+  updatedAt     DateTime @updatedAt
+
+  /// Роли пользователя в системе (USER, PREMIUM, MANAGER, ADMIN)
+  rights        UserRole[] @default([USER])
+  
+  /// Email адрес пользователя (уникальный)
+  email         String   @unique
+  
+  /// Подтвержден ли email адрес
+  emailVerified Boolean  @default(false)
+  
+  /// Хеш пароля пользователя
+  passwordHash  String
+  
+  /// Имя пользователя
+  firstName     String?
+  
+  /// Фамилия пользователя
+  lastName      String?
+  
+  /// URL аватара пользователя
+  avatarUrl     String?
+  
+  /// Активен ли пользователь
+  isActive      Boolean? @default(true)
+  
+  /// Дата и время последнего входа
+  lastLoginAt   DateTime?
+  
+  /// Настройки пользователя в формате JSON
+  userSettings  Json?
+  
+  /// ID пользователя в Google (для OAuth)
+  googleId      String?  @unique
+  
+  /// Предпочитаемый режим изучения
+  preferredStudyMode StudyMode?
+
+  // Связи с другими моделями
+  /// Сессии пользователя
+  sessions      Session[]
+  
+  /// Папки пользователя
+  folders       Folder[]
+  
+  /// Достижения пользователя
+  achievements  Achievement[]
+  
+  /// Карточки, созданные пользователем
+  cards         Card[]
+  
+  /// Наборы пользователя
+  userSets      UserSet[]
+  
+  /// Карточки пользователя
+  userCards     UserCard[]
+  
+  /// Наборы, созданные пользователем
+  sets          Set[]
+  
+  /// Логи аудита пользователя
+  auditLogs     AuditLog[]
+  
+  /// Прогресс изучения пользователя
+  progresses    Progress[]
+  
+  @@map("users")
+  @@index([email])
+  @@index([isActive])
+  @@index([lastLoginAt])
+}

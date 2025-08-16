@@ -98,6 +98,9 @@ data/
 
 # Development files
 notes.md
+
+# Templates (uncomment to ignore)
+# templates/
 *.md.bak
 *.tmp
 
