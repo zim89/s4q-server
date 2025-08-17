@@ -29,6 +29,9 @@ enum PartOfSpeech {
   ARTICLE         // Артикль
   PARTICLE        // Частица
   PHRASE          // Фраза
+  SENTENCE        // Предложение
+  PHRASE_VERB     // Фразовый глагол
+  IDIOM           // Идиома
 }
 
 /// Тип набора карточек

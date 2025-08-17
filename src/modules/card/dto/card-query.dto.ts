@@ -9,6 +9,35 @@ import {
 } from 'src/shared/constants/sort';
 import { PaginationDto } from 'src/shared/dto';
 
+/**
+ * DTO для запросов с фильтрацией и пагинацией карточек
+ *
+ * Расширяет {@link PaginationDto} и добавляет специфичные для карточек фильтры.
+ * Используется для получения списка карточек с возможностью фильтрации и сортировки.
+ *
+ * @example
+ * ```typescript
+ * const queryDto: CardQueryDto = {
+ *   page: 1,
+ *   limit: 20,
+ *   difficulty: CardDifficulty.EASY,
+ *   partOfSpeech: PartOfSpeech.NOUN,
+ *   search: 'hello',
+ *   sort: 'createdAt',
+ *   order: 'desc'
+ * };
+ * ```
+ *
+ * @example
+ * ```typescript
+ * // Поиск по сложности
+ * const queryDto: CardQueryDto = {
+ *   difficulty: CardDifficulty.MEDIUM,
+ *   sort: 'wordOrPhrase',
+ *   order: 'asc'
+ * };
+ * ```
+ */
 export class CardQueryDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Сложность карточки',

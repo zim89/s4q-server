@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { AppController } from './app.controller';
 import { envLoader, envSchema } from './config';
 import { PrismaModule } from './infrastructure/database';
+import { DictionaryModule } from './integrations/dictionary';
 import { AuthModule } from './modules/auth/auth.module';
 import { CardModule } from './modules/card/card.module';
 import { SetModule } from './modules/set/set.module';
@@ -44,6 +45,7 @@ import { VersionService } from './shared/services';
     CardModule,
     SetModule,
     UserModule,
+    DictionaryModule,
   ],
   controllers: [AppController],
   providers: [

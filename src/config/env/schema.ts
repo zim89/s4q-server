@@ -32,58 +32,6 @@ export const envSchema = z.object({
     .default('development'),
   [envKeys.PORT]: z.coerce.number().default(3000),
   [envKeys.GLOBAL_PREFIX]: z.string().default('api'),
-  // Email Configuration
-  [envKeys.SMTP_HOST]: z.string().default('smtp.gmail.com'),
-  [envKeys.SMTP_PORT]: z.coerce.number().default(587),
-  [envKeys.SMTP_SECURE]: z.coerce.boolean().default(false),
-  [envKeys.SMTP_USER]: z.string().optional(),
-  [envKeys.SMTP_PASS]: z.string().optional(),
-  [envKeys.EMAIL_FROM]: z.string().default('noreply@space4quiz.com'),
-  [envKeys.EMAIL_REPLY_TO]: z.string().optional(),
-  [envKeys.EMAIL_TEMPLATE_DIR]: z.string().default('./templates/emails'),
-  // S3 Configuration
-  [envKeys.AWS_REGION]: z.string().default('us-east-1'),
-  [envKeys.AWS_ACCESS_KEY_ID]: z.string().optional(),
-  [envKeys.AWS_SECRET_ACCESS_KEY]: z.string().optional(),
-  [envKeys.S3_BUCKET_NAME]: z.string().optional(),
-  [envKeys.S3_ENDPOINT]: z.string().optional(),
-  [envKeys.S3_MAX_FILE_SIZE]: z.coerce.number().default(10 * 1024 * 1024),
-  [envKeys.S3_ALLOWED_MIME_TYPES]: z
-    .string()
-    .optional()
-    .transform(val =>
-      val
-        ? val.split(',').map(type => type.trim())
-        : ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']
-    )
-    .pipe(z.array(z.string())),
-  // Stripe Configuration
-  [envKeys.STRIPE_PUBLISHABLE_KEY]: z.string().optional(),
-  [envKeys.STRIPE_SECRET_KEY]: z.string().optional(),
-  [envKeys.STRIPE_WEBHOOK_SECRET]: z.string().optional(),
-  [envKeys.STRIPE_CURRENCY]: z.string().default('usd'),
-  [envKeys.STRIPE_PAYMENT_METHODS]: z
-    .string()
-    .optional()
-    .transform(val =>
-      val ? val.split(',').map(method => method.trim()) : ['card', 'sepa_debit']
-    )
-    .pipe(z.array(z.string())),
-  [envKeys.STRIPE_DEFAULT_TRIAL_DAYS]: z.coerce.number().default(7),
-  [envKeys.STRIPE_ENABLE_SUBSCRIPTIONS]: z.coerce.boolean().default(true),
-  [envKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS]: z.coerce.boolean().default(true),
-  // Telegram Configuration
-  [envKeys.TELEGRAM_BOT_TOKEN]: z.string().optional(),
-  [envKeys.TELEGRAM_BOT_USERNAME]: z.string().optional(),
-  [envKeys.TELEGRAM_WEBHOOK_URL]: z.string().optional(),
-  [envKeys.TELEGRAM_WEBHOOK_SECRET]: z.string().optional(),
-  [envKeys.TELEGRAM_ENABLE_WEBHOOK]: z.coerce.boolean().default(true),
-  [envKeys.TELEGRAM_ENABLE_POLLING]: z.coerce.boolean().default(false),
-  [envKeys.TELEGRAM_DEFAULT_PARSE_MODE]: z
-    .enum(['HTML', 'Markdown', 'MarkdownV2'])
-    .default('HTML'),
-  [envKeys.TELEGRAM_ENABLE_NOTIFICATIONS]: z.coerce.boolean().default(true),
-  [envKeys.TELEGRAM_ENABLE_COMMANDS]: z.coerce.boolean().default(true),
   // Database Configuration
   [envKeys.POSTGRES_URI]: z.string().nonempty('POSTGRES_URI is required'),
   [envKeys.POSTGRES_SHADOW_URI]: z.string().optional(),
@@ -102,6 +50,12 @@ export const envSchema = z.object({
   [envKeys.DB_LOG_QUERIES]: z.coerce.boolean().default(false),
   [envKeys.DB_LOG_PARAMETERS]: z.coerce.boolean().default(false),
   [envKeys.DB_LOG_QUERY_TIME]: z.coerce.boolean().default(true),
+  // Конфигурация интеграций
+  [envKeys.FREE_DICTIONARY_API_URL]: z
+    .string()
+    .default('https://api.dictionaryapi.dev/api/v2/entries/en'),
+  [envKeys.FREE_DICTIONARY_API_TIMEOUT]: z.coerce.number().default(5000),
+  [envKeys.FREE_DICTIONARY_API_RETRIES]: z.coerce.number().default(3),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;

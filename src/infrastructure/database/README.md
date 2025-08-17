@@ -262,3 +262,196 @@ await this.seed.seedTestData();
 - [NestJS Database](https://docs.nestjs.com/techniques/database)
 - [Schema Documentation](./schema/README.md)
 - [Prisma Documentation](./prisma/README.md)
+
+## Миграции базы данных
+
+### Обзор
+
+Система управления миграциями предоставляет программный интерфейс для работы с Prisma Migrate через `MigrationsService` и REST API через `MigrationsController`.
+
+### Компоненты
+
+#### MigrationsService
+
+Сервис для программного управления миграциями:
+
+- `generateMigration(name)` - создание новой миграции
+- `applyMigrations()` - применение миграций
+- `resetDatabase()` - сброс базы данных (только для разработки)
+- `getMigrationStatus()` - получение статуса миграций
+- `generateClient()` - генерация Prisma клиента
+- `pushSchema()` - прямое применение схемы (только для разработки)
+
+#### MigrationsController
+
+REST API для управления миграциями (только для администраторов):
+
+- `POST /migrations/generate` - создать миграцию
+- `POST /migrations/apply` - применить миграции
+- `POST /migrations/reset` - сбросить базу данных
+- `GET /migrations/status` - получить статус
+- `POST /migrations/generate-client` - сгенерировать клиент
+- `POST /migrations/push-schema` - применить схему
+
+### Как правильно делать миграции
+
+#### 1. Разработка (Development)
+
+**Создание новой миграции:**
+
+```bash
+# Через CLI
+npx prisma migrate dev --name add_new_feature
+
+# Через API (требует права администратора)
+POST /v1/migrations/generate
+{
+  "name": "add_new_feature"
+}
+```
+
+**Сброс базы данных (только для разработки):**
+
+```bash
+# Через CLI
+npx prisma migrate reset --force
+
+# Через API
+POST /v1/migrations/reset
+```
+
+**Прямое применение схемы (для быстрого прототипирования):**
+
+```bash
+# Через CLI
+npx prisma db push
+
+# Через API
+POST /v1/migrations/push-schema
+```
+
+#### 2. Продакшн (Production)
+
+**Применение миграций:**
+
+```bash
+# Через CLI
+npx prisma migrate deploy
+
+# Через API
+POST /v1/migrations/apply
+```
+
+**Проверка статуса:**
+
+```bash
+# Через CLI
+npx prisma migrate status
+
+# Через API
+GET /v1/migrations/status
+```
+
+#### 3. Генерация клиента
+
+После изменения схемы всегда генерируйте Prisma клиент:
+
+```bash
+# Через CLI
+npx prisma generate
+
+# Через API
+POST /v1/migrations/generate-client
+```
+
+### Рекомендации
+
+#### Для разработки:
+
+1. **Используйте `migrate dev`** для создания миграций
+2. **Используйте `db push`** для быстрого прототипирования
+3. **Сбрасывайте базу** при необходимости с помощью `migrate reset`
+
+#### Для продакшна:
+
+1. **Всегда используйте `migrate deploy`** для применения миграций
+2. **Никогда не используйте `db push`** в продакшне
+3. **Проверяйте статус** перед применением миграций
+
+#### Безопасность:
+
+1. **Все операции через API** требуют права администратора
+2. **Сброс базы** запрещен в продакшне
+3. **Прямое применение схемы** запрещено в продакшне
+
+### Примеры использования
+
+#### Программное использование:
+
+```typescript
+import { MigrationsService } from 'src/infrastructure/database';
+
+@Injectable()
+export class MyService {
+  constructor(private migrations: MigrationsService) {}
+
+  async setupDatabase() {
+    // Применить миграции
+    await this.migrations.applyMigrations();
+
+    // Сгенерировать клиент
+    await this.migrations.generateClient();
+  }
+
+  async createFeatureMigration() {
+    // Создать миграцию для новой функции
+    await this.migrations.generateMigration('add_user_preferences');
+  }
+}
+```
+
+#### Через API:
+
+```bash
+# Создать миграцию
+curl -X POST http://localhost:4000/v1/migrations/generate \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "add_user_preferences"}'
+
+# Применить миграции
+curl -X POST http://localhost:4000/v1/migrations/apply \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+
+# Проверить статус
+curl -X GET http://localhost:4000/v1/migrations/status \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
+
+### Troubleshooting
+
+#### Проблема: "Database schema is not in sync"
+
+**Решение:** Сбросите базу данных и создайте новую миграцию:
+
+```bash
+npx prisma migrate reset --force
+npx prisma migrate dev --name init
+```
+
+#### Проблема: "Migration failed"
+
+**Решение:** Проверьте логи и убедитесь, что схема корректна:
+
+```bash
+npx prisma migrate status
+npx prisma validate
+```
+
+#### Проблема: "Client not generated"
+
+**Решение:** Сгенерируйте клиент после изменений схемы:
+
+```bash
+npx prisma generate
+```

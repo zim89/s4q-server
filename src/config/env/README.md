@@ -41,9 +41,15 @@ ConfigModule.forRoot({
 
 **Назначение**: Константы для ключей переменных окружения
 
-**Экспорт**: `EnvKeys`
+**Экспорт**: `envKeys`
 
 **Доступные ключи:**
+
+#### Application Configuration
+
+- `NODE_ENV` - Окружение (development/production/test)
+- `PORT` - Порт приложения
+- `GLOBAL_PREFIX` - Глобальный префикс API
 
 #### JWT Configuration
 
@@ -59,22 +65,42 @@ ConfigModule.forRoot({
 
 - `ALLOWED_ORIGINS` - Разрешенные origins для CORS
 
-#### Environment
+#### Database Configuration
 
-- `NODE_ENV` - Окружение (development/production/test)
+- `POSTGRES_URI` - URI подключения к PostgreSQL
+- `POSTGRES_SHADOW_URI` - URI shadow базы данных
+- `DB_POOL_MIN` - Минимальный размер пула соединений
+- `DB_POOL_MAX` - Максимальный размер пула соединений
+- `DB_IDLE_TIMEOUT` - Таймаут неактивных соединений
+- `DB_CONNECTION_TIMEOUT` - Таймаут подключения
+- `DB_LOGGING_ENABLED` - Включение логирования запросов
+- `DB_SLOW_QUERY_THRESHOLD` - Порог медленных запросов
+- `DB_SEED_ENABLED` - Включение сидинга
 
-#### Application
+#### Database Monitoring
 
-- `PORT` - Порт приложения
-- `GLOBAL_PREFIX` - Глобальный префикс API
+- `DB_METRICS_ENABLED` - Включение метрик
+- `DB_METRICS_INTERVAL` - Интервал сбора метрик
+- `DB_ALERT_SLOW_QUERY` - Порог для алертов медленных запросов
+- `DB_ALERT_CONNECTION_ERRORS` - Порог для алертов ошибок подключения
+- `DB_LOG_QUERIES` - Логирование запросов
+- `DB_LOG_PARAMETERS` - Логирование параметров
+- `DB_LOG_QUERY_TIME` - Логирование времени выполнения
+
+#### Integrations Configuration
+
+- `FREE_DICTIONARY_API_URL` - URL Free Dictionary API
+- `FREE_DICTIONARY_API_TIMEOUT` - Таймаут запросов к API
+- `FREE_DICTIONARY_API_RETRIES` - Количество повторов запросов
 
 **Использование:**
 
 ```typescript
-import { EnvKeys } from 'src/config/env';
+import { envKeys } from 'src/config/env';
 
-const jwtSecret = configService.getOrThrow<string>(EnvKeys.JWT_SECRET);
-const port = configService.get<number>(EnvKeys.PORT, 3000);
+const jwtSecret = configService.getOrThrow<string>(envKeys.JWT_SECRET);
+const port = configService.get<number>(envKeys.PORT, 3000);
+const origins = configService.get<string[]>(envKeys.ALLOWED_ORIGINS);
 ```
 
 ### schema.ts
@@ -130,16 +156,16 @@ export class AppModule {}
 ```typescript
 // some.service.ts
 import { ConfigService } from '@nestjs/config';
-import { EnvKeys, type EnvSchema } from 'src/config/env';
+import { envKeys, type EnvSchema } from 'src/config/env';
 
 @Injectable()
 export class SomeService {
   constructor(private configService: ConfigService<EnvSchema>) {}
 
   someMethod() {
-    const jwtSecret = this.configService.getOrThrow<string>(EnvKeys.JWT_SECRET);
-    const port = this.configService.get<number>(EnvKeys.PORT, 3000);
-    const origins = this.configService.get<string[]>(EnvKeys.ALLOWED_ORIGINS);
+    const jwtSecret = this.configService.getOrThrow<string>(envKeys.JWT_SECRET);
+    const port = this.configService.get<number>(envKeys.PORT, 3000);
+    const origins = this.configService.get<string[]>(envKeys.ALLOWED_ORIGINS);
   }
 }
 ```
@@ -151,47 +177,50 @@ export class SomeService {
 ```env
 # JWT Configuration
 JWT_SECRET=your-super-secret-key
-JWT_ACCESS_TOKEN_TTL=15m
-JWT_REFRESH_TOKEN_TTL=7d
-
-# Cookie Configuration
 COOKIE_DOMAIN=localhost
 
-# CORS Configuration
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
-
-# Environment
-NODE_ENV=development
+# Database Configuration
+POSTGRES_URI=postgresql://user:password@localhost:5432/db
 ```
 
 ### Опциональные переменные
 
 ```env
 # Application Configuration
+NODE_ENV=development
 PORT=3000
 GLOBAL_PREFIX=api
-```
 
-### Пример .env файла
-
-```env
 # JWT Configuration
-JWT_SECRET=your-super-secret-key-here
 JWT_ACCESS_TOKEN_TTL=15m
 JWT_REFRESH_TOKEN_TTL=7d
 
-# Cookie Configuration
-COOKIE_DOMAIN=localhost
-
 # CORS Configuration
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,https://yourdomain.com
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 
-# Environment
-NODE_ENV=development
+# Database Configuration
+POSTGRES_SHADOW_URI=
+DB_POOL_MIN=2
+DB_POOL_MAX=10
+DB_IDLE_TIMEOUT=30000
+DB_CONNECTION_TIMEOUT=2000
+DB_LOGGING_ENABLED=true
+DB_SLOW_QUERY_THRESHOLD=1000
+DB_SEED_ENABLED=false
 
-# Application Configuration
-PORT=3000
-GLOBAL_PREFIX=api
+# Database Monitoring
+DB_METRICS_ENABLED=false
+DB_METRICS_INTERVAL=60
+DB_ALERT_SLOW_QUERY=5000
+DB_ALERT_CONNECTION_ERRORS=10
+DB_LOG_QUERIES=false
+DB_LOG_PARAMETERS=false
+DB_LOG_QUERY_TIME=true
+
+# Integrations Configuration
+FREE_DICTIONARY_API_URL=https://api.dictionaryapi.dev/api/v2/entries/en
+FREE_DICTIONARY_API_TIMEOUT=5000
+FREE_DICTIONARY_API_RETRIES=3
 ```
 
 ## 📝 Принципы
@@ -226,7 +255,7 @@ GLOBAL_PREFIX=api
 
 ```typescript
 // src/config/env/keys.ts
-export const EnvKeys = {
+export const envKeys = {
   // ... существующие ключи
   REDIS_HOST: 'REDIS_HOST',
   REDIS_PORT: 'REDIS_PORT',
@@ -239,8 +268,8 @@ export const EnvKeys = {
 // src/config/env/schema.ts
 export const envSchema = z.object({
   // ... существующие поля
-  [EnvKeys.REDIS_HOST]: z.string().default('localhost'),
-  [EnvKeys.REDIS_PORT]: z.coerce.number().default(6379),
+  [envKeys.REDIS_HOST]: z.string().default('localhost'),
+  [envKeys.REDIS_PORT]: z.coerce.number().default(6379),
 });
 ```
 
@@ -252,8 +281,8 @@ export const envLoader = {
   load: [
     () => ({
       // ... существующие поля
-      [EnvKeys.REDIS_HOST]: process.env[EnvKeys.REDIS_HOST],
-      [EnvKeys.REDIS_PORT]: process.env[EnvKeys.REDIS_PORT],
+      [envKeys.REDIS_HOST]: process.env[envKeys.REDIS_HOST],
+      [envKeys.REDIS_PORT]: process.env[envKeys.REDIS_PORT],
     }),
   ],
 };
@@ -264,10 +293,10 @@ export const envLoader = {
 ```typescript
 // some.service.ts
 const redisHost = this.configService.get<string>(
-  EnvKeys.REDIS_HOST,
+  envKeys.REDIS_HOST,
   'localhost'
 );
-const redisPort = this.configService.get<number>(EnvKeys.REDIS_PORT, 6379);
+const redisPort = this.configService.get<number>(envKeys.REDIS_PORT, 6379);
 ```
 
 ## ⚠️ Важные моменты

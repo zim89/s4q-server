@@ -2,6 +2,37 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ContentCategory, LanguageLevel, SetType } from '@prisma/client';
 import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 
+/**
+ * DTO для создания нового набора карточек
+ *
+ * Используется для создания наборов карточек для изучения языков.
+ * Поддерживает различные типы наборов: языковые и пользовательские.
+ *
+ * @example
+ * ```typescript
+ * const createSetDto: CreateSetDto = {
+ *   name: 'Базовые английские слова',
+ *   description: 'Набор базовых английских слов для начинающих',
+ *   type: SetType.LANGUAGE,
+ *   level: LanguageLevel.A1,
+ *   contentCategory: ContentCategory.EDUCATIONAL,
+ *   isPublic: true
+ * };
+ * ```
+ *
+ * @example
+ * ```typescript
+ * // Пользовательский набор
+ * const createSetDto: CreateSetDto = {
+ *   name: 'Мои любимые слова',
+ *   description: 'Персональная коллекция интересных слов',
+ *   type: SetType.CUSTOM,
+ *   level: LanguageLevel.B2,
+ *   contentCategory: ContentCategory.ENTERTAINMENT,
+ *   isPublic: false
+ * };
+ * ```
+ */
 export class CreateSetDto {
   @ApiProperty({
     description: 'Название набора',

@@ -23,7 +23,7 @@ import { CardService } from './card.service';
 import { CardSwaggerDocs } from './decorators';
 import { CardQueryDto, CreateCardDto, UpdateCardDto } from './dto';
 
-@ApiTags('cards')
+@ApiTags('Cards')
 @Controller('cards')
 export class CardController {
   constructor(private readonly cardService: CardService) {}

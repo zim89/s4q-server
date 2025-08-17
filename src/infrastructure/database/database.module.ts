@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
+import { MigrationsController } from './migrations.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { DatabaseService } from './services/database.service';
+import { MigrationsService } from './services/migrations.service';
 
 /**
  * Database module
@@ -9,7 +11,8 @@ import { DatabaseService } from './services/database.service';
  */
 @Module({
   imports: [PrismaModule],
-  providers: [DatabaseService],
-  exports: [DatabaseService],
+  controllers: [MigrationsController],
+  providers: [DatabaseService, MigrationsService],
+  exports: [DatabaseService, MigrationsService],
 })
 export class DatabaseModule {}

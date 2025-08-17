@@ -1,25 +1,130 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Card, CardDifficulty, PartOfSpeech } from '@prisma/client';
+import {
+  Card,
+  CardDifficulty,
+  ContentStatus,
+  ContentType,
+  PartOfSpeech,
+} from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/database';
+import { DictionaryService } from 'src/integrations/dictionary';
 import { cardSortFields, sortOrders } from 'src/shared/constants/sort';
+import {
+  ContentAnalyzerService,
+  DifficultyCalculatorService,
+} from 'src/shared/services';
 import { PaginatedResponse } from 'src/shared/types';
 import { generateSlug } from 'src/shared/utils';
 import { CardQueryDto, CreateCardDto, UpdateCardDto } from './dto';
 
 @Injectable()
 export class CardService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dictionaryService: DictionaryService,
+    private readonly difficultyCalculator: DifficultyCalculatorService,
+    private readonly contentAnalyzer: ContentAnalyzerService
+  ) {}
 
   async create(createCardDto: CreateCardDto, userId?: string): Promise<Card> {
     const slug = generateSlug(createCardDto.wordOrPhrase);
 
+    // Подготавливаем данные для создания карточки
+    const cardData: CreateCardDto & {
+      slug: string;
+      userId?: string;
+      isGlobal: boolean;
+      contentType?: ContentType;
+      contentStatus?: ContentStatus;
+      sourceProvider?: string;
+      sourceId?: string;
+    } = {
+      ...createCardDto,
+      slug,
+      userId,
+      isGlobal: createCardDto.isGlobal ?? true,
+    };
+
+    // Определяем тип контента и статус
+    cardData.contentType ??= this.contentAnalyzer.determineContentType();
+    cardData.contentStatus ??= this.contentAnalyzer.determineContentStatus();
+
+    // Определяем часть речи если не указана
+    cardData.partOfSpeech ??= this.contentAnalyzer.determinePartOfSpeech(
+      createCardDto.wordOrPhrase
+    );
+
+    // Получаем информацию о языке для определения sourceProvider
+    let languageCode: string | undefined;
+    if (createCardDto.languageId) {
+      const language = await this.prisma.language.findUnique({
+        where: { id: createCardDto.languageId },
+        select: { code: true },
+      });
+      languageCode = language?.code;
+    }
+
+    // Устанавливаем sourceProvider и sourceId
+    cardData.sourceProvider = 'dictionary-api';
+    cardData.sourceId = createCardDto.wordOrPhrase;
+
+    // Если нужно получить данные из словаря
+    if (
+      this.contentAnalyzer.shouldFetchFromDictionary(
+        createCardDto.wordOrPhrase,
+        languageCode
+      )
+    ) {
+      try {
+        const wordInfo = await this.dictionaryService.getWordInfo(
+          createCardDto.wordOrPhrase
+        );
+
+        if (wordInfo) {
+          // Заполняем недостающие поля данными из словаря
+          if (!cardData.transcription && wordInfo.transcription) {
+            cardData.transcription = wordInfo.transcription;
+          }
+
+          if (!cardData.partOfSpeech && wordInfo.partOfSpeech) {
+            cardData.partOfSpeech = this.mapPartOfSpeech(wordInfo.partOfSpeech);
+          }
+
+          if (!cardData.audioUrl && wordInfo.audioUrl) {
+            cardData.audioUrl = wordInfo.audioUrl;
+          }
+        }
+      } catch (error) {
+        // Логируем ошибку, но продолжаем создание карточки
+        console.warn(
+          `Не удалось получить данные из словаря для слова "${createCardDto.wordOrPhrase}":`,
+          error
+        );
+      }
+    }
+
+    // Рассчитываем сложность
+    if (!cardData.difficulty) {
+      if (this.contentAnalyzer.isPhrasalVerb(createCardDto.wordOrPhrase)) {
+        cardData.difficulty = CardDifficulty.MEDIUM;
+      } else if (
+        this.contentAnalyzer.isPhrase(createCardDto.wordOrPhrase) ||
+        this.contentAnalyzer.isSentence(createCardDto.wordOrPhrase) ||
+        this.contentAnalyzer.isIdiom(createCardDto.wordOrPhrase)
+      ) {
+        const phraseDifficulty = this.contentAnalyzer.calculatePhraseDifficulty(
+          createCardDto.wordOrPhrase
+        );
+        cardData.difficulty = phraseDifficulty as CardDifficulty;
+      } else {
+        cardData.difficulty = this.difficultyCalculator.calculateDifficulty(
+          createCardDto.wordOrPhrase
+        );
+      }
+    }
+
     return this.prisma.card.create({
-      data: {
-        ...createCardDto,
-        slug,
-        userId,
-        isGlobal: createCardDto.isGlobal ?? true,
-      },
+      data: cardData,
     });
   }
 
@@ -138,5 +243,28 @@ export class CardService {
     await this.prisma.card.delete({
       where: { id },
     });
+  }
+
+  /**
+   * Преобразует часть речи из словаря в enum Prisma
+   */
+  private mapPartOfSpeech(
+    dictionaryPartOfSpeech: string
+  ): PartOfSpeech | undefined {
+    const mapping: Record<string, PartOfSpeech> = {
+      noun: PartOfSpeech.NOUN,
+      verb: PartOfSpeech.VERB,
+      adjective: PartOfSpeech.ADJECTIVE,
+      adverb: PartOfSpeech.ADVERB,
+      pronoun: PartOfSpeech.PRONOUN,
+      preposition: PartOfSpeech.PREPOSITION,
+      conjunction: PartOfSpeech.CONJUNCTION,
+      interjection: PartOfSpeech.INTERJECTION,
+      article: PartOfSpeech.ARTICLE,
+      particle: PartOfSpeech.PARTICLE,
+      phrase: PartOfSpeech.PHRASE,
+    };
+
+    return mapping[dictionaryPartOfSpeech.toLowerCase()];
   }
 }

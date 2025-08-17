@@ -18,7 +18,8 @@
   "@nestjs/platform-express": "^11.0.1",
   "@nestjs/schedule": "^6.0.0",
   "@nestjs/swagger": "^11.2.0",
-  "@nestjs/throttler": "^6.4.0"
+  "@nestjs/throttler": "^6.4.0",
+  "@nestjs/axios": "^4.0.1"
 }
 ```
 
@@ -58,6 +59,14 @@
 {
   "compression": "^1.8.1",
   "cookie-parser": "^1.4.7"
+}
+```
+
+### HTTP клиенты
+
+```json
+{
+  "@nestjs/axios": "^4.0.1"
 }
 ```
 
@@ -207,6 +216,37 @@ const UserSchema = z.object({
 - TypeScript интеграция
 - Автоматическая типизация
 
+### @nestjs/axios (4.0.1)
+
+**Назначение**: HTTP клиент для NestJS приложений
+
+**Использование**:
+
+```typescript
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
+
+@Injectable()
+export class SomeService {
+  constructor(private httpService: HttpService) {}
+
+  async fetchData() {
+    const response = await firstValueFrom(
+      this.httpService.get('https://api.example.com/data')
+    );
+    return response.data;
+  }
+}
+```
+
+**Особенности**:
+
+- Интеграция с NestJS DI
+- Поддержка RxJS Observable
+- Автоматическая обработка ошибок
+- TypeScript поддержка
+- Interceptors и middleware
+
 ## 📋 Управление зависимостями
 
 ### Добавление новых пакетов
@@ -271,3 +311,4 @@ bun audit
 - [Helmet Documentation](https://helmetjs.github.io/)
 - [Argon2 Documentation](https://github.com/ranisalt/node-argon2)
 - [Zod Documentation](https://zod.dev/)
+- [NestJS Axios Documentation](https://docs.nestjs.com/techniques/http-module)

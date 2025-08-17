@@ -16,65 +16,49 @@ import { envKeys } from './keys';
 export const envLoader = {
   load: [
     () => ({
+      // Application Configuration
+      [envKeys.NODE_ENV]: process.env[envKeys.NODE_ENV],
+      [envKeys.PORT]: process.env[envKeys.PORT],
+      [envKeys.GLOBAL_PREFIX]: process.env[envKeys.GLOBAL_PREFIX],
+
+      // JWT Configuration
       [envKeys.JWT_SECRET]: process.env[envKeys.JWT_SECRET],
       [envKeys.JWT_ACCESS_TOKEN_TTL]: process.env[envKeys.JWT_ACCESS_TOKEN_TTL],
       [envKeys.JWT_REFRESH_TOKEN_TTL]:
         process.env[envKeys.JWT_REFRESH_TOKEN_TTL],
       [envKeys.COOKIE_DOMAIN]: process.env[envKeys.COOKIE_DOMAIN],
       [envKeys.ALLOWED_ORIGINS]: process.env[envKeys.ALLOWED_ORIGINS],
-      [envKeys.PORT]: process.env[envKeys.PORT],
-      [envKeys.GLOBAL_PREFIX]: process.env[envKeys.GLOBAL_PREFIX],
-      // Email Configuration
-      [envKeys.SMTP_HOST]: process.env[envKeys.SMTP_HOST],
-      [envKeys.SMTP_PORT]: process.env[envKeys.SMTP_PORT],
-      [envKeys.SMTP_SECURE]: process.env[envKeys.SMTP_SECURE],
-      [envKeys.SMTP_USER]: process.env[envKeys.SMTP_USER],
-      [envKeys.SMTP_PASS]: process.env[envKeys.SMTP_PASS],
-      [envKeys.EMAIL_FROM]: process.env[envKeys.EMAIL_FROM],
-      [envKeys.EMAIL_REPLY_TO]: process.env[envKeys.EMAIL_REPLY_TO],
-      [envKeys.EMAIL_TEMPLATE_DIR]: process.env[envKeys.EMAIL_TEMPLATE_DIR],
-      // S3 Configuration
-      [envKeys.AWS_REGION]: process.env[envKeys.AWS_REGION],
-      [envKeys.AWS_ACCESS_KEY_ID]: process.env[envKeys.AWS_ACCESS_KEY_ID],
-      [envKeys.AWS_SECRET_ACCESS_KEY]:
-        process.env[envKeys.AWS_SECRET_ACCESS_KEY],
-      [envKeys.S3_BUCKET_NAME]: process.env[envKeys.S3_BUCKET_NAME],
-      [envKeys.S3_ENDPOINT]: process.env[envKeys.S3_ENDPOINT],
-      [envKeys.S3_MAX_FILE_SIZE]: process.env[envKeys.S3_MAX_FILE_SIZE],
-      [envKeys.S3_ALLOWED_MIME_TYPES]:
-        process.env[envKeys.S3_ALLOWED_MIME_TYPES],
-      // Stripe Configuration
-      [envKeys.STRIPE_PUBLISHABLE_KEY]:
-        process.env[envKeys.STRIPE_PUBLISHABLE_KEY],
-      [envKeys.STRIPE_SECRET_KEY]: process.env[envKeys.STRIPE_SECRET_KEY],
-      [envKeys.STRIPE_WEBHOOK_SECRET]:
-        process.env[envKeys.STRIPE_WEBHOOK_SECRET],
-      [envKeys.STRIPE_CURRENCY]: process.env[envKeys.STRIPE_CURRENCY],
-      [envKeys.STRIPE_PAYMENT_METHODS]:
-        process.env[envKeys.STRIPE_PAYMENT_METHODS],
-      [envKeys.STRIPE_DEFAULT_TRIAL_DAYS]:
-        process.env[envKeys.STRIPE_DEFAULT_TRIAL_DAYS],
-      [envKeys.STRIPE_ENABLE_SUBSCRIPTIONS]:
-        process.env[envKeys.STRIPE_ENABLE_SUBSCRIPTIONS],
-      [envKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS]:
-        process.env[envKeys.STRIPE_ENABLE_ONE_TIME_PAYMENTS],
-      // Telegram Configuration
-      [envKeys.TELEGRAM_BOT_TOKEN]: process.env[envKeys.TELEGRAM_BOT_TOKEN],
-      [envKeys.TELEGRAM_BOT_USERNAME]:
-        process.env[envKeys.TELEGRAM_BOT_USERNAME],
-      [envKeys.TELEGRAM_WEBHOOK_URL]: process.env[envKeys.TELEGRAM_WEBHOOK_URL],
-      [envKeys.TELEGRAM_WEBHOOK_SECRET]:
-        process.env[envKeys.TELEGRAM_WEBHOOK_SECRET],
-      [envKeys.TELEGRAM_ENABLE_WEBHOOK]:
-        process.env[envKeys.TELEGRAM_ENABLE_WEBHOOK],
-      [envKeys.TELEGRAM_ENABLE_POLLING]:
-        process.env[envKeys.TELEGRAM_ENABLE_POLLING],
-      [envKeys.TELEGRAM_DEFAULT_PARSE_MODE]:
-        process.env[envKeys.TELEGRAM_DEFAULT_PARSE_MODE],
-      [envKeys.TELEGRAM_ENABLE_NOTIFICATIONS]:
-        process.env[envKeys.TELEGRAM_ENABLE_NOTIFICATIONS],
-      [envKeys.TELEGRAM_ENABLE_COMMANDS]:
-        process.env[envKeys.TELEGRAM_ENABLE_COMMANDS],
+
+      // Database Configuration
+      [envKeys.POSTGRES_URI]: process.env[envKeys.POSTGRES_URI],
+      [envKeys.POSTGRES_SHADOW_URI]: process.env[envKeys.POSTGRES_SHADOW_URI],
+      [envKeys.DB_POOL_MIN]: process.env[envKeys.DB_POOL_MIN],
+      [envKeys.DB_POOL_MAX]: process.env[envKeys.DB_POOL_MAX],
+      [envKeys.DB_IDLE_TIMEOUT]: process.env[envKeys.DB_IDLE_TIMEOUT],
+      [envKeys.DB_CONNECTION_TIMEOUT]:
+        process.env[envKeys.DB_CONNECTION_TIMEOUT],
+      [envKeys.DB_LOGGING_ENABLED]: process.env[envKeys.DB_LOGGING_ENABLED],
+      [envKeys.DB_SLOW_QUERY_THRESHOLD]:
+        process.env[envKeys.DB_SLOW_QUERY_THRESHOLD],
+      [envKeys.DB_SEED_ENABLED]: process.env[envKeys.DB_SEED_ENABLED],
+
+      // Database Monitoring Configuration
+      [envKeys.DB_METRICS_ENABLED]: process.env[envKeys.DB_METRICS_ENABLED],
+      [envKeys.DB_METRICS_INTERVAL]: process.env[envKeys.DB_METRICS_INTERVAL],
+      [envKeys.DB_ALERT_SLOW_QUERY]: process.env[envKeys.DB_ALERT_SLOW_QUERY],
+      [envKeys.DB_ALERT_CONNECTION_ERRORS]:
+        process.env[envKeys.DB_ALERT_CONNECTION_ERRORS],
+      [envKeys.DB_LOG_QUERIES]: process.env[envKeys.DB_LOG_QUERIES],
+      [envKeys.DB_LOG_PARAMETERS]: process.env[envKeys.DB_LOG_PARAMETERS],
+      [envKeys.DB_LOG_QUERY_TIME]: process.env[envKeys.DB_LOG_QUERY_TIME],
+
+      // Integrations Configuration
+      [envKeys.FREE_DICTIONARY_API_URL]:
+        process.env[envKeys.FREE_DICTIONARY_API_URL],
+      [envKeys.FREE_DICTIONARY_API_TIMEOUT]:
+        process.env[envKeys.FREE_DICTIONARY_API_TIMEOUT],
+      [envKeys.FREE_DICTIONARY_API_RETRIES]:
+        process.env[envKeys.FREE_DICTIONARY_API_RETRIES],
     }),
   ],
 };

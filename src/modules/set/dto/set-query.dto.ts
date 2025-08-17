@@ -9,6 +9,37 @@ import {
 } from 'src/shared/constants/sort';
 import { PaginationDto } from 'src/shared/dto';
 
+/**
+ * DTO для запросов с фильтрацией и пагинацией наборов
+ *
+ * Расширяет {@link PaginationDto} и добавляет специфичные для наборов фильтры.
+ * Используется для получения списка наборов с возможностью фильтрации и сортировки.
+ *
+ * @example
+ * ```typescript
+ * const queryDto: SetQueryDto = {
+ *   page: 1,
+ *   limit: 20,
+ *   type: SetType.LANGUAGE,
+ *   level: LanguageLevel.A1,
+ *   contentCategory: ContentCategory.EDUCATIONAL,
+ *   search: 'english',
+ *   sort: 'createdAt',
+ *   order: 'desc'
+ * };
+ * ```
+ *
+ * @example
+ * ```typescript
+ * // Поиск по типу и уровню
+ * const queryDto: SetQueryDto = {
+ *   type: SetType.CUSTOM,
+ *   level: LanguageLevel.B2,
+ *   sort: 'name',
+ *   order: 'asc'
+ * };
+ * ```
+ */
 export class SetQueryDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Тип набора',
