@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { envLoader, envSchema } from './config';
 import { PrismaModule } from './infrastructure/database';
 import { AuthModule } from './modules/auth/auth.module';
+import { CardModule } from './modules/card/card.module';
 import { SetModule } from './modules/set/set.module';
 import { UserModule } from './modules/user/user.module';
 import { AppThrottlerGuard } from './shared/guards';
@@ -40,6 +41,7 @@ import { VersionService } from './shared/services';
     ]),
     PrismaModule,
     AuthModule,
+    CardModule,
     SetModule,
     UserModule,
   ],

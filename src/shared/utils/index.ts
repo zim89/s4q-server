@@ -6,3 +6,4 @@ export {
   isProduction,
   isTest,
 } from './env';
+export { generateSlug } from './slug';

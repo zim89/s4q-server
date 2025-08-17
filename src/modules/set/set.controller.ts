@@ -3,63 +3,94 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Param,
   Patch,
   Post,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Set, UserRole } from '@prisma/client';
 import {
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+  CurrentUser,
+  JwtGuard,
+  RequireRoles,
+  RolesGuard,
+} from 'src/modules/auth';
 import { BodyRequiredPipe } from 'src/shared/pipes';
-import { CreateSetDto } from './dto/create-set.dto';
-import { UpdateSetDto } from './dto/update-set.dto';
+import { PaginatedResponse } from 'src/shared/types';
+import { SetSwaggerDocs } from './decorators';
+import { CreateSetDto, SetQueryDto, UpdateSetDto } from './dto';
 import { SetService } from './set.service';
 
-@ApiTags('Sets')
-@Controller('set')
+@ApiTags('sets')
+@Controller('sets')
 export class SetController {
   constructor(private readonly setService: SetService) {}
 
-  @ApiOperation({
-    summary: 'Create a new set',
-    description: 'Creates a new set with the provided details.',
-  })
-  @ApiOkResponse({
-    description: 'The set has been successfully created.',
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: 'Set not found.',
-  })
   @Post()
-  create(@Body(BodyRequiredPipe) createSetDto: CreateSetDto) {
-    return this.setService.create(createSetDto);
+  @UseGuards(JwtGuard, RolesGuard)
+  @RequireRoles(UserRole.ADMIN)
+  @SetSwaggerDocs.create()
+  async create(
+    @Body(BodyRequiredPipe) createSetDto: CreateSetDto,
+    @CurrentUser('id') userId: string
+  ): Promise<Set> {
+    return this.setService.create(createSetDto, userId);
   }
 
   @Get()
-  findAll() {
-    return this.setService.findAll();
+  @SetSwaggerDocs.findAll()
+  async findAll(
+    @Query() queryDto: SetQueryDto
+  ): Promise<PaginatedResponse<Set>> {
+    return this.setService.findAll(queryDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.setService.findOne(+id);
+  @SetSwaggerDocs.findOne()
+  async findOne(@Param('id') id: string): Promise<Set> {
+    return this.setService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  @UseGuards(JwtGuard, RolesGuard)
+  @RequireRoles(UserRole.ADMIN)
+  @SetSwaggerDocs.update()
+  async update(
     @Param('id') id: string,
     @Body(BodyRequiredPipe) updateSetDto: UpdateSetDto
-  ) {
-    return this.setService.update(+id, updateSetDto);
+  ): Promise<Set> {
+    return this.setService.update(id, updateSetDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.setService.remove(+id);
+  @UseGuards(JwtGuard, RolesGuard)
+  @RequireRoles(UserRole.ADMIN)
+  @SetSwaggerDocs.remove()
+  async remove(@Param('id') id: string): Promise<void> {
+    return this.setService.remove(id);
+  }
+
+  @Post(':id/cards/:cardId')
+  @UseGuards(JwtGuard, RolesGuard)
+  @RequireRoles(UserRole.ADMIN)
+  @SetSwaggerDocs.addCardToSet()
+  async addCardToSet(
+    @Param('id') setId: string,
+    @Param('cardId') cardId: string
+  ): Promise<void> {
+    return this.setService.addCardToSet(setId, cardId);
+  }
+
+  @Delete(':id/cards/:cardId')
+  @UseGuards(JwtGuard, RolesGuard)
+  @RequireRoles(UserRole.ADMIN)
+  @SetSwaggerDocs.removeCardFromSet()
+  async removeCardFromSet(
+    @Param('id') setId: string,
+    @Param('cardId') cardId: string
+  ): Promise<void> {
+    return this.setService.removeCardFromSet(setId, cardId);
   }
 }
