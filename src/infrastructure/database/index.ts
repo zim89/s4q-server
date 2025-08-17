@@ -1,3 +1,6 @@
+// Database module
+export { DatabaseModule } from './database.module';
+
 // Database services
 export { DatabaseService } from './services/database.service';
 export { MigrationsService } from './services/migrations.service';

@@ -18,6 +18,10 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
 
+  // 🌐 Глобальный префикс API из конфига
+  const globalPrefix = config.get<string>(envKeys.GLOBAL_PREFIX, 'api');
+  app.setGlobalPrefix(globalPrefix);
+
   // 🔒 Безопасность: HTTP заголовки безопасности
   app.use(helmet());
 

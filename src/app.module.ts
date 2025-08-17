@@ -5,7 +5,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { z } from 'zod';
 import { AppController } from './app.controller';
 import { envLoader, envSchema } from './config';
-import { PrismaModule } from './infrastructure/database';
+import { DatabaseModule } from './infrastructure/database';
 import { DictionaryModule } from './integrations/dictionary';
 import { AuthModule } from './modules/auth/auth.module';
 import { CardModule } from './modules/card/card.module';
@@ -40,12 +40,12 @@ import { VersionService } from './shared/services';
         limit: 100, // максимум 100 запросов в минуту
       },
     ]),
-    PrismaModule,
+    DatabaseModule,
     AuthModule,
-    CardModule,
-    SetModule,
     UserModule,
     DictionaryModule,
+    CardModule,
+    SetModule,
   ],
   controllers: [AppController],
   providers: [

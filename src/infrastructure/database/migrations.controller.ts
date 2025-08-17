@@ -7,10 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { UserRole } from '@prisma/client';
 import { RequireRoles } from 'src/modules/auth/decorators';
 import { RolesGuard } from 'src/modules/auth/guards';
+import { MigrationsSwaggerDocs } from './decorators';
 import { MigrationsService } from './services/migrations.service';
 
 /**
@@ -35,18 +36,7 @@ export class MigrationsController {
 
   @Post('generate')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Создать новую миграцию',
-    description: 'Создает новую миграцию на основе изменений в схеме Prisma',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Миграция успешно создана',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.generateMigration()
   async generateMigration(@Body() createMigrationDto: CreateMigrationDto) {
     const result = await this.migrationsService.generateMigration(
       createMigrationDto.name
@@ -60,18 +50,7 @@ export class MigrationsController {
 
   @Post('apply')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Применить миграции',
-    description: 'Применяет все ожидающие миграции к базе данных',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Миграции успешно применены',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.applyMigrations()
   async applyMigrations() {
     const result = await this.migrationsService.applyMigrations();
     return {
@@ -83,18 +62,7 @@ export class MigrationsController {
 
   @Post('reset')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Сбросить базу данных',
-    description: 'Сбрасывает базу данных (только для разработки)',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'База данных успешно сброшена',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.resetDatabase()
   async resetDatabase() {
     const result = await this.migrationsService.resetDatabase();
     return {
@@ -105,18 +73,7 @@ export class MigrationsController {
   }
 
   @Get('status')
-  @ApiOperation({
-    summary: 'Получить статус миграций',
-    description: 'Возвращает текущий статус миграций базы данных',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Статус миграций получен',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.getMigrationStatus()
   async getMigrationStatus() {
     const result = await this.migrationsService.getMigrationStatus();
     return {
@@ -127,18 +84,7 @@ export class MigrationsController {
 
   @Post('generate-client')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Сгенерировать Prisma клиент',
-    description: 'Генерирует Prisma клиент на основе текущей схемы',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Prisma клиент успешно сгенерирован',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.generateClient()
   async generateClient() {
     const result = await this.migrationsService.generateClient();
     return {
@@ -150,18 +96,7 @@ export class MigrationsController {
 
   @Post('push-schema')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Применить схему напрямую',
-    description: 'Применяет изменения схемы напрямую (только для разработки)',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Схема успешно применена',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'Доступ запрещен (только для администраторов)',
-  })
+  @MigrationsSwaggerDocs.pushSchema()
   async pushSchema() {
     const result = await this.migrationsService.pushSchema();
     return {
