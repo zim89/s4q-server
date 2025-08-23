@@ -105,7 +105,7 @@ model Card {
   sets          Set[] @relation("sets_cards")
 
   @@map("cards")
-  @@unique([slug, languageId, sourceProvider, sourceId])
+  @@unique([slug, partOfSpeech, languageId])
   @@index([languageId, level, isGlobal])
   @@index([wordOrPhrase])
   @@index([userId, isGlobal])

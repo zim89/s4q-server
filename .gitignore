@@ -98,10 +98,14 @@ data/
 
 # Development files
 notes.md
+
+# Backlog (временные файлы для будущей реализации)
+backlog/
 .coding-standards.md
 
 # Templates (uncomment to ignore)
-# templates/
+
+template/
 *.md.bak
 *.tmp
 

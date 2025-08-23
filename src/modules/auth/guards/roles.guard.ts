@@ -29,6 +29,8 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest<Request>();
+
     const requiredRoles = this.reflector.get<UserRole[]>(
       'roles',
       context.getHandler()
@@ -39,7 +41,6 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest<Request>();
     const user = request.user as AuthenticatedUser | undefined;
 
     // Check if user is authenticated

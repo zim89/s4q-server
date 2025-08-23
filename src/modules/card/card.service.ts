@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   Card,
   CardDifficulty,
@@ -29,6 +33,36 @@ export class CardService {
   async create(createCardDto: CreateCardDto, userId?: string): Promise<Card> {
     const slug = generateSlug(createCardDto.wordOrPhrase);
 
+    // Получаем язык по умолчанию (английский) если не указан
+    let languageId = createCardDto.languageId;
+    if (!languageId) {
+      const defaultLanguage = await this.prisma.language.findFirst({
+        where: { code: 'en' },
+        select: { id: true },
+      });
+      languageId = defaultLanguage?.id;
+    }
+
+    // Определяем часть речи
+    const partOfSpeech =
+      createCardDto.partOfSpeech ??
+      this.contentAnalyzer.determinePartOfSpeech(createCardDto.wordOrPhrase);
+
+    // Проверяем, существует ли уже карточка с таким slug, partOfSpeech и languageId
+    const existingCard = await this.prisma.card.findFirst({
+      where: {
+        slug,
+        partOfSpeech,
+        languageId,
+      },
+    });
+
+    if (existingCard) {
+      throw new ConflictException(
+        `Карточка со словом "${createCardDto.wordOrPhrase}" (часть речи: ${partOfSpeech}) уже существует`
+      );
+    }
+
     // Подготавливаем данные для создания карточки
     const cardData: CreateCardDto & {
       slug: string;
@@ -42,6 +76,7 @@ export class CardService {
       ...createCardDto,
       slug,
       userId,
+      languageId,
       isGlobal: createCardDto.isGlobal ?? true,
     };
 
@@ -89,6 +124,12 @@ export class CardService {
           if (!cardData.partOfSpeech && wordInfo.partOfSpeech) {
             cardData.partOfSpeech = this.mapPartOfSpeech(wordInfo.partOfSpeech);
           }
+
+          // Исправляем неправильные части речи для известных слов
+          cardData.partOfSpeech = this.correctPartOfSpeech(
+            createCardDto.wordOrPhrase,
+            cardData.partOfSpeech
+          );
 
           if (!cardData.audioUrl && wordInfo.audioUrl) {
             cardData.audioUrl = wordInfo.audioUrl;
@@ -266,5 +307,92 @@ export class CardService {
     };
 
     return mapping[dictionaryPartOfSpeech.toLowerCase()];
+  }
+
+  /**
+   * Исправляет неправильные части речи для известных слов
+   */
+  private correctPartOfSpeech(
+    word: string,
+    currentPartOfSpeech?: PartOfSpeech
+  ): PartOfSpeech | undefined {
+    const normalizedWord = word.toLowerCase().trim();
+
+    // Слова, которые часто неправильно определяются API
+    const corrections: Record<string, PartOfSpeech> = {
+      // Прилагательные, которые API часто определяет как существительные
+      beautiful: PartOfSpeech.ADJECTIVE,
+      nice: PartOfSpeech.ADJECTIVE,
+      pretty: PartOfSpeech.ADJECTIVE,
+      handsome: PartOfSpeech.ADJECTIVE,
+      lovely: PartOfSpeech.ADJECTIVE,
+      gorgeous: PartOfSpeech.ADJECTIVE,
+      stunning: PartOfSpeech.ADJECTIVE,
+      attractive: PartOfSpeech.ADJECTIVE,
+      cute: PartOfSpeech.ADJECTIVE,
+      charming: PartOfSpeech.ADJECTIVE,
+      elegant: PartOfSpeech.ADJECTIVE,
+      graceful: PartOfSpeech.ADJECTIVE,
+      splendid: PartOfSpeech.ADJECTIVE,
+      magnificent: PartOfSpeech.ADJECTIVE,
+      wonderful: PartOfSpeech.ADJECTIVE,
+      fantastic: PartOfSpeech.ADJECTIVE,
+      amazing: PartOfSpeech.ADJECTIVE,
+      excellent: PartOfSpeech.ADJECTIVE,
+      perfect: PartOfSpeech.ADJECTIVE,
+      brilliant: PartOfSpeech.ADJECTIVE,
+      outstanding: PartOfSpeech.ADJECTIVE,
+      superb: PartOfSpeech.ADJECTIVE,
+      terrific: PartOfSpeech.ADJECTIVE,
+      awesome: PartOfSpeech.ADJECTIVE,
+      fabulous: PartOfSpeech.ADJECTIVE,
+      marvelous: PartOfSpeech.ADJECTIVE,
+      glorious: PartOfSpeech.ADJECTIVE,
+      divine: PartOfSpeech.ADJECTIVE,
+      heavenly: PartOfSpeech.ADJECTIVE,
+
+      // Глаголы
+      go: PartOfSpeech.VERB,
+      get: PartOfSpeech.VERB,
+      make: PartOfSpeech.VERB,
+      take: PartOfSpeech.VERB,
+      see: PartOfSpeech.VERB,
+      come: PartOfSpeech.VERB,
+      know: PartOfSpeech.VERB,
+      think: PartOfSpeech.VERB,
+      look: PartOfSpeech.VERB,
+      want: PartOfSpeech.VERB,
+      give: PartOfSpeech.VERB,
+      use: PartOfSpeech.VERB,
+      find: PartOfSpeech.VERB,
+      tell: PartOfSpeech.VERB,
+      ask: PartOfSpeech.VERB,
+      work: PartOfSpeech.VERB,
+      seem: PartOfSpeech.VERB,
+      feel: PartOfSpeech.VERB,
+      try: PartOfSpeech.VERB,
+      leave: PartOfSpeech.VERB,
+      call: PartOfSpeech.VERB,
+
+      // Наречия
+      very: PartOfSpeech.ADVERB,
+      really: PartOfSpeech.ADVERB,
+      quite: PartOfSpeech.ADVERB,
+      rather: PartOfSpeech.ADVERB,
+      extremely: PartOfSpeech.ADVERB,
+      absolutely: PartOfSpeech.ADVERB,
+      completely: PartOfSpeech.ADVERB,
+      totally: PartOfSpeech.ADVERB,
+      entirely: PartOfSpeech.ADVERB,
+      fully: PartOfSpeech.ADVERB,
+    };
+
+    // Если есть исправление для этого слова, используем его
+    if (corrections[normalizedWord]) {
+      return corrections[normalizedWord];
+    }
+
+    // Иначе возвращаем исходную часть речи
+    return currentPartOfSpeech;
   }
 }
