@@ -1,2 +1,2 @@
-export * from './dictionary.types';
 export * from './transcription.types';
+export * from './word-info.types';

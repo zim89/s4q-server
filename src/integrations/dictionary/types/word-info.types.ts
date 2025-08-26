@@ -1,25 +1,6 @@
 /**
- * Основные типы для работы с API словарей
+ * Общие типы для работы с информацией о словах
  */
-
-/**
- * Ответ от Free Dictionary API
- */
-export interface DictionaryResponse {
-  word: string;
-  phonetic?: string;
-  phonetics?: Array<{
-    text?: string;
-    audio?: string;
-  }>;
-  meanings?: Array<{
-    partOfSpeech?: string;
-    definitions?: Array<{
-      definition: string;
-      example?: string;
-    }>;
-  }>;
-}
 
 /**
  * Общая информация о слове

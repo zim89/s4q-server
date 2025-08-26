@@ -56,6 +56,10 @@ export const envSchema = z.object({
     .default('https://api.dictionaryapi.dev/api/v2/entries/en'),
   [envKeys.FREE_DICTIONARY_API_TIMEOUT]: z.coerce.number().default(5000),
   [envKeys.FREE_DICTIONARY_API_RETRIES]: z.coerce.number().default(3),
+  // Конфигурация словарей
+  [envKeys.DICTIONARY_PROVIDER]: z.string().default('merriam-webster'),
+  [envKeys.MERRIAM_API_KEY]: z.string().optional(),
+  [envKeys.MERRIAM_API_URL]: z.string().optional(),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;

@@ -30,14 +30,21 @@ export class ContentAnalyzerService {
 
   /**
    * Проверяет, является ли контент отдельным словом
+   *
+   * Поддерживает:
+   * - Обычные слова: hello, beautiful, computer
+   * - Составные слова с дефисом: self-driving, well-known, up-to-date
+   * - Слова с апострофом: don't, can't, it's
+   * - Слова с точкой: e.g., i.e., etc.
+   *
+   * НЕ поддерживает:
+   * - Фразы с пробелами: hello world, look up
+   * - Предложения: Hello, how are you?
+   * - Числа: 123, 3.14
+   * - Специальные символы: @#$%
    */
   isSingleWord(content: string): boolean {
     const normalized = content.trim();
-
-    // Проверяем, что это одно слово без пробелов
-    if (normalized.includes(' ')) {
-      return false;
-    }
 
     // Проверяем, что это не пустая строка
     if (normalized.length === 0) {
@@ -49,7 +56,46 @@ export class ContentAnalyzerService {
       return false;
     }
 
+    // Проверяем, что это не число (целое или дробное)
+    if (/^\d+(\.\d+)?$/.test(normalized)) {
+      return false;
+    }
+
+    // Проверяем, что это не только специальные символы
+    if (/^[^\w\s\-'.]+$/.test(normalized)) {
+      return false;
+    }
+
+    // Проверяем, что это не фраза с пробелами (но разрешаем составные слова)
+    if (normalized.includes(' ') && !this.isCompoundWord(normalized)) {
+      return false;
+    }
+
     return true;
+  }
+
+  /**
+   * Проверяет, является ли слово составным (с дефисом)
+   */
+  private isCompoundWord(word: string): boolean {
+    // Составные слова содержат дефис и не содержат пробелы
+    if (!word.includes('-') || word.includes(' ')) {
+      return false;
+    }
+
+    // Разбиваем по дефису и проверяем каждую часть
+    const parts = word.split('-');
+
+    // Должно быть минимум 2 части
+    if (parts.length < 2) {
+      return false;
+    }
+
+    // Каждая часть должна быть валидным словом
+    return parts.every(part => {
+      const trimmedPart = part.trim();
+      return trimmedPart.length > 0 && /^[a-zA-Z]+$/.test(trimmedPart);
+    });
   }
 
   /**

@@ -59,6 +59,10 @@ export const envLoader = {
         process.env[envKeys.FREE_DICTIONARY_API_TIMEOUT],
       [envKeys.FREE_DICTIONARY_API_RETRIES]:
         process.env[envKeys.FREE_DICTIONARY_API_RETRIES],
+      // Конфигурация словарей
+      [envKeys.DICTIONARY_PROVIDER]: process.env[envKeys.DICTIONARY_PROVIDER],
+      [envKeys.MERRIAM_API_KEY]: process.env[envKeys.MERRIAM_API_KEY],
+      [envKeys.MERRIAM_API_URL]: process.env[envKeys.MERRIAM_API_URL],
     }),
   ],
 };

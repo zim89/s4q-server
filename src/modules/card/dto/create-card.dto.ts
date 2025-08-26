@@ -81,7 +81,8 @@ export class CreateCardDto {
   partOfSpeech?: PartOfSpeech;
 
   @ApiPropertyOptional({
-    description: 'Фонетическая транскрипция',
+    description:
+      'Фонетическая транскрипция. Если не указана, будет автоматически получена из словаря (только для отдельных слов). Поддерживает обычные слова, составные слова с дефисом, слова с апострофом и сокращения.',
     example: 'həˈloʊ',
   })
   @IsOptional()

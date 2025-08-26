@@ -26,8 +26,8 @@ export class CardService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly dictionaryService: DictionaryService,
-    private readonly difficultyCalculator: DifficultyCalculatorService,
-    private readonly contentAnalyzer: ContentAnalyzerService
+    private readonly contentAnalyzer: ContentAnalyzerService,
+    private readonly difficultyCalculator: DifficultyCalculatorService
   ) {}
 
   async create(createCardDto: CreateCardDto, userId?: string): Promise<Card> {
@@ -43,23 +43,18 @@ export class CardService {
       languageId = defaultLanguage?.id;
     }
 
-    // Определяем часть речи
-    const partOfSpeech =
-      createCardDto.partOfSpeech ??
-      this.contentAnalyzer.determinePartOfSpeech(createCardDto.wordOrPhrase);
-
     // Проверяем, существует ли уже карточка с таким slug, partOfSpeech и languageId
     const existingCard = await this.prisma.card.findFirst({
       where: {
         slug,
-        partOfSpeech,
+        partOfSpeech: createCardDto.partOfSpeech,
         languageId,
       },
     });
 
     if (existingCard) {
       throw new ConflictException(
-        `Карточка со словом "${createCardDto.wordOrPhrase}" (часть речи: ${partOfSpeech}) уже существует`
+        `Карточка со словом "${createCardDto.wordOrPhrase}" уже существует`
       );
     }
 
@@ -70,8 +65,6 @@ export class CardService {
       isGlobal: boolean;
       contentType?: ContentType;
       contentStatus?: ContentStatus;
-      sourceProvider?: string;
-      sourceId?: string;
     } = {
       ...createCardDto,
       slug,
@@ -84,85 +77,34 @@ export class CardService {
     cardData.contentType ??= this.contentAnalyzer.determineContentType();
     cardData.contentStatus ??= this.contentAnalyzer.determineContentStatus();
 
-    // Определяем часть речи если не указана
-    cardData.partOfSpeech ??= this.contentAnalyzer.determinePartOfSpeech(
-      createCardDto.wordOrPhrase
-    );
-
-    // Получаем информацию о языке для определения sourceProvider
-    let languageCode: string | undefined;
-    if (createCardDto.languageId) {
-      const language = await this.prisma.language.findUnique({
-        where: { id: createCardDto.languageId },
-        select: { code: true },
-      });
-      languageCode = language?.code;
-    }
-
-    // Устанавливаем sourceProvider и sourceId
-    cardData.sourceProvider = 'dictionary-api';
-    cardData.sourceId = createCardDto.wordOrPhrase;
-
-    // Если нужно получить данные из словаря
+    // Получаем транскрипцию только для отдельных слов
     if (
-      this.contentAnalyzer.shouldFetchFromDictionary(
-        createCardDto.wordOrPhrase,
-        languageCode
-      )
+      !cardData.transcription &&
+      this.contentAnalyzer.isSingleWord(createCardDto.wordOrPhrase)
     ) {
       try {
-        const wordInfo = await this.dictionaryService.getWordInfo(
-          createCardDto.wordOrPhrase
-        );
-
-        if (wordInfo) {
-          // Заполняем недостающие поля данными из словаря
-          if (!cardData.transcription && wordInfo.transcription) {
-            cardData.transcription = wordInfo.transcription;
-          }
-
-          if (!cardData.partOfSpeech && wordInfo.partOfSpeech) {
-            cardData.partOfSpeech = this.mapPartOfSpeech(wordInfo.partOfSpeech);
-          }
-
-          // Исправляем неправильные части речи для известных слов
-          cardData.partOfSpeech = this.correctPartOfSpeech(
-            createCardDto.wordOrPhrase,
-            cardData.partOfSpeech
+        const transcriptionResult =
+          await this.dictionaryService.getTranscription(
+            createCardDto.wordOrPhrase
           );
 
-          if (!cardData.audioUrl && wordInfo.audioUrl) {
-            cardData.audioUrl = wordInfo.audioUrl;
-          }
+        if (transcriptionResult?.transcription) {
+          cardData.transcription = transcriptionResult.transcription;
         }
       } catch (error) {
         // Логируем ошибку, но продолжаем создание карточки
         console.warn(
-          `Не удалось получить данные из словаря для слова "${createCardDto.wordOrPhrase}":`,
+          `⚠️ Не удалось получить транскрипцию для слова "${createCardDto.wordOrPhrase}":`,
           error
         );
       }
     }
 
-    // Рассчитываем сложность
-    if (!cardData.difficulty) {
-      if (this.contentAnalyzer.isPhrasalVerb(createCardDto.wordOrPhrase)) {
-        cardData.difficulty = CardDifficulty.MEDIUM;
-      } else if (
-        this.contentAnalyzer.isPhrase(createCardDto.wordOrPhrase) ||
-        this.contentAnalyzer.isSentence(createCardDto.wordOrPhrase) ||
-        this.contentAnalyzer.isIdiom(createCardDto.wordOrPhrase)
-      ) {
-        const phraseDifficulty = this.contentAnalyzer.calculatePhraseDifficulty(
-          createCardDto.wordOrPhrase
-        );
-        cardData.difficulty = phraseDifficulty as CardDifficulty;
-      } else {
-        cardData.difficulty = this.difficultyCalculator.calculateDifficulty(
-          createCardDto.wordOrPhrase
-        );
-      }
-    }
+    // Рассчитываем сложность если не указана
+    cardData.difficulty ??= this.difficultyCalculator.calculateDifficulty(
+      createCardDto.wordOrPhrase,
+      createCardDto.partOfSpeech
+    );
 
     return this.prisma.card.create({
       data: cardData,
@@ -284,115 +226,5 @@ export class CardService {
     await this.prisma.card.delete({
       where: { id },
     });
-  }
-
-  /**
-   * Преобразует часть речи из словаря в enum Prisma
-   */
-  private mapPartOfSpeech(
-    dictionaryPartOfSpeech: string
-  ): PartOfSpeech | undefined {
-    const mapping: Record<string, PartOfSpeech> = {
-      noun: PartOfSpeech.NOUN,
-      verb: PartOfSpeech.VERB,
-      adjective: PartOfSpeech.ADJECTIVE,
-      adverb: PartOfSpeech.ADVERB,
-      pronoun: PartOfSpeech.PRONOUN,
-      preposition: PartOfSpeech.PREPOSITION,
-      conjunction: PartOfSpeech.CONJUNCTION,
-      interjection: PartOfSpeech.INTERJECTION,
-      article: PartOfSpeech.ARTICLE,
-      particle: PartOfSpeech.PARTICLE,
-      phrase: PartOfSpeech.PHRASE,
-    };
-
-    return mapping[dictionaryPartOfSpeech.toLowerCase()];
-  }
-
-  /**
-   * Исправляет неправильные части речи для известных слов
-   */
-  private correctPartOfSpeech(
-    word: string,
-    currentPartOfSpeech?: PartOfSpeech
-  ): PartOfSpeech | undefined {
-    const normalizedWord = word.toLowerCase().trim();
-
-    // Слова, которые часто неправильно определяются API
-    const corrections: Record<string, PartOfSpeech> = {
-      // Прилагательные, которые API часто определяет как существительные
-      beautiful: PartOfSpeech.ADJECTIVE,
-      nice: PartOfSpeech.ADJECTIVE,
-      pretty: PartOfSpeech.ADJECTIVE,
-      handsome: PartOfSpeech.ADJECTIVE,
-      lovely: PartOfSpeech.ADJECTIVE,
-      gorgeous: PartOfSpeech.ADJECTIVE,
-      stunning: PartOfSpeech.ADJECTIVE,
-      attractive: PartOfSpeech.ADJECTIVE,
-      cute: PartOfSpeech.ADJECTIVE,
-      charming: PartOfSpeech.ADJECTIVE,
-      elegant: PartOfSpeech.ADJECTIVE,
-      graceful: PartOfSpeech.ADJECTIVE,
-      splendid: PartOfSpeech.ADJECTIVE,
-      magnificent: PartOfSpeech.ADJECTIVE,
-      wonderful: PartOfSpeech.ADJECTIVE,
-      fantastic: PartOfSpeech.ADJECTIVE,
-      amazing: PartOfSpeech.ADJECTIVE,
-      excellent: PartOfSpeech.ADJECTIVE,
-      perfect: PartOfSpeech.ADJECTIVE,
-      brilliant: PartOfSpeech.ADJECTIVE,
-      outstanding: PartOfSpeech.ADJECTIVE,
-      superb: PartOfSpeech.ADJECTIVE,
-      terrific: PartOfSpeech.ADJECTIVE,
-      awesome: PartOfSpeech.ADJECTIVE,
-      fabulous: PartOfSpeech.ADJECTIVE,
-      marvelous: PartOfSpeech.ADJECTIVE,
-      glorious: PartOfSpeech.ADJECTIVE,
-      divine: PartOfSpeech.ADJECTIVE,
-      heavenly: PartOfSpeech.ADJECTIVE,
-
-      // Глаголы
-      go: PartOfSpeech.VERB,
-      get: PartOfSpeech.VERB,
-      make: PartOfSpeech.VERB,
-      take: PartOfSpeech.VERB,
-      see: PartOfSpeech.VERB,
-      come: PartOfSpeech.VERB,
-      know: PartOfSpeech.VERB,
-      think: PartOfSpeech.VERB,
-      look: PartOfSpeech.VERB,
-      want: PartOfSpeech.VERB,
-      give: PartOfSpeech.VERB,
-      use: PartOfSpeech.VERB,
-      find: PartOfSpeech.VERB,
-      tell: PartOfSpeech.VERB,
-      ask: PartOfSpeech.VERB,
-      work: PartOfSpeech.VERB,
-      seem: PartOfSpeech.VERB,
-      feel: PartOfSpeech.VERB,
-      try: PartOfSpeech.VERB,
-      leave: PartOfSpeech.VERB,
-      call: PartOfSpeech.VERB,
-
-      // Наречия
-      very: PartOfSpeech.ADVERB,
-      really: PartOfSpeech.ADVERB,
-      quite: PartOfSpeech.ADVERB,
-      rather: PartOfSpeech.ADVERB,
-      extremely: PartOfSpeech.ADVERB,
-      absolutely: PartOfSpeech.ADVERB,
-      completely: PartOfSpeech.ADVERB,
-      totally: PartOfSpeech.ADVERB,
-      entirely: PartOfSpeech.ADVERB,
-      fully: PartOfSpeech.ADVERB,
-    };
-
-    // Если есть исправление для этого слова, используем его
-    if (corrections[normalizedWord]) {
-      return corrections[normalizedWord];
-    }
-
-    // Иначе возвращаем исходную часть речи
-    return currentPartOfSpeech;
   }
 }

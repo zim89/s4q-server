@@ -1,152 +1,210 @@
-import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { AxiosResponse } from 'axios';
-import { firstValueFrom } from 'rxjs';
-import { envKeys } from 'src/config/env/keys';
-import { DictionaryResponse, TranscriptionResult, WordInfo } from './types';
+import { envKeys } from 'src/config';
+import { dictionaryProviders } from './constants';
+import { FreeDictionaryService } from './providers/free-dictionary/free-dictionary.service';
+import { MerriamWebsterDictionaryService } from './providers/merriam-webster/merriam-webster.service';
+import { TranscriptionResult, WordInfo } from './types';
 
 /**
- * Сервис для работы с внешними API словарей
+ * Фасад сервис для работы с провайдерами словарей
  *
- * Предоставляет методы для получения транскрипции и другой информации о словах
- * из различных источников (Free Dictionary API, Oxford API, etc.)
+ * Предоставляет единый интерфейс для получения информации о словах
+ * с автоматическим переключением между провайдерами
  */
 @Injectable()
 export class DictionaryService {
   private readonly logger = new Logger(DictionaryService.name);
+  private currentProviderName: string;
 
   constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService
-  ) {}
+    private readonly configService: ConfigService,
+    private readonly freeDictionaryService: FreeDictionaryService,
+    private readonly merriamService: MerriamWebsterDictionaryService
+  ) {
+    // Устанавливаем активного провайдера по умолчанию
+    this.currentProviderName =
+      this.configService.get<string>(envKeys.DICTIONARY_PROVIDER) ??
+      dictionaryProviders.merriamWebster;
 
-  private get baseUrl(): string {
-    return (
-      this.configService.get<string>(envKeys.FREE_DICTIONARY_API_URL) ??
-      'https://api.dictionaryapi.dev/api/v2/entries/en'
-    );
+    this.logger.log(`Active dictionary provider: ${this.currentProviderName}`);
   }
 
   /**
-   * Получить транскрипцию слова из Free Dictionary API
-   *
-   * @param word - Слово для получения транскрипции
-   * @returns Объект с транскрипцией и аудио URL
-   */
-  async getTranscription(word: string): Promise<TranscriptionResult | null> {
-    try {
-      const response: AxiosResponse<DictionaryResponse[]> =
-        await firstValueFrom(
-          this.httpService.get<DictionaryResponse[]>(
-            `${this.baseUrl}/${encodeURIComponent(word)}`
-          )
-        );
-
-      const data: DictionaryResponse[] = response.data;
-      if (!data || data.length === 0) {
-        this.logger.warn(`Транскрипция не найдена для слова: ${word}`);
-        return null;
-      }
-
-      const wordData = data[0];
-      if (!wordData) {
-        this.logger.warn(`Данные слова не найдены для: ${word}`);
-        return null;
-      }
-
-      // Ищем транскрипцию в различных полях
-      let transcription = wordData.phonetic;
-
-      if (!transcription && wordData.phonetics) {
-        // Ищем первую доступную транскрипцию
-        const phonetic = wordData.phonetics.find(p => p.text);
-        transcription = phonetic?.text;
-      }
-
-      // Ищем аудио URL
-      let audioUrl: string | undefined;
-      if (wordData.phonetics) {
-        const audioPhonetic = wordData.phonetics.find(p => p.audio);
-        audioUrl = audioPhonetic?.audio;
-      }
-
-      if (!transcription) {
-        this.logger.warn(`Транскрипция не найдена для слова: ${word}`);
-        return null;
-      }
-
-      return {
-        transcription,
-        audioUrl,
-        source: 'Free Dictionary API',
-      };
-    } catch (error) {
-      this.logger.error(
-        `Ошибка при получении транскрипции для слова "${word}":`,
-        error
-      );
-      return null;
-    }
-  }
-
-  /**
-   * Получить информацию о слове (транскрипция + часть речи)
+   * Получить информацию о слове
    *
    * @param word - Слово для получения информации
-   * @returns Объект с транскрипцией и частью речи
+   * @returns Объект с информацией о слове
    */
   async getWordInfo(word: string): Promise<WordInfo | null> {
     try {
-      const response: AxiosResponse<DictionaryResponse[]> =
-        await firstValueFrom(
-          this.httpService.get<DictionaryResponse[]>(
-            `${this.baseUrl}/${encodeURIComponent(word)}`
-          )
-        );
-
-      const data: DictionaryResponse[] = response.data;
-      if (!data || data.length === 0) {
-        return null;
+      // Пробуем текущего провайдера
+      const result = await this.getCurrentProviderService().getWordInfo(word);
+      if (result) {
+        return result;
       }
 
-      const wordData = data[0];
-      if (!wordData) {
-        return null;
-      }
-
-      // Получаем транскрипцию
-      let transcription = wordData.phonetic;
-      if (!transcription && wordData.phonetics) {
-        const phonetic = wordData.phonetics.find(p => p.text);
-        transcription = phonetic?.text;
-      }
-
-      // Получаем аудио URL
-      let audioUrl: string | undefined;
-      if (wordData.phonetics) {
-        const audioPhonetic = wordData.phonetics.find(p => p.audio);
-        audioUrl = audioPhonetic?.audio;
-      }
-
-      // Получаем часть речи
-      let partOfSpeech: string | undefined;
-      if (wordData.meanings && wordData.meanings.length > 0) {
-        partOfSpeech = wordData.meanings[0].partOfSpeech;
-      }
-
-      return {
-        transcription,
-        audioUrl,
-        partOfSpeech,
-        source: 'Free Dictionary API',
-      };
-    } catch (error) {
-      this.logger.error(
-        `Ошибка при получении информации о слове "${word}":`,
-        error
+      // Если не получилось, пробуем других провайдеров
+      const fallbackResult = await this.tryFallbackProviders(
+        word,
+        'getWordInfo'
       );
+      if (fallbackResult) {
+        return fallbackResult as WordInfo;
+      }
+
+      return null;
+    } catch (error) {
+      this.logger.error(`Error getting word info for "${word}":`, error);
       return null;
     }
+  }
+
+  /**
+   * Получить транскрипцию слова
+   *
+   * @param word - Слово для получения транскрипции
+   * @returns Объект с транскрипцией
+   */
+  async getTranscription(word: string): Promise<TranscriptionResult | null> {
+    try {
+      // Пробуем текущего провайдера
+      const result =
+        await this.getCurrentProviderService().getTranscription(word);
+      if (result) {
+        return result;
+      }
+
+      // Если не получилось, пробуем других провайдеров
+      const fallbackResult = await this.tryFallbackProviders(
+        word,
+        'getTranscription'
+      );
+      if (fallbackResult) {
+        return fallbackResult as TranscriptionResult;
+      }
+
+      return null;
+    } catch (error) {
+      this.logger.error(`Error getting transcription for "${word}":`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Переключить активного провайдера
+   *
+   * @param providerName - Название провайдера
+   */
+  switchProvider(providerName: string): void {
+    if (this.isProviderAvailable(providerName)) {
+      this.currentProviderName = providerName;
+      this.logger.log(`Switched to provider: ${providerName}`);
+    } else {
+      this.logger.warn(`Provider ${providerName} is not available`);
+    }
+  }
+
+  /**
+   * Получить статус всех провайдеров
+   */
+  getProvidersStatus(): Record<string, unknown> {
+    return {
+      [dictionaryProviders.freeDictionary]: {
+        name: this.freeDictionaryService.getProviderName(),
+        isAvailable: this.freeDictionaryService.isAvailable(),
+        isActive:
+          this.currentProviderName === dictionaryProviders.freeDictionary,
+        status: this.freeDictionaryService.getStatus(),
+      },
+      [dictionaryProviders.merriamWebster]: {
+        name: this.merriamService.getProviderName(),
+        isAvailable: this.merriamService.isAvailable(),
+        isActive:
+          this.currentProviderName === dictionaryProviders.merriamWebster,
+        status: this.merriamService.getStatus(),
+      },
+      [dictionaryProviders.merriamIntermediate]: {
+        name: 'Merriam-Webster Intermediate',
+        isAvailable: false, // Пока не реализован
+        isActive: false,
+        status: {
+          errorCount: 0,
+          successCount: 0,
+          averageResponseTime: null,
+        },
+      },
+    };
+  }
+
+  /**
+   * Получить текущего активного провайдера
+   */
+  getCurrentProvider(): string {
+    return this.currentProviderName;
+  }
+
+  /**
+   * Получить текущий провайдер сервис
+   */
+  private getCurrentProviderService() {
+    switch (this.currentProviderName) {
+      case dictionaryProviders.freeDictionary:
+        return this.freeDictionaryService;
+      case dictionaryProviders.merriamWebster:
+        return this.merriamService;
+      default:
+        return this.merriamService;
+    }
+  }
+
+  /**
+   * Проверить доступность провайдера
+   */
+  private isProviderAvailable(providerName: string): boolean {
+    switch (providerName) {
+      case dictionaryProviders.freeDictionary:
+        return this.freeDictionaryService.isAvailable();
+      case dictionaryProviders.merriamWebster:
+        return this.merriamService.isAvailable();
+      case dictionaryProviders.merriamIntermediate:
+        return false; // Пока не реализован
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Попробовать другие провайдеры
+   */
+  private async tryFallbackProviders(
+    word: string,
+    method: 'getWordInfo' | 'getTranscription'
+  ) {
+    const providers = [
+      {
+        name: dictionaryProviders.merriamWebster,
+        service: this.merriamService,
+      },
+      {
+        name: dictionaryProviders.freeDictionary,
+        service: this.freeDictionaryService,
+      },
+    ];
+
+    for (const provider of providers) {
+      if (provider.name === this.currentProviderName) continue;
+
+      if (provider.service.isAvailable()) {
+        this.logger.log(`Switching to provider: ${provider.name}`);
+        const result = await provider.service[method](word);
+        if (result) {
+          this.currentProviderName = provider.name;
+          return result;
+        }
+      }
+    }
+
+    return null;
   }
 }
