@@ -5,10 +5,15 @@ import { AxiosError } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import { envKeys } from 'src/config';
 import { dictionaryProviders } from '../../constants';
-import { TranscriptionResult, WordInfo } from '../../types';
+import {
+  ExtendedWordInfo,
+  FreeDictionaryWordInfo,
+  TranscriptionResult,
+} from '../../types';
 import { BaseDictionaryProvider } from '../base';
 import {
   FreeDictionaryError,
+  FreeDictionaryMeaning,
   FreeDictionaryResponse,
 } from './free-dictionary.types';
 
@@ -38,7 +43,7 @@ export class FreeDictionaryService extends BaseDictionaryProvider {
     this.activate();
   }
 
-  async getWordInfo(word: string): Promise<WordInfo | null> {
+  async getWordInfo(word: string): Promise<FreeDictionaryWordInfo | null> {
     try {
       this.logger.debug(
         `Fetching word info for "${word}" from Free Dictionary API`
@@ -68,6 +73,49 @@ export class FreeDictionaryService extends BaseDictionaryProvider {
       } else {
         this.logger.error(
           `Unexpected error getting word info for "${word}":`,
+          error
+        );
+      }
+
+      return null;
+    }
+  }
+
+  /**
+   * Получить расширенную информацию о слове
+   */
+  async getExtendedWordInfo(word: string): Promise<ExtendedWordInfo | null> {
+    try {
+      this.logger.debug(
+        `Fetching extended word info for "${word}" from Free Dictionary API`
+      );
+
+      const response = await firstValueFrom(
+        this.httpService.get<FreeDictionaryResponse>(
+          `${this.baseUrl}/${encodeURIComponent(word)}`,
+          {
+            timeout: this.timeout,
+          }
+        )
+      );
+
+      if (!response.data || response.data.length === 0) {
+        this.logger.debug(`Word "${word}" not found in Free Dictionary API`);
+        return null;
+      }
+
+      const extendedWordInfo = this.normalizeExtendedWordInfo(response.data[0]);
+      this.logger.debug(
+        `Successfully fetched extended word info for "${word}"`
+      );
+
+      return extendedWordInfo;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error, word);
+      } else {
+        this.logger.error(
+          `Unexpected error getting extended word info for "${word}":`,
           error
         );
       }
@@ -118,37 +166,166 @@ export class FreeDictionaryService extends BaseDictionaryProvider {
     return dictionaryProviders.freeDictionary;
   }
 
-  private normalizeWordInfo(data: FreeDictionaryResponse[0]): WordInfo {
-    const meanings = data.meanings.map(meaning => ({
-      partOfSpeech: meaning.partOfSpeech,
-      definitions: meaning.definitions.map(def => ({
-        definition: def.definition,
-        example: def.example,
-      })),
-    }));
-
+  private normalizeWordInfo(
+    data: FreeDictionaryResponse[0]
+  ): FreeDictionaryWordInfo {
     // Получаем первую доступную транскрипцию и аудио
-    const phonetic = data.phonetic ?? data.phonetics[0]?.text ?? '';
-    const audioUrl = data.phonetics.find(p => p.audio)?.audio ?? '';
+    const phonetic = this.extractPhonetic(data);
+    const audioUrl = this.extractAudioUrl(data);
+
+    // Выбираем наиболее важную часть речи
+    const partOfSpeech = this.selectPrimaryPartOfSpeech(data.meanings);
 
     return {
       transcription: phonetic,
       audioUrl,
-      partOfSpeech: meanings[0]?.partOfSpeech,
+      partOfSpeech,
       source: 'Free Dictionary API',
+      origin: data, // Полный ответ от Free Dictionary API
     };
   }
 
   private normalizeTranscription(
     data: FreeDictionaryResponse[0]
   ): TranscriptionResult {
-    const phonetic = data.phonetic ?? data.phonetics[0]?.text ?? '';
-    const audioUrl = data.phonetics.find(p => p.audio)?.audio ?? '';
+    const phonetic = this.extractPhonetic(data);
+    const audioUrl = this.extractAudioUrl(data);
 
     return {
       transcription: phonetic,
       audioUrl,
       source: 'Free Dictionary API',
+      origin: data, // Полный ответ от Free Dictionary API
+    };
+  }
+
+  private extractPhonetic(data: FreeDictionaryResponse[0]): string {
+    // Сначала проверяем поле phonetic (если есть)
+    if (data.phonetic) {
+      return data.phonetic;
+    }
+
+    // Затем ищем в массиве phonetics первую запись с текстом
+    const phoneticWithText = data.phonetics.find(p => p.text);
+    if (phoneticWithText) {
+      return phoneticWithText.text;
+    }
+
+    return '';
+  }
+
+  private extractAudioUrl(data: FreeDictionaryResponse[0]): string {
+    // Ищем первую запись с аудио
+    const phoneticWithAudio = data.phonetics.find(p => p.audio);
+    return phoneticWithAudio?.audio ?? '';
+  }
+
+  /**
+   * Выбирает наиболее важную часть речи из множественных значений
+   *
+   * Приоритет: adjective > noun > verb > adverb > preposition > conjunction
+   */
+  private selectPrimaryPartOfSpeech(meanings: FreeDictionaryMeaning[]): string {
+    if (!meanings || meanings.length === 0) {
+      return '';
+    }
+
+    // Если только одна часть речи, возвращаем её
+    if (meanings.length === 1) {
+      return meanings[0].partOfSpeech;
+    }
+
+    // Приоритет частей речи (от высшего к низшему)
+    const priorityOrder = [
+      'adjective',
+      'noun',
+      'verb',
+      'adverb',
+      'preposition',
+      'conjunction',
+      'interjection',
+      'pronoun',
+      'determiner',
+      'article',
+    ];
+
+    // Ищем часть речи с наивысшим приоритетом
+    for (const priority of priorityOrder) {
+      const meaning = meanings.find(m => m.partOfSpeech === priority);
+      if (meaning) {
+        return meaning.partOfSpeech;
+      }
+    }
+
+    // Если не найдена приоритетная часть речи, возвращаем первую
+    return meanings[0].partOfSpeech;
+  }
+
+  /**
+   * Нормализует данные в расширенный формат
+   */
+  private normalizeExtendedWordInfo(
+    data: FreeDictionaryResponse[0]
+  ): ExtendedWordInfo {
+    // Базовая информация
+    const phonetic = this.extractPhonetic(data);
+    const audioUrl = this.extractAudioUrl(data);
+    const partOfSpeech = this.selectPrimaryPartOfSpeech(data.meanings);
+
+    // Метаданные
+    const metadata = {
+      allPartsOfSpeech: data.meanings.map(m => m.partOfSpeech),
+      definitionsCount: data.meanings.reduce(
+        (sum, m) => sum + m.definitions.length,
+        0
+      ),
+      meaningsCount: data.meanings.length,
+    };
+
+    // Семантические связи (объединяем из всех значений)
+    const allSynonyms = new Set<string>();
+    const allAntonyms = new Set<string>();
+
+    data.meanings.forEach((meaning, index) => {
+      console.log(`Meaning ${index}: ${meaning.partOfSpeech}`);
+      console.log(`Synonyms:`, meaning.synonyms);
+      console.log(`Antonyms:`, meaning.antonyms);
+
+      // Синонимы и антонимы на уровне meaning
+      if (meaning.synonyms) {
+        meaning.synonyms.forEach(synonym => allSynonyms.add(synonym));
+      }
+      if (meaning.antonyms) {
+        meaning.antonyms.forEach(antonym => allAntonyms.add(antonym));
+      }
+
+      // Синонимы и антонимы на уровне definition
+      meaning.definitions.forEach(def => {
+        if (def.synonyms) {
+          def.synonyms.forEach(synonym => allSynonyms.add(synonym));
+        }
+        if (def.antonyms) {
+          def.antonyms.forEach(antonym => allAntonyms.add(antonym));
+        }
+      });
+    });
+
+    console.log(`Final synonyms:`, Array.from(allSynonyms));
+    console.log(`Final antonyms:`, Array.from(allAntonyms));
+
+    const semantic = {
+      synonyms: Array.from(allSynonyms),
+      antonyms: Array.from(allAntonyms),
+    };
+
+    return {
+      transcription: phonetic,
+      audioUrl,
+      partOfSpeech,
+      source: 'Free Dictionary API',
+      origin: data,
+      metadata,
+      semantic,
     };
   }
 

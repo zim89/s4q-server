@@ -19,6 +19,8 @@ export interface FreeDictionaryDefinition {
 export interface FreeDictionaryMeaning {
   partOfSpeech: string;
   definitions: FreeDictionaryDefinition[];
+  synonyms?: string[];
+  antonyms?: string[];
 }
 
 export interface FreeDictionaryEntry {

@@ -38,6 +38,15 @@ export class DictionaryService {
    */
   async getWordInfo(word: string): Promise<WordInfo | null> {
     try {
+      // Если текущий провайдер - Free Dictionary, возвращаем расширенную информацию
+      if (this.currentProviderName === dictionaryProviders.freeDictionary) {
+        const extendedResult =
+          await this.freeDictionaryService.getExtendedWordInfo(word);
+        if (extendedResult) {
+          return extendedResult;
+        }
+      }
+
       // Пробуем текущего провайдера
       const result = await this.getCurrentProviderService().getWordInfo(word);
       if (result) {
@@ -197,10 +206,24 @@ export class DictionaryService {
 
       if (provider.service.isAvailable()) {
         this.logger.log(`Switching to provider: ${provider.name}`);
-        const result = await provider.service[method](word);
-        if (result) {
-          this.currentProviderName = provider.name;
-          return result;
+
+        // Для Free Dictionary возвращаем расширенную информацию
+        if (
+          provider.name === dictionaryProviders.freeDictionary &&
+          method === 'getWordInfo'
+        ) {
+          const result =
+            await this.freeDictionaryService.getExtendedWordInfo(word);
+          if (result) {
+            this.currentProviderName = provider.name;
+            return result;
+          }
+        } else {
+          const result = await provider.service[method](word);
+          if (result) {
+            this.currentProviderName = provider.name;
+            return result;
+          }
         }
       }
     }

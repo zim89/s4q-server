@@ -37,7 +37,7 @@ src/integrations/dictionary/
 
 ### API эндпоинты:
 
-- `GET /dictionary/word/:word` - информация о слове
+- `GET /dictionary/word/:word` - информация о слове (расширенная от Free Dictionary, базовая от других)
 - `GET /dictionary/transcription/:word` - транскрипция слова
 - `GET /dictionary/providers/status` - статус всех провайдеров
 - `GET /dictionary/providers/current` - текущий активный провайдер
@@ -134,24 +134,57 @@ providers/new-provider/
 
 ## 📝 Примеры ответов
 
-### Информация о слове:
+### Базовая информация о слове:
 
 ```json
 {
-  "word": "hello",
-  "phonetic": "/həˈloʊ/",
-  "meanings": [
-    {
-      "partOfSpeech": "noun",
-      "definitions": [
-        {
-          "definition": "An expression of greeting",
-          "example": "Hello, how are you?"
-        }
-      ]
-    }
-  ],
-  "audio": "https://example.com/audio/hello.mp3"
+  "transcription": "/həˈloʊ/",
+  "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3",
+  "partOfSpeech": "noun",
+  "source": "Free Dictionary API",
+  "origin": {
+    "word": "hello",
+    "phonetics": [
+      {
+        "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3",
+        "text": "/həˈloʊ/"
+      }
+    ],
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "definitions": [
+          {
+            "definition": "An expression of greeting",
+            "example": "Hello, how are you?"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Расширенная информация о слове:
+
+```json
+{
+  "transcription": "/ˈbjuːtɪfəl/",
+  "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/beautiful-uk.mp3",
+  "partOfSpeech": "adjective",
+  "source": "Free Dictionary API",
+  "origin": {
+    /* полный ответ от API */
+  },
+  "metadata": {
+    "allPartsOfSpeech": ["adjective", "noun"],
+    "definitionsCount": 4,
+    "meaningsCount": 2
+  },
+  "semantic": {
+    "synonyms": ["attractive", "beauteous", "cute", "fair", "gorgeous"],
+    "antonyms": ["ugly", "hideous", "grotesque", "repulsive"]
+  }
 }
 ```
 
@@ -159,11 +192,42 @@ providers/new-provider/
 
 ```json
 {
-  "word": "hello",
-  "phonetic": "/həˈloʊ/",
-  "audio": "https://example.com/audio/hello.mp3"
+  "transcription": "/həˈloʊ/",
+  "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3",
+  "source": "Free Dictionary API",
+  "origin": {
+    "word": "hello",
+    "phonetics": [
+      {
+        "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-au.mp3",
+        "text": "/həˈloʊ/"
+      }
+    ]
+  }
 }
 ```
+
+### Поле `origin`:
+
+Поле `origin` содержит полный ответ от внешнего API провайдера. Это полезно для:
+
+- Отладки и диагностики
+- Получения дополнительных данных
+- Анализа структуры ответов от разных провайдеров
+
+### Расширенные поля:
+
+#### `metadata` - Метаданные слова:
+
+- **allPartsOfSpeech**: Все части речи слова
+- **definitionsCount**: Общее количество определений
+- **meaningsCount**: Количество значений
+
+#### `semantic` - Семантические связи:
+
+- **synonyms**: Синонимы слова
+- **antonyms**: Антонимы слова
+- **relatedWords**: Связанные слова
 
 ## 🚨 Ограничения
 

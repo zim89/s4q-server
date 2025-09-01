@@ -9,6 +9,7 @@ export interface TranscriptionResult {
   transcription: string; // Фонетическая транскрипция
   audioUrl?: string; // URL аудио файла
   source: string; // Источник данных
+  origin?: unknown; // Полный ответ от внешнего API
 }
 
 /**

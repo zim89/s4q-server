@@ -134,6 +134,7 @@ export class MerriamWebsterDictionaryService extends BaseDictionaryProvider {
       audioUrl,
       partOfSpeech,
       source: 'Merriam-Webster API',
+      origin: response, // Полный ответ от Merriam-Webster API
     };
   }
 
@@ -166,6 +167,7 @@ export class MerriamWebsterDictionaryService extends BaseDictionaryProvider {
       transcription: pronunciation.mw,
       audioUrl,
       source: 'Merriam-Webster API',
+      origin: response, // Полный ответ от Merriam-Webster API
     };
   }
 }
