@@ -21,7 +21,6 @@ import { CreateSetDto } from './create-set.dto';
  * // Изменение видимости
  * const updateSetDto: UpdateSetDto = {
  *   isPublic: true,
- *   contentCategory: ContentCategory.BUSINESS
  * };
  * ```
  */

@@ -1,7 +1,7 @@
 import { CardDifficulty, LanguageLevel } from '@prisma/client';
 
 export interface RegularVerbData {
-  wordOrPhrase: string;
+  term: string;
   slug: string;
   transcription: string;
   translation: string;
@@ -14,7 +14,7 @@ export interface RegularVerbData {
 export const regularVerbsData: RegularVerbData[] = [
   // A1 Level - Basic Actions
   {
-    wordOrPhrase: 'work',
+    term: 'work',
     slug: 'work',
     transcription: 'wɜːk',
     translation: 'работать',
@@ -24,7 +24,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'play',
+    term: 'play',
     slug: 'play',
     transcription: 'pleɪ',
     translation: 'играть',
@@ -34,7 +34,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'read',
+    term: 'read',
     slug: 'read',
     transcription: 'riːd',
     translation: 'читать',
@@ -44,7 +44,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'write',
+    term: 'write',
     slug: 'write',
     transcription: 'raɪt',
     translation: 'писать',
@@ -54,7 +54,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'listen',
+    term: 'listen',
     slug: 'listen',
     transcription: 'ˈlɪsən',
     translation: 'слушать',
@@ -64,7 +64,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'speak',
+    term: 'speak',
     slug: 'speak',
     transcription: 'spiːk',
     translation: 'говорить',
@@ -74,7 +74,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'watch',
+    term: 'watch',
     slug: 'watch',
     transcription: 'wɒtʃ',
     translation: 'смотреть',
@@ -84,7 +84,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'open',
+    term: 'open',
     slug: 'open',
     transcription: 'ˈəʊpən',
     translation: 'открывать',
@@ -94,7 +94,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'close',
+    term: 'close',
     slug: 'close',
     transcription: 'kləʊz',
     translation: 'закрывать',
@@ -104,7 +104,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'start',
+    term: 'start',
     slug: 'start',
     transcription: 'stɑːt',
     translation: 'начинать',
@@ -114,7 +114,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'stop',
+    term: 'stop',
     slug: 'stop',
     transcription: 'stɒp',
     translation: 'останавливать',
@@ -124,7 +124,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wait',
+    term: 'wait',
     slug: 'wait',
     transcription: 'weɪt',
     translation: 'ждать',
@@ -134,7 +134,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'live',
+    term: 'live',
     slug: 'live',
     transcription: 'lɪv',
     translation: 'жить',
@@ -144,7 +144,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'study',
+    term: 'study',
     slug: 'study',
     transcription: 'ˈstʌdi',
     translation: 'изучать',
@@ -154,7 +154,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'learn',
+    term: 'learn',
     slug: 'learn',
     transcription: 'lɜːn',
     translation: 'учиться',
@@ -164,7 +164,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'teach',
+    term: 'teach',
     slug: 'teach',
     transcription: 'tiːtʃ',
     translation: 'учить',
@@ -174,7 +174,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'help',
+    term: 'help',
     slug: 'help',
     transcription: 'help',
     translation: 'помогать',
@@ -184,7 +184,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ask',
+    term: 'ask',
     slug: 'ask',
     transcription: 'ɑːsk',
     translation: 'спрашивать',
@@ -194,7 +194,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'answer',
+    term: 'answer',
     slug: 'answer',
     transcription: 'ˈɑːnsə',
     translation: 'отвечать',
@@ -204,7 +204,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'call',
+    term: 'call',
     slug: 'call',
     transcription: 'kɔːl',
     translation: 'звонить',
@@ -216,7 +216,7 @@ export const regularVerbsData: RegularVerbData[] = [
 
   // A2 Level - More Complex Actions
   {
-    wordOrPhrase: 'understand',
+    term: 'understand',
     slug: 'understand',
     transcription: 'ˌʌndəˈstænd',
     translation: 'понимать',
@@ -226,7 +226,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'remember',
+    term: 'remember',
     slug: 'remember',
     transcription: 'rɪˈmembə',
     translation: 'помнить',
@@ -236,7 +236,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'forget',
+    term: 'forget',
     slug: 'forget',
     transcription: 'fəˈɡet',
     translation: 'забывать',
@@ -246,7 +246,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'think',
+    term: 'think',
     slug: 'think',
     transcription: 'θɪŋk',
     translation: 'думать',
@@ -256,7 +256,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'feel',
+    term: 'feel',
     slug: 'feel',
     transcription: 'fiːl',
     translation: 'чувствовать',
@@ -266,7 +266,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'believe',
+    term: 'believe',
     slug: 'believe',
     transcription: 'bɪˈliːv',
     translation: 'верить',
@@ -276,7 +276,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hope',
+    term: 'hope',
     slug: 'hope',
     transcription: 'həʊp',
     translation: 'надеяться',
@@ -286,7 +286,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'want',
+    term: 'want',
     slug: 'want',
     transcription: 'wɒnt',
     translation: 'хотеть',
@@ -296,7 +296,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'need',
+    term: 'need',
     slug: 'need',
     transcription: 'niːd',
     translation: 'нуждаться',
@@ -306,7 +306,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'like',
+    term: 'like',
     slug: 'like',
     transcription: 'laɪk',
     translation: 'нравиться',
@@ -316,7 +316,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'love',
+    term: 'love',
     slug: 'love',
     transcription: 'lʌv',
     translation: 'любить',
@@ -326,7 +326,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hate',
+    term: 'hate',
     slug: 'hate',
     transcription: 'heɪt',
     translation: 'ненавидеть',
@@ -336,7 +336,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'meet',
+    term: 'meet',
     slug: 'meet',
     transcription: 'miːt',
     translation: 'встречать',
@@ -346,7 +346,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'show',
+    term: 'show',
     slug: 'show',
     transcription: 'ʃəʊ',
     translation: 'показывать',
@@ -356,7 +356,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'give',
+    term: 'give',
     slug: 'give',
     transcription: 'ɡɪv',
     translation: 'давать',
@@ -366,7 +366,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'take',
+    term: 'take',
     slug: 'take',
     transcription: 'teɪk',
     translation: 'брать',
@@ -376,7 +376,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bring',
+    term: 'bring',
     slug: 'bring',
     transcription: 'brɪŋ',
     translation: 'приносить',
@@ -386,7 +386,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'send',
+    term: 'send',
     slug: 'send',
     transcription: 'send',
     translation: 'отправлять',
@@ -396,7 +396,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'receive',
+    term: 'receive',
     slug: 'receive',
     transcription: 'rɪˈsiːv',
     translation: 'получать',
@@ -406,7 +406,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'explain',
+    term: 'explain',
     slug: 'explain',
     transcription: 'ɪkˈspleɪn',
     translation: 'объяснять',
@@ -416,7 +416,7 @@ export const regularVerbsData: RegularVerbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'describe',
+    term: 'describe',
     slug: 'describe',
     transcription: 'dɪˈskraɪb',
     translation: 'описывать',

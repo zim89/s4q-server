@@ -1,7 +1,7 @@
 import { CardDifficulty, LanguageLevel } from '@prisma/client';
 
 export interface PhraseData {
-  wordOrPhrase: string;
+  term: string;
   slug: string;
   transcription: string;
   translation: string;
@@ -14,7 +14,7 @@ export interface PhraseData {
 export const phrasesData: PhraseData[] = [
   // A1 Level - Basic Phrases
   {
-    wordOrPhrase: 'hello',
+    term: 'hello',
     slug: 'hello',
     transcription: 'həˈləʊ',
     translation: 'привет',
@@ -24,7 +24,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'goodbye',
+    term: 'goodbye',
     slug: 'goodbye',
     transcription: 'ˌɡʊdˈbaɪ',
     translation: 'до свидания',
@@ -34,7 +34,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thank you',
+    term: 'thank you',
     slug: 'thank-you',
     transcription: 'ˈθæŋk juː',
     translation: 'спасибо',
@@ -44,7 +44,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'please',
+    term: 'please',
     slug: 'please',
     transcription: 'pliːz',
     translation: 'пожалуйста',
@@ -54,7 +54,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'excuse me',
+    term: 'excuse me',
     slug: 'excuse-me',
     transcription: 'ɪkˈskjuːz miː',
     translation: 'извините',
@@ -64,7 +64,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sorry',
+    term: 'sorry',
     slug: 'sorry',
     transcription: 'ˈsɒri',
     translation: 'извините',
@@ -74,7 +74,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'how are you',
+    term: 'how are you',
     slug: 'how-are-you',
     transcription: 'haʊ ɑː juː',
     translation: 'как дела',
@@ -84,7 +84,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am fine',
+    term: 'I am fine',
     slug: 'i-am-fine',
     transcription: 'aɪ æm faɪn',
     translation: 'у меня все хорошо',
@@ -94,7 +94,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'what is your name',
+    term: 'what is your name',
     slug: 'what-is-your-name',
     transcription: 'wɒt ɪz jɔː neɪm',
     translation: 'как вас зовут',
@@ -104,7 +104,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'my name is',
+    term: 'my name is',
     slug: 'my-name-is',
     transcription: 'maɪ neɪm ɪz',
     translation: 'меня зовут',
@@ -114,7 +114,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'nice to meet you',
+    term: 'nice to meet you',
     slug: 'nice-to-meet-you',
     transcription: 'naɪs tuː miːt juː',
     translation: 'приятно познакомиться',
@@ -124,7 +124,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'where are you from',
+    term: 'where are you from',
     slug: 'where-are-you-from',
     transcription: 'weə ɑː juː frɒm',
     translation: 'откуда вы',
@@ -134,7 +134,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am from',
+    term: 'I am from',
     slug: 'i-am-from',
     transcription: 'aɪ æm frɒm',
     translation: 'я из',
@@ -144,7 +144,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'how old are you',
+    term: 'how old are you',
     slug: 'how-old-are-you',
     transcription: 'haʊ əʊld ɑː juː',
     translation: 'сколько вам лет',
@@ -154,7 +154,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am years old',
+    term: 'I am years old',
     slug: 'i-am-years-old',
     transcription: 'aɪ æm jɪəz əʊld',
     translation: 'мне лет',
@@ -164,7 +164,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'do you speak English',
+    term: 'do you speak English',
     slug: 'do-you-speak-english',
     transcription: 'duː juː spiːk ˈɪŋɡlɪʃ',
     translation: 'вы говорите по-английски',
@@ -174,7 +174,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I speak English',
+    term: 'I speak English',
     slug: 'i-speak-english',
     transcription: 'aɪ spiːk ˈɪŋɡlɪʃ',
     translation: 'я говорю по-английски',
@@ -184,7 +184,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I do not understand',
+    term: 'I do not understand',
     slug: 'i-do-not-understand',
     transcription: 'aɪ duː nɒt ˌʌndəˈstænd',
     translation: 'я не понимаю',
@@ -194,7 +194,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'can you help me',
+    term: 'can you help me',
     slug: 'can-you-help-me',
     transcription: 'kæn juː help miː',
     translation: 'можете помочь мне',
@@ -204,7 +204,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I need help',
+    term: 'I need help',
     slug: 'i-need-help',
     transcription: 'aɪ niːd help',
     translation: 'мне нужна помощь',
@@ -214,7 +214,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'where is the bathroom',
+    term: 'where is the bathroom',
     slug: 'where-is-the-bathroom',
     transcription: 'weə ɪz ðə ˈbɑːθruːm',
     translation: 'где туалет',
@@ -224,7 +224,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'how much is this',
+    term: 'how much is this',
     slug: 'how-much-is-this',
     transcription: 'haʊ mʌtʃ ɪz ðɪs',
     translation: 'сколько это стоит',
@@ -234,7 +234,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is expensive',
+    term: 'it is expensive',
     slug: 'it-is-expensive',
     transcription: 'ɪt ɪz ɪkˈspensɪv',
     translation: 'это дорого',
@@ -244,7 +244,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is cheap',
+    term: 'it is cheap',
     slug: 'it-is-cheap',
     transcription: 'ɪt ɪz tʃiːp',
     translation: 'это дешево',
@@ -254,7 +254,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I like this',
+    term: 'I like this',
     slug: 'i-like-this',
     transcription: 'aɪ laɪk ðɪs',
     translation: 'мне это нравится',
@@ -264,7 +264,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I do not like this',
+    term: 'I do not like this',
     slug: 'i-do-not-like-this',
     transcription: 'aɪ duː nɒt laɪk ðɪs',
     translation: 'мне это не нравится',
@@ -274,7 +274,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'what time is it',
+    term: 'what time is it',
     slug: 'what-time-is-it',
     transcription: 'wɒt taɪm ɪz ɪt',
     translation: 'который час',
@@ -284,7 +284,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is o clock',
+    term: 'it is o clock',
     slug: 'it-is-o-clock',
     transcription: 'ɪt ɪz əʊ klɒk',
     translation: 'часов',
@@ -294,7 +294,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'what is the weather like',
+    term: 'what is the weather like',
     slug: 'what-is-the-weather-like',
     transcription: 'wɒt ɪz ðə ˈweðə laɪk',
     translation: 'какая погода',
@@ -304,7 +304,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is sunny',
+    term: 'it is sunny',
     slug: 'it-is-sunny',
     transcription: 'ɪt ɪz ˈsʌni',
     translation: 'солнечно',
@@ -314,7 +314,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is raining',
+    term: 'it is raining',
     slug: 'it-is-raining',
     transcription: 'ɪt ɪz ˈreɪnɪŋ',
     translation: 'идет дождь',
@@ -324,7 +324,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is cold',
+    term: 'it is cold',
     slug: 'it-is-cold',
     transcription: 'ɪt ɪz kəʊld',
     translation: 'холодно',
@@ -334,7 +334,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'it is hot',
+    term: 'it is hot',
     slug: 'it-is-hot',
     transcription: 'ɪt ɪz hɒt',
     translation: 'жарко',
@@ -344,7 +344,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am hungry',
+    term: 'I am hungry',
     slug: 'i-am-hungry',
     transcription: 'aɪ æm ˈhʌŋɡri',
     translation: 'я голоден',
@@ -354,7 +354,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am thirsty',
+    term: 'I am thirsty',
     slug: 'i-am-thirsty',
     transcription: 'aɪ æm ˈθɜːsti',
     translation: 'я хочу пить',
@@ -364,7 +364,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am tired',
+    term: 'I am tired',
     slug: 'i-am-tired',
     transcription: 'aɪ æm ˈtaɪəd',
     translation: 'я устал',
@@ -374,7 +374,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am sick',
+    term: 'I am sick',
     slug: 'i-am-sick',
     transcription: 'aɪ æm sɪk',
     translation: 'я болен',
@@ -384,7 +384,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am happy',
+    term: 'I am happy',
     slug: 'i-am-happy',
     transcription: 'aɪ æm ˈhæpi',
     translation: 'я счастлив',
@@ -394,7 +394,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I am sad',
+    term: 'I am sad',
     slug: 'i-am-sad',
     transcription: 'aɪ æm sæd',
     translation: 'я грустен',
@@ -404,7 +404,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'good morning',
+    term: 'good morning',
     slug: 'good-morning',
     transcription: 'ˌɡʊd ˈmɔːnɪŋ',
     translation: 'доброе утро',
@@ -414,7 +414,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'good afternoon',
+    term: 'good afternoon',
     slug: 'good-afternoon',
     transcription: 'ˌɡʊd ˌɑːftəˈnuːn',
     translation: 'добрый день',
@@ -424,7 +424,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'good evening',
+    term: 'good evening',
     slug: 'good-evening',
     transcription: 'ˌɡʊd ˈiːvnɪŋ',
     translation: 'добрый вечер',
@@ -434,7 +434,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'good night',
+    term: 'good night',
     slug: 'good-night',
     transcription: 'ˌɡʊd ˈnaɪt',
     translation: 'спокойной ночи',
@@ -444,7 +444,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'see you later',
+    term: 'see you later',
     slug: 'see-you-later',
     transcription: 'siː juː ˈleɪtə',
     translation: 'увидимся позже',
@@ -454,7 +454,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'see you tomorrow',
+    term: 'see you tomorrow',
     slug: 'see-you-tomorrow',
     transcription: 'siː juː təˈmɒrəʊ',
     translation: 'увидимся завтра',
@@ -464,7 +464,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'have a nice day',
+    term: 'have a nice day',
     slug: 'have-a-nice-day',
     transcription: 'hæv ə naɪs deɪ',
     translation: 'хорошего дня',
@@ -474,7 +474,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'take care',
+    term: 'take care',
     slug: 'take-care',
     transcription: 'teɪk keə',
     translation: 'береги себя',
@@ -484,7 +484,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'no problem',
+    term: 'no problem',
     slug: 'no-problem',
     transcription: 'nəʊ ˈprɒbləm',
     translation: 'нет проблем',
@@ -494,7 +494,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'you are welcome',
+    term: 'you are welcome',
     slug: 'you-are-welcome',
     transcription: 'juː ɑː ˈwelkəm',
     translation: 'пожалуйста',
@@ -504,7 +504,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'that is okay',
+    term: 'that is okay',
     slug: 'that-is-okay',
     transcription: 'ðæt ɪz əʊˈkeɪ',
     translation: 'это нормально',
@@ -514,7 +514,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'that is fine',
+    term: 'that is fine',
     slug: 'that-is-fine',
     transcription: 'ðæt ɪz faɪn',
     translation: 'это хорошо',
@@ -524,7 +524,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I agree',
+    term: 'I agree',
     slug: 'i-agree',
     transcription: 'aɪ əˈɡriː',
     translation: 'я согласен',
@@ -534,7 +534,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I disagree',
+    term: 'I disagree',
     slug: 'i-disagree',
     transcription: 'aɪ ˌdɪsəˈɡriː',
     translation: 'я не согласен',
@@ -544,7 +544,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I think so',
+    term: 'I think so',
     slug: 'i-think-so',
     transcription: 'aɪ θɪŋk səʊ',
     translation: 'я думаю да',
@@ -554,7 +554,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'I do not think so',
+    term: 'I do not think so',
     slug: 'i-do-not-think-so',
     transcription: 'aɪ duː nɒt θɪŋk səʊ',
     translation: 'я не думаю',
@@ -564,7 +564,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'maybe',
+    term: 'maybe',
     slug: 'maybe',
     transcription: 'ˈmeɪbi',
     translation: 'может быть',
@@ -574,7 +574,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'probably',
+    term: 'probably',
     slug: 'probably',
     transcription: 'ˈprɒbəbli',
     translation: 'вероятно',
@@ -584,7 +584,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'definitely',
+    term: 'definitely',
     slug: 'definitely',
     transcription: 'ˈdefɪnətli',
     translation: 'определенно',
@@ -594,7 +594,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'of course',
+    term: 'of course',
     slug: 'of-course',
     transcription: 'əv kɔːs',
     translation: 'конечно',
@@ -604,7 +604,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'certainly',
+    term: 'certainly',
     slug: 'certainly',
     transcription: 'ˈsɜːtnli',
     translation: 'конечно',
@@ -614,7 +614,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'absolutely',
+    term: 'absolutely',
     slug: 'absolutely',
     transcription: 'ˈæbsəluːtli',
     translation: 'абсолютно',
@@ -624,7 +624,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'not at all',
+    term: 'not at all',
     slug: 'not-at-all',
     transcription: 'nɒt æt ɔːl',
     translation: 'совсем нет',
@@ -634,7 +634,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'by the way',
+    term: 'by the way',
     slug: 'by-the-way',
     transcription: 'baɪ ðə weɪ',
     translation: 'кстати',
@@ -644,7 +644,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'in fact',
+    term: 'in fact',
     slug: 'in-fact',
     transcription: 'ɪn fækt',
     translation: 'на самом деле',
@@ -654,7 +654,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'actually',
+    term: 'actually',
     slug: 'actually',
     transcription: 'ˈæktʃuəli',
     translation: 'на самом деле',
@@ -664,7 +664,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'basically',
+    term: 'basically',
     slug: 'basically',
     transcription: 'ˈbeɪsɪkli',
     translation: 'в основном',
@@ -674,7 +674,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'generally',
+    term: 'generally',
     slug: 'generally',
     transcription: 'ˈdʒenrəli',
     translation: 'в общем',
@@ -684,7 +684,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'usually',
+    term: 'usually',
     slug: 'usually',
     transcription: 'ˈjuːʒuəli',
     translation: 'обычно',
@@ -694,7 +694,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sometimes',
+    term: 'sometimes',
     slug: 'sometimes',
     transcription: 'ˈsʌmtaɪmz',
     translation: 'иногда',
@@ -704,7 +704,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'never',
+    term: 'never',
     slug: 'never',
     transcription: 'ˈnevə',
     translation: 'никогда',
@@ -714,7 +714,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'always',
+    term: 'always',
     slug: 'always',
     transcription: 'ˈɔːlweɪz',
     translation: 'всегда',
@@ -724,7 +724,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'often',
+    term: 'often',
     slug: 'often',
     transcription: 'ˈɒfn',
     translation: 'часто',
@@ -734,7 +734,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rarely',
+    term: 'rarely',
     slug: 'rarely',
     transcription: 'ˈreəli',
     translation: 'редко',
@@ -744,7 +744,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'almost',
+    term: 'almost',
     slug: 'almost',
     transcription: 'ˈɔːlməʊst',
     translation: 'почти',
@@ -754,7 +754,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'nearly',
+    term: 'nearly',
     slug: 'nearly',
     transcription: 'ˈnɪəli',
     translation: 'почти',
@@ -764,7 +764,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'about',
+    term: 'about',
     slug: 'about',
     transcription: 'əˈbaʊt',
     translation: 'около',
@@ -774,7 +774,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'approximately',
+    term: 'approximately',
     slug: 'approximately',
     transcription: 'əˈprɒksɪmətli',
     translation: 'приблизительно',
@@ -784,7 +784,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'exactly',
+    term: 'exactly',
     slug: 'exactly',
     transcription: 'ɪɡˈzæktli',
     translation: 'точно',
@@ -794,7 +794,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'precisely',
+    term: 'precisely',
     slug: 'precisely',
     transcription: 'prɪˈsaɪsli',
     translation: 'точно',
@@ -804,7 +804,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'especially',
+    term: 'especially',
     slug: 'especially',
     transcription: 'ɪˈspeʃəli',
     translation: 'особенно',
@@ -814,7 +814,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'particularly',
+    term: 'particularly',
     slug: 'particularly',
     transcription: 'pəˈtɪkjələli',
     translation: 'особенно',
@@ -824,7 +824,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mainly',
+    term: 'mainly',
     slug: 'mainly',
     transcription: 'ˈmeɪnli',
     translation: 'главным образом',
@@ -834,7 +834,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mostly',
+    term: 'mostly',
     slug: 'mostly',
     transcription: 'ˈməʊstli',
     translation: 'в основном',
@@ -844,7 +844,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'partly',
+    term: 'partly',
     slug: 'partly',
     transcription: 'ˈpɑːtli',
     translation: 'частично',
@@ -854,7 +854,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'completely',
+    term: 'completely',
     slug: 'completely',
     transcription: 'kəmˈpliːtli',
     translation: 'полностью',
@@ -864,7 +864,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'totally',
+    term: 'totally',
     slug: 'totally',
     transcription: 'ˈtəʊtəli',
     translation: 'полностью',
@@ -874,7 +874,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'entirely',
+    term: 'entirely',
     slug: 'entirely',
     transcription: 'ɪnˈtaɪəli',
     translation: 'полностью',
@@ -884,7 +884,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'almost',
+    term: 'almost',
     slug: 'almost',
     transcription: 'ˈɔːlməʊst',
     translation: 'почти',
@@ -894,7 +894,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'nearly',
+    term: 'nearly',
     slug: 'nearly',
     transcription: 'ˈnɪəli',
     translation: 'почти',
@@ -904,7 +904,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'about',
+    term: 'about',
     slug: 'about',
     transcription: 'əˈbaʊt',
     translation: 'около',
@@ -914,7 +914,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'approximately',
+    term: 'approximately',
     slug: 'approximately',
     transcription: 'əˈprɒksɪmətli',
     translation: 'приблизительно',
@@ -924,7 +924,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'exactly',
+    term: 'exactly',
     slug: 'exactly',
     transcription: 'ɪɡˈzæktli',
     translation: 'точно',
@@ -934,7 +934,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'precisely',
+    term: 'precisely',
     slug: 'precisely',
     transcription: 'prɪˈsaɪsli',
     translation: 'точно',
@@ -944,7 +944,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'especially',
+    term: 'especially',
     slug: 'especially',
     transcription: 'ɪˈspeʃəli',
     translation: 'особенно',
@@ -954,7 +954,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'particularly',
+    term: 'particularly',
     slug: 'particularly',
     transcription: 'pəˈtɪkjələli',
     translation: 'особенно',
@@ -964,7 +964,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mainly',
+    term: 'mainly',
     slug: 'mainly',
     transcription: 'ˈmeɪnli',
     translation: 'главным образом',
@@ -974,7 +974,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mostly',
+    term: 'mostly',
     slug: 'mostly',
     transcription: 'ˈməʊstli',
     translation: 'в основном',
@@ -984,7 +984,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'partly',
+    term: 'partly',
     slug: 'partly',
     transcription: 'ˈpɑːtli',
     translation: 'частично',
@@ -994,7 +994,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'completely',
+    term: 'completely',
     slug: 'completely',
     transcription: 'kəmˈpliːtli',
     translation: 'полностью',
@@ -1004,7 +1004,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'totally',
+    term: 'totally',
     slug: 'totally',
     transcription: 'ˈtəʊtəli',
     translation: 'полностью',
@@ -1014,7 +1014,7 @@ export const phrasesData: PhraseData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'entirely',
+    term: 'entirely',
     slug: 'entirely',
     transcription: 'ɪnˈtaɪəli',
     translation: 'полностью',

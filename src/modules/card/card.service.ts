@@ -31,7 +31,7 @@ export class CardService {
   ) {}
 
   async create(createCardDto: CreateCardDto, userId?: string): Promise<Card> {
-    const slug = generateSlug(createCardDto.wordOrPhrase);
+    const slug = generateSlug(createCardDto.term);
 
     // Получаем язык по умолчанию (английский) если не указан
     let languageId = createCardDto.languageId;
@@ -54,7 +54,7 @@ export class CardService {
 
     if (existingCard) {
       throw new ConflictException(
-        `Карточка со словом "${createCardDto.wordOrPhrase}" уже существует`
+        `Карточка со словом "${createCardDto.term}" уже существует`
       );
     }
 
@@ -80,13 +80,11 @@ export class CardService {
     // Получаем транскрипцию только для отдельных слов
     if (
       !cardData.transcription &&
-      this.contentAnalyzer.isSingleWord(createCardDto.wordOrPhrase)
+      this.contentAnalyzer.isSingleWord(createCardDto.term)
     ) {
       try {
         const transcriptionResult =
-          await this.dictionaryService.getTranscription(
-            createCardDto.wordOrPhrase
-          );
+          await this.dictionaryService.getTranscription(createCardDto.term);
 
         if (transcriptionResult?.transcription) {
           cardData.transcription = transcriptionResult.transcription;
@@ -94,7 +92,7 @@ export class CardService {
       } catch (error) {
         // Логируем ошибку, но продолжаем создание карточки
         console.warn(
-          `⚠️ Не удалось получить транскрипцию для слова "${createCardDto.wordOrPhrase}":`,
+          `⚠️ Не удалось получить транскрипцию для слова "${createCardDto.term}":`,
           error
         );
       }
@@ -102,7 +100,7 @@ export class CardService {
 
     // Рассчитываем сложность если не указана
     cardData.difficulty ??= this.difficultyCalculator.calculateDifficulty(
-      createCardDto.wordOrPhrase,
+      createCardDto.term,
       createCardDto.partOfSpeech
     );
 
@@ -128,7 +126,7 @@ export class CardService {
     const where: {
       difficulty?: CardDifficulty;
       partOfSpeech?: PartOfSpeech;
-      wordOrPhrase?: {
+      term?: {
         contains: string;
         mode: 'insensitive';
       };
@@ -143,7 +141,7 @@ export class CardService {
     }
 
     if (search) {
-      where.wordOrPhrase = {
+      where.term = {
         contains: search,
         mode: 'insensitive',
       };
@@ -201,11 +199,8 @@ export class CardService {
       ...updateCardDto,
     };
 
-    if (
-      updateCardDto.wordOrPhrase &&
-      updateCardDto.wordOrPhrase !== existingCard.wordOrPhrase
-    ) {
-      updateData.slug = generateSlug(updateCardDto.wordOrPhrase);
+    if (updateCardDto.term && updateCardDto.term !== existingCard.term) {
+      updateData.slug = generateSlug(updateCardDto.term);
     }
 
     return this.prisma.card.update({

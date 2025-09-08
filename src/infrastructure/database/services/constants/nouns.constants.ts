@@ -1,7 +1,7 @@
 import { CardDifficulty, LanguageLevel } from '@prisma/client';
 
 export interface NounData {
-  wordOrPhrase: string;
+  term: string;
   slug: string;
   transcription: string;
   translation: string;
@@ -14,7 +14,7 @@ export interface NounData {
 export const nounsData: NounData[] = [
   // A1 Level - Basic Nouns
   {
-    wordOrPhrase: 'house',
+    term: 'house',
     slug: 'house',
     transcription: 'haʊs',
     translation: 'дом',
@@ -24,7 +24,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'car',
+    term: 'car',
     slug: 'car',
     transcription: 'kɑː',
     translation: 'машина',
@@ -34,7 +34,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'book',
+    term: 'book',
     slug: 'book',
     transcription: 'bʊk',
     translation: 'книга',
@@ -44,7 +44,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'water',
+    term: 'water',
     slug: 'water',
     transcription: 'ˈwɔːtə',
     translation: 'вода',
@@ -54,7 +54,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'food',
+    term: 'food',
     slug: 'food',
     transcription: 'fuːd',
     translation: 'еда',
@@ -64,7 +64,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'time',
+    term: 'time',
     slug: 'time',
     transcription: 'taɪm',
     translation: 'время',
@@ -74,7 +74,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'day',
+    term: 'day',
     slug: 'day',
     transcription: 'deɪ',
     translation: 'день',
@@ -84,7 +84,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'night',
+    term: 'night',
     slug: 'night',
     transcription: 'naɪt',
     translation: 'ночь',
@@ -94,7 +94,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'year',
+    term: 'year',
     slug: 'year',
     transcription: 'jɪə',
     translation: 'год',
@@ -104,7 +104,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'month',
+    term: 'month',
     slug: 'month',
     transcription: 'mʌnθ',
     translation: 'месяц',
@@ -114,7 +114,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'week',
+    term: 'week',
     slug: 'week',
     transcription: 'wiːk',
     translation: 'неделя',
@@ -124,7 +124,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hour',
+    term: 'hour',
     slug: 'hour',
     transcription: 'ˈaʊə',
     translation: 'час',
@@ -134,7 +134,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'minute',
+    term: 'minute',
     slug: 'minute',
     transcription: 'ˈmɪnɪt',
     translation: 'минута',
@@ -144,7 +144,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'family',
+    term: 'family',
     slug: 'family',
     transcription: 'ˈfæmɪli',
     translation: 'семья',
@@ -154,7 +154,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'friend',
+    term: 'friend',
     slug: 'friend',
     transcription: 'frend',
     translation: 'друг',
@@ -164,7 +164,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mother',
+    term: 'mother',
     slug: 'mother',
     transcription: 'ˈmʌðə',
     translation: 'мать',
@@ -174,7 +174,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'father',
+    term: 'father',
     slug: 'father',
     transcription: 'ˈfɑːðə',
     translation: 'отец',
@@ -184,7 +184,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sister',
+    term: 'sister',
     slug: 'sister',
     transcription: 'ˈsɪstə',
     translation: 'сестра',
@@ -194,7 +194,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'brother',
+    term: 'brother',
     slug: 'brother',
     transcription: 'ˈbrʌðə',
     translation: 'брат',
@@ -204,7 +204,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'child',
+    term: 'child',
     slug: 'child',
     transcription: 'tʃaɪld',
     translation: 'ребенок',
@@ -214,7 +214,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'man',
+    term: 'man',
     slug: 'man',
     transcription: 'mæn',
     translation: 'мужчина',
@@ -224,7 +224,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'woman',
+    term: 'woman',
     slug: 'woman',
     transcription: 'ˈwʊmən',
     translation: 'женщина',
@@ -234,7 +234,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'boy',
+    term: 'boy',
     slug: 'boy',
     transcription: 'bɔɪ',
     translation: 'мальчик',
@@ -244,7 +244,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'girl',
+    term: 'girl',
     slug: 'girl',
     transcription: 'ɡɜːl',
     translation: 'девочка',
@@ -254,7 +254,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'teacher',
+    term: 'teacher',
     slug: 'teacher',
     transcription: 'ˈtiːtʃə',
     translation: 'учитель',
@@ -264,7 +264,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'student',
+    term: 'student',
     slug: 'student',
     transcription: 'ˈstjuːdənt',
     translation: 'студент',
@@ -274,7 +274,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'doctor',
+    term: 'doctor',
     slug: 'doctor',
     transcription: 'ˈdɒktə',
     translation: 'врач',
@@ -284,7 +284,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'work',
+    term: 'work',
     slug: 'work',
     transcription: 'wɜːk',
     translation: 'работа',
@@ -294,7 +294,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'school',
+    term: 'school',
     slug: 'school',
     transcription: 'skuːl',
     translation: 'школа',
@@ -304,7 +304,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'home',
+    term: 'home',
     slug: 'home',
     transcription: 'həʊm',
     translation: 'дом',
@@ -314,7 +314,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'room',
+    term: 'room',
     slug: 'room',
     transcription: 'ruːm',
     translation: 'комната',
@@ -324,7 +324,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'door',
+    term: 'door',
     slug: 'door',
     transcription: 'dɔː',
     translation: 'дверь',
@@ -334,7 +334,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'window',
+    term: 'window',
     slug: 'window',
     transcription: 'ˈwɪndəʊ',
     translation: 'окно',
@@ -344,7 +344,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'table',
+    term: 'table',
     slug: 'table',
     transcription: 'ˈteɪbl',
     translation: 'стол',
@@ -354,7 +354,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'chair',
+    term: 'chair',
     slug: 'chair',
     transcription: 'tʃeə',
     translation: 'стул',
@@ -364,7 +364,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bed',
+    term: 'bed',
     slug: 'bed',
     transcription: 'bed',
     translation: 'кровать',
@@ -374,7 +374,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'phone',
+    term: 'phone',
     slug: 'phone',
     transcription: 'fəʊn',
     translation: 'телефон',
@@ -384,7 +384,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'computer',
+    term: 'computer',
     slug: 'computer',
     transcription: 'kəmˈpjuːtə',
     translation: 'компьютер',
@@ -394,7 +394,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'money',
+    term: 'money',
     slug: 'money',
     transcription: 'ˈmʌni',
     translation: 'деньги',
@@ -404,7 +404,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'name',
+    term: 'name',
     slug: 'name',
     transcription: 'neɪm',
     translation: 'имя',
@@ -414,7 +414,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'number',
+    term: 'number',
     slug: 'number',
     transcription: 'ˈnʌmbə',
     translation: 'число',
@@ -424,7 +424,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'word',
+    term: 'word',
     slug: 'word',
     transcription: 'wɜːd',
     translation: 'слово',
@@ -434,7 +434,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'question',
+    term: 'question',
     slug: 'question',
     transcription: 'ˈkwestʃən',
     translation: 'вопрос',
@@ -444,7 +444,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'answer',
+    term: 'answer',
     slug: 'answer',
     transcription: 'ˈɑːnsə',
     translation: 'ответ',
@@ -454,7 +454,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'problem',
+    term: 'problem',
     slug: 'problem',
     transcription: 'ˈprɒbləm',
     translation: 'проблема',
@@ -464,7 +464,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'idea',
+    term: 'idea',
     slug: 'idea',
     transcription: 'aɪˈdɪə',
     translation: 'идея',
@@ -474,7 +474,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'way',
+    term: 'way',
     slug: 'way',
     transcription: 'weɪ',
     translation: 'путь',
@@ -484,7 +484,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'place',
+    term: 'place',
     slug: 'place',
     transcription: 'pleɪs',
     translation: 'место',
@@ -494,7 +494,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thing',
+    term: 'thing',
     slug: 'thing',
     transcription: 'θɪŋ',
     translation: 'вещь',
@@ -504,7 +504,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'people',
+    term: 'people',
     slug: 'people',
     transcription: 'ˈpiːpl',
     translation: 'люди',
@@ -514,7 +514,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'country',
+    term: 'country',
     slug: 'country',
     transcription: 'ˈkʌntri',
     translation: 'страна',
@@ -524,7 +524,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'city',
+    term: 'city',
     slug: 'city',
     transcription: 'ˈsɪti',
     translation: 'город',
@@ -534,7 +534,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'street',
+    term: 'street',
     slug: 'street',
     transcription: 'striːt',
     translation: 'улица',
@@ -544,7 +544,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'shop',
+    term: 'shop',
     slug: 'shop',
     transcription: 'ʃɒp',
     translation: 'магазин',
@@ -554,7 +554,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'restaurant',
+    term: 'restaurant',
     slug: 'restaurant',
     transcription: 'ˈrestrɒnt',
     translation: 'ресторан',
@@ -564,7 +564,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hospital',
+    term: 'hospital',
     slug: 'hospital',
     transcription: 'ˈhɒspɪtl',
     translation: 'больница',
@@ -574,7 +574,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bank',
+    term: 'bank',
     slug: 'bank',
     transcription: 'bæŋk',
     translation: 'банк',
@@ -584,7 +584,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'station',
+    term: 'station',
     slug: 'station',
     transcription: 'ˈsteɪʃn',
     translation: 'станция',
@@ -594,7 +594,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'airport',
+    term: 'airport',
     slug: 'airport',
     transcription: 'ˈeəpɔːt',
     translation: 'аэропорт',
@@ -604,7 +604,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hotel',
+    term: 'hotel',
     slug: 'hotel',
     transcription: 'həʊˈtel',
     translation: 'отель',
@@ -614,7 +614,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'park',
+    term: 'park',
     slug: 'park',
     transcription: 'pɑːk',
     translation: 'парк',
@@ -624,7 +624,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'beach',
+    term: 'beach',
     slug: 'beach',
     transcription: 'biːtʃ',
     translation: 'пляж',
@@ -634,7 +634,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mountain',
+    term: 'mountain',
     slug: 'mountain',
     transcription: 'ˈmaʊntən',
     translation: 'гора',
@@ -644,7 +644,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'river',
+    term: 'river',
     slug: 'river',
     transcription: 'ˈrɪvə',
     translation: 'река',
@@ -654,7 +654,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sea',
+    term: 'sea',
     slug: 'sea',
     transcription: 'siː',
     translation: 'море',
@@ -664,7 +664,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sun',
+    term: 'sun',
     slug: 'sun',
     transcription: 'sʌn',
     translation: 'солнце',
@@ -674,7 +674,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'moon',
+    term: 'moon',
     slug: 'moon',
     transcription: 'muːn',
     translation: 'луна',
@@ -684,7 +684,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'star',
+    term: 'star',
     slug: 'star',
     transcription: 'stɑː',
     translation: 'звезда',
@@ -694,7 +694,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tree',
+    term: 'tree',
     slug: 'tree',
     transcription: 'triː',
     translation: 'дерево',
@@ -704,7 +704,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'flower',
+    term: 'flower',
     slug: 'flower',
     transcription: 'ˈflaʊə',
     translation: 'цветок',
@@ -714,7 +714,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'animal',
+    term: 'animal',
     slug: 'animal',
     transcription: 'ˈænɪml',
     translation: 'животное',
@@ -724,7 +724,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dog',
+    term: 'dog',
     slug: 'dog',
     transcription: 'dɒɡ',
     translation: 'собака',
@@ -734,7 +734,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cat',
+    term: 'cat',
     slug: 'cat',
     transcription: 'kæt',
     translation: 'кошка',
@@ -744,7 +744,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bird',
+    term: 'bird',
     slug: 'bird',
     transcription: 'bɜːd',
     translation: 'птица',
@@ -754,7 +754,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fish',
+    term: 'fish',
     slug: 'fish',
     transcription: 'fɪʃ',
     translation: 'рыба',
@@ -764,7 +764,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'horse',
+    term: 'horse',
     slug: 'horse',
     transcription: 'hɔːs',
     translation: 'лошадь',
@@ -774,7 +774,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cow',
+    term: 'cow',
     slug: 'cow',
     transcription: 'kaʊ',
     translation: 'корова',
@@ -784,7 +784,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'chicken',
+    term: 'chicken',
     slug: 'chicken',
     transcription: 'ˈtʃɪkɪn',
     translation: 'курица',
@@ -794,7 +794,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'pig',
+    term: 'pig',
     slug: 'pig',
     transcription: 'pɪɡ',
     translation: 'свинья',
@@ -804,7 +804,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sheep',
+    term: 'sheep',
     slug: 'sheep',
     transcription: 'ʃiːp',
     translation: 'овца',
@@ -814,7 +814,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bread',
+    term: 'bread',
     slug: 'bread',
     transcription: 'bred',
     translation: 'хлеб',
@@ -824,7 +824,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'milk',
+    term: 'milk',
     slug: 'milk',
     transcription: 'mɪlk',
     translation: 'молоко',
@@ -834,7 +834,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'egg',
+    term: 'egg',
     slug: 'egg',
     transcription: 'eɡ',
     translation: 'яйцо',
@@ -844,7 +844,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'meat',
+    term: 'meat',
     slug: 'meat',
     transcription: 'miːt',
     translation: 'мясо',
@@ -854,7 +854,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rice',
+    term: 'rice',
     slug: 'rice',
     transcription: 'raɪs',
     translation: 'рис',
@@ -864,7 +864,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'potato',
+    term: 'potato',
     slug: 'potato',
     transcription: 'pəˈteɪtəʊ',
     translation: 'картофель',
@@ -874,7 +874,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tomato',
+    term: 'tomato',
     slug: 'tomato',
     transcription: 'təˈmɑːtəʊ',
     translation: 'помидор',
@@ -884,7 +884,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'apple',
+    term: 'apple',
     slug: 'apple',
     transcription: 'ˈæpl',
     translation: 'яблоко',
@@ -894,7 +894,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'banana',
+    term: 'banana',
     slug: 'banana',
     transcription: 'bəˈnɑːnə',
     translation: 'банан',
@@ -904,7 +904,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'orange',
+    term: 'orange',
     slug: 'orange',
     transcription: 'ˈɒrɪndʒ',
     translation: 'апельсин',
@@ -914,7 +914,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'coffee',
+    term: 'coffee',
     slug: 'coffee',
     transcription: 'ˈkɒfi',
     translation: 'кофе',
@@ -924,7 +924,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tea',
+    term: 'tea',
     slug: 'tea',
     transcription: 'tiː',
     translation: 'чай',
@@ -934,7 +934,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'juice',
+    term: 'juice',
     slug: 'juice',
     transcription: 'dʒuːs',
     translation: 'сок',
@@ -944,7 +944,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'beer',
+    term: 'beer',
     slug: 'beer',
     transcription: 'bɪə',
     translation: 'пиво',
@@ -954,7 +954,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wine',
+    term: 'wine',
     slug: 'wine',
     transcription: 'waɪn',
     translation: 'вино',
@@ -964,7 +964,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cake',
+    term: 'cake',
     slug: 'cake',
     transcription: 'keɪk',
     translation: 'торт',
@@ -974,7 +974,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'chocolate',
+    term: 'chocolate',
     slug: 'chocolate',
     transcription: 'ˈtʃɒklət',
     translation: 'шоколад',
@@ -984,7 +984,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sugar',
+    term: 'sugar',
     slug: 'sugar',
     transcription: 'ˈʃʊɡə',
     translation: 'сахар',
@@ -994,7 +994,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'salt',
+    term: 'salt',
     slug: 'salt',
     transcription: 'sɔːlt',
     translation: 'соль',
@@ -1004,7 +1004,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'paper',
+    term: 'paper',
     slug: 'paper',
     transcription: 'ˈpeɪpə',
     translation: 'бумага',
@@ -1014,7 +1014,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'pen',
+    term: 'pen',
     slug: 'pen',
     transcription: 'pen',
     translation: 'ручка',
@@ -1024,7 +1024,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'pencil',
+    term: 'pencil',
     slug: 'pencil',
     transcription: 'ˈpensl',
     translation: 'карандаш',
@@ -1034,7 +1034,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bag',
+    term: 'bag',
     slug: 'bag',
     transcription: 'bæɡ',
     translation: 'сумка',
@@ -1044,7 +1044,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'shirt',
+    term: 'shirt',
     slug: 'shirt',
     transcription: 'ʃɜːt',
     translation: 'рубашка',
@@ -1054,7 +1054,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'shoes',
+    term: 'shoes',
     slug: 'shoes',
     transcription: 'ʃuːz',
     translation: 'обувь',
@@ -1064,7 +1064,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hat',
+    term: 'hat',
     slug: 'hat',
     transcription: 'hæt',
     translation: 'шляпа',
@@ -1074,7 +1074,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'watch',
+    term: 'watch',
     slug: 'watch',
     transcription: 'wɒtʃ',
     translation: 'часы',
@@ -1084,7 +1084,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ring',
+    term: 'ring',
     slug: 'ring',
     transcription: 'rɪŋ',
     translation: 'кольцо',
@@ -1094,7 +1094,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'key',
+    term: 'key',
     slug: 'key',
     transcription: 'kiː',
     translation: 'ключ',
@@ -1104,7 +1104,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'map',
+    term: 'map',
     slug: 'map',
     transcription: 'mæp',
     translation: 'карта',
@@ -1114,7 +1114,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'photo',
+    term: 'photo',
     slug: 'photo',
     transcription: 'ˈfəʊtəʊ',
     translation: 'фото',
@@ -1124,7 +1124,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'picture',
+    term: 'picture',
     slug: 'picture',
     transcription: 'ˈpɪktʃə',
     translation: 'картина',
@@ -1134,7 +1134,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'film',
+    term: 'film',
     slug: 'film',
     transcription: 'fɪlm',
     translation: 'фильм',
@@ -1144,7 +1144,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'music',
+    term: 'music',
     slug: 'music',
     transcription: 'ˈmjuːzɪk',
     translation: 'музыка',
@@ -1154,7 +1154,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'song',
+    term: 'song',
     slug: 'song',
     transcription: 'sɒŋ',
     translation: 'песня',
@@ -1164,7 +1164,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'game',
+    term: 'game',
     slug: 'game',
     transcription: 'ɡeɪm',
     translation: 'игра',
@@ -1174,7 +1174,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ball',
+    term: 'ball',
     slug: 'ball',
     transcription: 'bɔːl',
     translation: 'мяч',
@@ -1184,7 +1184,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'toy',
+    term: 'toy',
     slug: 'toy',
     transcription: 'tɔɪ',
     translation: 'игрушка',
@@ -1194,7 +1194,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'gift',
+    term: 'gift',
     slug: 'gift',
     transcription: 'ɡɪft',
     translation: 'подарок',
@@ -1204,7 +1204,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'party',
+    term: 'party',
     slug: 'party',
     transcription: 'ˈpɑːti',
     translation: 'вечеринка',
@@ -1214,7 +1214,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'holiday',
+    term: 'holiday',
     slug: 'holiday',
     transcription: 'ˈhɒlɪdeɪ',
     translation: 'отпуск',
@@ -1224,7 +1224,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'birthday',
+    term: 'birthday',
     slug: 'birthday',
     transcription: 'ˈbɜːθdeɪ',
     translation: 'день рождения',
@@ -1234,7 +1234,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'Christmas',
+    term: 'Christmas',
     slug: 'christmas',
     transcription: 'ˈkrɪsməs',
     translation: 'Рождество',
@@ -1244,7 +1244,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'weather',
+    term: 'weather',
     slug: 'weather',
     transcription: 'ˈweðə',
     translation: 'погода',
@@ -1254,7 +1254,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rain',
+    term: 'rain',
     slug: 'rain',
     transcription: 'reɪn',
     translation: 'дождь',
@@ -1264,7 +1264,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'snow',
+    term: 'snow',
     slug: 'snow',
     transcription: 'snəʊ',
     translation: 'снег',
@@ -1274,7 +1274,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wind',
+    term: 'wind',
     slug: 'wind',
     transcription: 'wɪnd',
     translation: 'ветер',
@@ -1284,7 +1284,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cloud',
+    term: 'cloud',
     slug: 'cloud',
     transcription: 'klaʊd',
     translation: 'облако',
@@ -1294,7 +1294,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sky',
+    term: 'sky',
     slug: 'sky',
     transcription: 'skaɪ',
     translation: 'небо',
@@ -1304,7 +1304,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ground',
+    term: 'ground',
     slug: 'ground',
     transcription: 'ɡraʊnd',
     translation: 'земля',
@@ -1314,7 +1314,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'floor',
+    term: 'floor',
     slug: 'floor',
     transcription: 'flɔː',
     translation: 'пол',
@@ -1324,7 +1324,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wall',
+    term: 'wall',
     slug: 'wall',
     transcription: 'wɔːl',
     translation: 'стена',
@@ -1334,7 +1334,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'roof',
+    term: 'roof',
     slug: 'roof',
     transcription: 'ruːf',
     translation: 'крыша',
@@ -1344,7 +1344,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'stairs',
+    term: 'stairs',
     slug: 'stairs',
     transcription: 'steəz',
     translation: 'лестница',
@@ -1354,7 +1354,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'lift',
+    term: 'lift',
     slug: 'lift',
     transcription: 'lɪft',
     translation: 'лифт',
@@ -1364,7 +1364,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bus',
+    term: 'bus',
     slug: 'bus',
     transcription: 'bʌs',
     translation: 'автобус',
@@ -1374,7 +1374,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'train',
+    term: 'train',
     slug: 'train',
     transcription: 'treɪn',
     translation: 'поезд',
@@ -1384,7 +1384,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'plane',
+    term: 'plane',
     slug: 'plane',
     transcription: 'pleɪn',
     translation: 'самолет',
@@ -1394,7 +1394,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'boat',
+    term: 'boat',
     slug: 'boat',
     transcription: 'bəʊt',
     translation: 'лодка',
@@ -1404,7 +1404,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bike',
+    term: 'bike',
     slug: 'bike',
     transcription: 'baɪk',
     translation: 'велосипед',
@@ -1414,7 +1414,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'road',
+    term: 'road',
     slug: 'road',
     transcription: 'rəʊd',
     translation: 'дорога',
@@ -1424,7 +1424,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bridge',
+    term: 'bridge',
     slug: 'bridge',
     transcription: 'brɪdʒ',
     translation: 'мост',
@@ -1434,7 +1434,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'light',
+    term: 'light',
     slug: 'light',
     transcription: 'laɪt',
     translation: 'свет',
@@ -1444,7 +1444,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fire',
+    term: 'fire',
     slug: 'fire',
     transcription: 'ˈfaɪə',
     translation: 'огонь',
@@ -1454,7 +1454,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'smoke',
+    term: 'smoke',
     slug: 'smoke',
     transcription: 'sməʊk',
     translation: 'дым',
@@ -1464,7 +1464,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ice',
+    term: 'ice',
     slug: 'ice',
     transcription: 'aɪs',
     translation: 'лед',
@@ -1474,7 +1474,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fire',
+    term: 'fire',
     slug: 'fire',
     transcription: 'ˈfaɪə',
     translation: 'огонь',
@@ -1484,7 +1484,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'smoke',
+    term: 'smoke',
     slug: 'smoke',
     transcription: 'sməʊk',
     translation: 'дым',
@@ -1494,7 +1494,7 @@ export const nounsData: NounData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ice',
+    term: 'ice',
     slug: 'ice',
     transcription: 'aɪs',
     translation: 'лед',

@@ -9,7 +9,7 @@ import { envKeys } from './keys';
  *
  * @example
  * // Validate environment variables
- * const validatedConfig = envSchema.parse(process.env);
+ * const validatedConfig = envSchema.parse(config);
  *
  * @example
  * // Use in ConfigModule
@@ -57,7 +57,7 @@ export const envSchema = z.object({
   [envKeys.FREE_DICTIONARY_API_TIMEOUT]: z.coerce.number().default(5000),
   [envKeys.FREE_DICTIONARY_API_RETRIES]: z.coerce.number().default(3),
   // Конфигурация словарей
-  [envKeys.DICTIONARY_PROVIDER]: z.string().default('merriam-webster'),
+  [envKeys.DICTIONARY_PROVIDER]: z.string().default('free-dictionary'),
   [envKeys.MERRIAM_API_KEY]: z.string().optional(),
   [envKeys.MERRIAM_API_URL]: z.string().optional(),
 });

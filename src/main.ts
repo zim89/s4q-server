@@ -65,11 +65,27 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: config.getOrThrow<string[]>(envKeys.ALLOWED_ORIGINS),
+    origin: (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void
+    ) => {
+      const allowedOrigins = config.getOrThrow<string[]>(
+        envKeys.ALLOWED_ORIGINS
+      );
+
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error('Not allowed by CORS'), false);
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
     exposedHeaders: ['Set-Cookie', 'Content-Disposition'],
-    allowedHeaders: ['Authorization', 'X-Api-Key'],
+    allowedHeaders: ['Authorization', 'X-Api-Key', 'Content-Type', 'Accept'],
   });
 
   const port = config.get<number>(envKeys.PORT, 4040);

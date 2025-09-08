@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ContentCategory, LanguageLevel, SetType } from '@prisma/client';
+import { LanguageLevel, SetType } from '@prisma/client';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 import {
   SetSortField,
@@ -22,7 +22,6 @@ import { PaginationDto } from 'src/shared/dto';
  *   limit: 20,
  *   type: SetType.LANGUAGE,
  *   level: LanguageLevel.A1,
- *   contentCategory: ContentCategory.EDUCATIONAL,
  *   search: 'english',
  *   sort: 'createdAt',
  *   order: 'desc'
@@ -58,15 +57,6 @@ export class SetQueryDto extends PaginationDto {
   @IsOptional()
   @IsEnum(LanguageLevel)
   level?: LanguageLevel;
-
-  @ApiPropertyOptional({
-    description: 'Категория контента',
-    enum: ContentCategory,
-    example: ContentCategory.EDUCATIONAL,
-  })
-  @IsOptional()
-  @IsEnum(ContentCategory)
-  contentCategory?: ContentCategory;
 
   @ApiPropertyOptional({
     description: 'Поиск по названию',

@@ -1,7 +1,7 @@
 import { CardDifficulty, LanguageLevel } from '@prisma/client';
 
 export interface AdverbData {
-  wordOrPhrase: string;
+  term: string;
   slug: string;
   transcription: string;
   translation: string;
@@ -14,7 +14,7 @@ export interface AdverbData {
 export const adverbsData: AdverbData[] = [
   // A1 Level - Basic Adverbs
   {
-    wordOrPhrase: 'very',
+    term: 'very',
     slug: 'very',
     transcription: 'ˈveri',
     translation: 'очень',
@@ -24,7 +24,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'too',
+    term: 'too',
     slug: 'too',
     transcription: 'tuː',
     translation: 'слишком',
@@ -34,7 +34,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'so',
+    term: 'so',
     slug: 'so',
     transcription: 'səʊ',
     translation: 'так',
@@ -44,7 +44,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'quite',
+    term: 'quite',
     slug: 'quite',
     transcription: 'kwaɪt',
     translation: 'довольно',
@@ -54,7 +54,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'really',
+    term: 'really',
     slug: 'really',
     transcription: 'ˈrɪəli',
     translation: 'действительно',
@@ -64,7 +64,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'well',
+    term: 'well',
     slug: 'well',
     transcription: 'wel',
     translation: 'хорошо',
@@ -74,7 +74,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'badly',
+    term: 'badly',
     slug: 'badly',
     transcription: 'ˈbædli',
     translation: 'плохо',
@@ -84,7 +84,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fast',
+    term: 'fast',
     slug: 'fast',
     transcription: 'fɑːst',
     translation: 'быстро',
@@ -94,7 +94,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'slowly',
+    term: 'slowly',
     slug: 'slowly',
     transcription: 'ˈsləʊli',
     translation: 'медленно',
@@ -104,7 +104,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'quickly',
+    term: 'quickly',
     slug: 'quickly',
     transcription: 'ˈkwɪkli',
     translation: 'быстро',
@@ -114,7 +114,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'early',
+    term: 'early',
     slug: 'early',
     transcription: 'ˈɜːli',
     translation: 'рано',
@@ -124,7 +124,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'late',
+    term: 'late',
     slug: 'late',
     transcription: 'leɪt',
     translation: 'поздно',
@@ -134,7 +134,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'now',
+    term: 'now',
     slug: 'now',
     transcription: 'naʊ',
     translation: 'сейчас',
@@ -144,7 +144,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'then',
+    term: 'then',
     slug: 'then',
     transcription: 'ðen',
     translation: 'тогда',
@@ -154,7 +154,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'today',
+    term: 'today',
     slug: 'today',
     transcription: 'təˈdeɪ',
     translation: 'сегодня',
@@ -164,7 +164,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'yesterday',
+    term: 'yesterday',
     slug: 'yesterday',
     transcription: 'ˈjestədeɪ',
     translation: 'вчера',
@@ -174,7 +174,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tomorrow',
+    term: 'tomorrow',
     slug: 'tomorrow',
     transcription: 'təˈmɒrəʊ',
     translation: 'завтра',
@@ -184,7 +184,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'here',
+    term: 'here',
     slug: 'here',
     transcription: 'hɪə',
     translation: 'здесь',
@@ -194,7 +194,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'there',
+    term: 'there',
     slug: 'there',
     transcription: 'ðeə',
     translation: 'там',
@@ -204,7 +204,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'everywhere',
+    term: 'everywhere',
     slug: 'everywhere',
     transcription: 'ˈevriweə',
     translation: 'везде',
@@ -214,7 +214,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'nowhere',
+    term: 'nowhere',
     slug: 'nowhere',
     transcription: 'ˈnəʊweə',
     translation: 'нигде',
@@ -224,7 +224,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'somewhere',
+    term: 'somewhere',
     slug: 'somewhere',
     transcription: 'ˈsʌmweə',
     translation: 'где-то',
@@ -234,7 +234,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'anywhere',
+    term: 'anywhere',
     slug: 'anywhere',
     transcription: 'ˈeniweə',
     translation: 'где-нибудь',
@@ -244,7 +244,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'inside',
+    term: 'inside',
     slug: 'inside',
     transcription: 'ˌɪnˈsaɪd',
     translation: 'внутри',
@@ -254,7 +254,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'outside',
+    term: 'outside',
     slug: 'outside',
     transcription: 'ˌaʊtˈsaɪd',
     translation: 'снаружи',
@@ -264,7 +264,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'upstairs',
+    term: 'upstairs',
     slug: 'upstairs',
     transcription: 'ˌʌpˈsteəz',
     translation: 'наверх',
@@ -274,7 +274,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'downstairs',
+    term: 'downstairs',
     slug: 'downstairs',
     transcription: 'ˌdaʊnˈsteəz',
     translation: 'вниз',
@@ -284,7 +284,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'up',
+    term: 'up',
     slug: 'up',
     transcription: 'ʌp',
     translation: 'вверх',
@@ -294,7 +294,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'down',
+    term: 'down',
     slug: 'down',
     transcription: 'daʊn',
     translation: 'вниз',
@@ -304,7 +304,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'in',
+    term: 'in',
     slug: 'in',
     transcription: 'ɪn',
     translation: 'внутри',
@@ -314,7 +314,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'out',
+    term: 'out',
     slug: 'out',
     transcription: 'aʊt',
     translation: 'наружу',
@@ -324,7 +324,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'on',
+    term: 'on',
     slug: 'on',
     transcription: 'ɒn',
     translation: 'на',
@@ -334,7 +334,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'off',
+    term: 'off',
     slug: 'off',
     transcription: 'ɒf',
     translation: 'выключен',
@@ -344,7 +344,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'over',
+    term: 'over',
     slug: 'over',
     transcription: 'ˈəʊvə',
     translation: 'над',
@@ -354,7 +354,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'under',
+    term: 'under',
     slug: 'under',
     transcription: 'ˈʌndə',
     translation: 'под',
@@ -364,7 +364,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'above',
+    term: 'above',
     slug: 'above',
     transcription: 'əˈbʌv',
     translation: 'выше',
@@ -374,7 +374,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'below',
+    term: 'below',
     slug: 'below',
     transcription: 'bɪˈləʊ',
     translation: 'ниже',
@@ -384,7 +384,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'behind',
+    term: 'behind',
     slug: 'behind',
     transcription: 'bɪˈhaɪnd',
     translation: 'за',
@@ -394,7 +394,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'in front of',
+    term: 'in front of',
     slug: 'in-front-of',
     transcription: 'ɪn frʌnt əv',
     translation: 'перед',
@@ -404,7 +404,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'next to',
+    term: 'next to',
     slug: 'next-to',
     transcription: 'nekst tuː',
     translation: 'рядом с',
@@ -414,7 +414,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'near',
+    term: 'near',
     slug: 'near',
     transcription: 'nɪə',
     translation: 'близко',
@@ -424,7 +424,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'far',
+    term: 'far',
     slug: 'far',
     transcription: 'fɑː',
     translation: 'далеко',
@@ -434,7 +434,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'away',
+    term: 'away',
     slug: 'away',
     transcription: 'əˈweɪ',
     translation: 'прочь',
@@ -444,7 +444,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'back',
+    term: 'back',
     slug: 'back',
     transcription: 'bæk',
     translation: 'назад',
@@ -454,7 +454,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'forward',
+    term: 'forward',
     slug: 'forward',
     transcription: 'ˈfɔːwəd',
     translation: 'вперед',
@@ -464,7 +464,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'left',
+    term: 'left',
     slug: 'left',
     transcription: 'left',
     translation: 'налево',
@@ -474,7 +474,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'right',
+    term: 'right',
     slug: 'right',
     transcription: 'raɪt',
     translation: 'направо',
@@ -484,7 +484,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'straight',
+    term: 'straight',
     slug: 'straight',
     transcription: 'streɪt',
     translation: 'прямо',
@@ -494,7 +494,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'around',
+    term: 'around',
     slug: 'around',
     transcription: 'əˈraʊnd',
     translation: 'вокруг',
@@ -504,7 +504,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'through',
+    term: 'through',
     slug: 'through',
     transcription: 'θruː',
     translation: 'через',
@@ -514,7 +514,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'across',
+    term: 'across',
     slug: 'across',
     transcription: 'əˈkrɒs',
     translation: 'через',
@@ -524,7 +524,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'along',
+    term: 'along',
     slug: 'along',
     transcription: 'əˈlɒŋ',
     translation: 'вдоль',
@@ -534,7 +534,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'together',
+    term: 'together',
     slug: 'together',
     transcription: 'təˈɡeðə',
     translation: 'вместе',
@@ -544,7 +544,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'alone',
+    term: 'alone',
     slug: 'alone',
     transcription: 'əˈləʊn',
     translation: 'один',
@@ -554,7 +554,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'with',
+    term: 'with',
     slug: 'with',
     transcription: 'wɪð',
     translation: 'с',
@@ -564,7 +564,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'without',
+    term: 'without',
     slug: 'without',
     transcription: 'wɪˈðaʊt',
     translation: 'без',
@@ -574,7 +574,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'against',
+    term: 'against',
     slug: 'against',
     transcription: 'əˈɡenst',
     translation: 'против',
@@ -584,7 +584,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'for',
+    term: 'for',
     slug: 'for',
     transcription: 'fɔː',
     translation: 'для',
@@ -594,7 +594,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'from',
+    term: 'from',
     slug: 'from',
     transcription: 'frɒm',
     translation: 'от',
@@ -604,7 +604,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'to',
+    term: 'to',
     slug: 'to',
     transcription: 'tuː',
     translation: 'к',
@@ -614,7 +614,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'of',
+    term: 'of',
     slug: 'of',
     transcription: 'ɒv',
     translation: 'из',
@@ -624,7 +624,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'by',
+    term: 'by',
     slug: 'by',
     transcription: 'baɪ',
     translation: 'у',
@@ -634,7 +634,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'about',
+    term: 'about',
     slug: 'about',
     transcription: 'əˈbaʊt',
     translation: 'о',
@@ -644,7 +644,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'like',
+    term: 'like',
     slug: 'like',
     transcription: 'laɪk',
     translation: 'как',
@@ -654,7 +654,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'as',
+    term: 'as',
     slug: 'as',
     transcription: 'æz',
     translation: 'как',
@@ -664,7 +664,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'than',
+    term: 'than',
     slug: 'than',
     transcription: 'ðæn',
     translation: 'чем',
@@ -674,7 +674,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'more',
+    term: 'more',
     slug: 'more',
     transcription: 'mɔː',
     translation: 'больше',
@@ -684,7 +684,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'less',
+    term: 'less',
     slug: 'less',
     transcription: 'les',
     translation: 'меньше',
@@ -694,7 +694,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'most',
+    term: 'most',
     slug: 'most',
     transcription: 'məʊst',
     translation: 'больше всего',
@@ -704,7 +704,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'least',
+    term: 'least',
     slug: 'least',
     transcription: 'liːst',
     translation: 'меньше всего',
@@ -714,7 +714,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'better',
+    term: 'better',
     slug: 'better',
     transcription: 'ˈbetə',
     translation: 'лучше',
@@ -724,7 +724,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'worse',
+    term: 'worse',
     slug: 'worse',
     transcription: 'wɜːs',
     translation: 'хуже',
@@ -734,7 +734,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'best',
+    term: 'best',
     slug: 'best',
     transcription: 'best',
     translation: 'лучше всего',
@@ -744,7 +744,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'worst',
+    term: 'worst',
     slug: 'worst',
     transcription: 'wɜːst',
     translation: 'хуже всего',
@@ -754,7 +754,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'first',
+    term: 'first',
     slug: 'first',
     transcription: 'fɜːst',
     translation: 'первый',
@@ -764,7 +764,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'last',
+    term: 'last',
     slug: 'last',
     transcription: 'lɑːst',
     translation: 'последний',
@@ -774,7 +774,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'next',
+    term: 'next',
     slug: 'next',
     transcription: 'nekst',
     translation: 'следующий',
@@ -784,7 +784,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'previous',
+    term: 'previous',
     slug: 'previous',
     transcription: 'ˈpriːviəs',
     translation: 'предыдущий',
@@ -794,7 +794,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'current',
+    term: 'current',
     slug: 'current',
     transcription: 'ˈkʌrənt',
     translation: 'текущий',
@@ -804,7 +804,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'recent',
+    term: 'recent',
     slug: 'recent',
     transcription: 'ˈriːsnt',
     translation: 'недавний',
@@ -814,7 +814,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'old',
+    term: 'old',
     slug: 'old',
     transcription: 'əʊld',
     translation: 'старый',
@@ -824,7 +824,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'new',
+    term: 'new',
     slug: 'new',
     transcription: 'njuː',
     translation: 'новый',
@@ -834,7 +834,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'young',
+    term: 'young',
     slug: 'young',
     transcription: 'jʌŋ',
     translation: 'молодой',
@@ -844,7 +844,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'old',
+    term: 'old',
     slug: 'old',
     transcription: 'əʊld',
     translation: 'старый',
@@ -854,7 +854,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'new',
+    term: 'new',
     slug: 'new',
     transcription: 'njuː',
     translation: 'новый',
@@ -864,7 +864,7 @@ export const adverbsData: AdverbData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'young',
+    term: 'young',
     slug: 'young',
     transcription: 'jʌŋ',
     translation: 'молодой',

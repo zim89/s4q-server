@@ -33,7 +33,7 @@ import { PaginationDto } from 'src/shared/dto';
  * // Поиск по сложности
  * const queryDto: CardQueryDto = {
  *   difficulty: CardDifficulty.MEDIUM,
- *   sort: 'wordOrPhrase',
+ *   sort: 'term',
  *   order: 'asc'
  * };
  * ```

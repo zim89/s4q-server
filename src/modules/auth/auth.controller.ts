@@ -84,6 +84,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const user = req.user as { id: string } | undefined;
+
     if (!user) {
       throw new UnauthorizedException('User not authorized');
     }

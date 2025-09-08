@@ -218,6 +218,7 @@ export class AuthService {
     }
 
     this.refreshTokenService.removeFromResponse(res);
+
     return { message: 'Successfully logged out' };
   }
 

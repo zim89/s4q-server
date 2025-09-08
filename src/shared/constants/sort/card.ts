@@ -5,7 +5,7 @@
  */
 export const cardSortFields = {
   createdAt: 'createdAt',
-  wordOrPhrase: 'wordOrPhrase',
+  term: 'term',
   difficulty: 'difficulty',
 } as const;
 

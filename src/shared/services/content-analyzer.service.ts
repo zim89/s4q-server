@@ -16,8 +16,8 @@ export class ContentAnalyzerService {
    * Определяет тип контента на основе входных данных
    */
   determineContentType(): ContentType {
-    // Всегда текстовый контент для слов и фраз
-    return ContentType.TEXT;
+    // По умолчанию тип LANGUAGE для слов и фраз
+    return ContentType.LANGUAGE;
   }
 
   /**

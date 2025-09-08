@@ -17,15 +17,15 @@ export class DifficultyCalculatorService {
   /**
    * Рассчитывает сложность карточки на основе слова или фразы
    *
-   * @param wordOrPhrase - слово или фраза для анализа
+   * @param term - слово или фраза для анализа
    * @param partOfSpeech - часть речи (опционально)
    * @returns уровень сложности карточки
    */
   calculateDifficulty(
-    wordOrPhrase: string,
+    term: string,
     partOfSpeech?: PartOfSpeech
   ): CardDifficulty {
-    const normalizedWord = wordOrPhrase.toLowerCase().trim();
+    const normalizedWord = term.toLowerCase().trim();
 
     // 1. Проверяем базовые слова (самые простые)
     if (this.isBasicWord(normalizedWord)) {

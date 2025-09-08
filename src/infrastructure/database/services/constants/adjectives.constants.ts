@@ -1,7 +1,7 @@
 import { CardDifficulty, LanguageLevel } from '@prisma/client';
 
 export interface AdjectiveData {
-  wordOrPhrase: string;
+  term: string;
   slug: string;
   transcription: string;
   translation: string;
@@ -14,7 +14,7 @@ export interface AdjectiveData {
 export const adjectivesData: AdjectiveData[] = [
   // A1 Level - Basic Adjectives
   {
-    wordOrPhrase: 'big',
+    term: 'big',
     slug: 'big',
     transcription: 'bɪɡ',
     translation: 'большой',
@@ -24,7 +24,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'small',
+    term: 'small',
     slug: 'small',
     transcription: 'smɔːl',
     translation: 'маленький',
@@ -34,7 +34,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'good',
+    term: 'good',
     slug: 'good',
     transcription: 'ɡʊd',
     translation: 'хороший',
@@ -44,7 +44,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bad',
+    term: 'bad',
     slug: 'bad',
     transcription: 'bæd',
     translation: 'плохой',
@@ -54,7 +54,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'new',
+    term: 'new',
     slug: 'new',
     transcription: 'njuː',
     translation: 'новый',
@@ -64,7 +64,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'old',
+    term: 'old',
     slug: 'old',
     transcription: 'əʊld',
     translation: 'старый',
@@ -74,7 +74,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'young',
+    term: 'young',
     slug: 'young',
     transcription: 'jʌŋ',
     translation: 'молодой',
@@ -84,7 +84,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hot',
+    term: 'hot',
     slug: 'hot',
     transcription: 'hɒt',
     translation: 'горячий',
@@ -94,7 +94,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cold',
+    term: 'cold',
     slug: 'cold',
     transcription: 'kəʊld',
     translation: 'холодный',
@@ -104,7 +104,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'warm',
+    term: 'warm',
     slug: 'warm',
     transcription: 'wɔːm',
     translation: 'теплый',
@@ -114,7 +114,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'long',
+    term: 'long',
     slug: 'long',
     transcription: 'lɒŋ',
     translation: 'длинный',
@@ -124,7 +124,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'short',
+    term: 'short',
     slug: 'short',
     transcription: 'ʃɔːt',
     translation: 'короткий',
@@ -134,7 +134,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'high',
+    term: 'high',
     slug: 'high',
     transcription: 'haɪ',
     translation: 'высокий',
@@ -144,7 +144,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'low',
+    term: 'low',
     slug: 'low',
     transcription: 'ləʊ',
     translation: 'низкий',
@@ -154,7 +154,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fast',
+    term: 'fast',
     slug: 'fast',
     transcription: 'fɑːst',
     translation: 'быстрый',
@@ -164,7 +164,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'slow',
+    term: 'slow',
     slug: 'slow',
     transcription: 'sləʊ',
     translation: 'медленный',
@@ -174,7 +174,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'easy',
+    term: 'easy',
     slug: 'easy',
     transcription: 'ˈiːzi',
     translation: 'легкий',
@@ -184,7 +184,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'difficult',
+    term: 'difficult',
     slug: 'difficult',
     transcription: 'ˈdɪfɪkəlt',
     translation: 'сложный',
@@ -194,7 +194,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'happy',
+    term: 'happy',
     slug: 'happy',
     transcription: 'ˈhæpi',
     translation: 'счастливый',
@@ -204,7 +204,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sad',
+    term: 'sad',
     slug: 'sad',
     transcription: 'sæd',
     translation: 'грустный',
@@ -214,7 +214,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'beautiful',
+    term: 'beautiful',
     slug: 'beautiful',
     transcription: 'ˈbjuːtɪfl',
     translation: 'красивый',
@@ -224,7 +224,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ugly',
+    term: 'ugly',
     slug: 'ugly',
     transcription: 'ˈʌɡli',
     translation: 'уродливый',
@@ -234,7 +234,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'clean',
+    term: 'clean',
     slug: 'clean',
     transcription: 'kliːn',
     translation: 'чистый',
@@ -244,7 +244,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dirty',
+    term: 'dirty',
     slug: 'dirty',
     transcription: 'ˈdɜːti',
     translation: 'грязный',
@@ -254,7 +254,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rich',
+    term: 'rich',
     slug: 'rich',
     transcription: 'rɪtʃ',
     translation: 'богатый',
@@ -264,7 +264,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'poor',
+    term: 'poor',
     slug: 'poor',
     transcription: 'pɔː',
     translation: 'бедный',
@@ -274,7 +274,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'strong',
+    term: 'strong',
     slug: 'strong',
     transcription: 'strɒŋ',
     translation: 'сильный',
@@ -284,7 +284,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'weak',
+    term: 'weak',
     slug: 'weak',
     transcription: 'wiːk',
     translation: 'слабый',
@@ -294,7 +294,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tall',
+    term: 'tall',
     slug: 'tall',
     transcription: 'tɔːl',
     translation: 'высокий',
@@ -304,7 +304,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fat',
+    term: 'fat',
     slug: 'fat',
     transcription: 'fæt',
     translation: 'толстый',
@@ -314,7 +314,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thin',
+    term: 'thin',
     slug: 'thin',
     transcription: 'θɪn',
     translation: 'худой',
@@ -324,7 +324,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'right',
+    term: 'right',
     slug: 'right',
     transcription: 'raɪt',
     translation: 'правильный',
@@ -334,7 +334,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wrong',
+    term: 'wrong',
     slug: 'wrong',
     transcription: 'rɒŋ',
     translation: 'неправильный',
@@ -344,7 +344,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'same',
+    term: 'same',
     slug: 'same',
     transcription: 'seɪm',
     translation: 'одинаковый',
@@ -354,7 +354,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'different',
+    term: 'different',
     slug: 'different',
     transcription: 'ˈdɪfrənt',
     translation: 'разный',
@@ -364,7 +364,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'open',
+    term: 'open',
     slug: 'open',
     transcription: 'ˈəʊpən',
     translation: 'открытый',
@@ -374,7 +374,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'closed',
+    term: 'closed',
     slug: 'closed',
     transcription: 'kləʊzd',
     translation: 'закрытый',
@@ -384,7 +384,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'full',
+    term: 'full',
     slug: 'full',
     transcription: 'fʊl',
     translation: 'полный',
@@ -394,7 +394,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'empty',
+    term: 'empty',
     slug: 'empty',
     transcription: 'ˈempti',
     translation: 'пустой',
@@ -404,7 +404,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'heavy',
+    term: 'heavy',
     slug: 'heavy',
     transcription: 'ˈhevi',
     translation: 'тяжелый',
@@ -414,7 +414,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'light',
+    term: 'light',
     slug: 'light',
     transcription: 'laɪt',
     translation: 'легкий',
@@ -424,7 +424,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dark',
+    term: 'dark',
     slug: 'dark',
     transcription: 'dɑːk',
     translation: 'темный',
@@ -434,7 +434,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bright',
+    term: 'bright',
     slug: 'bright',
     transcription: 'braɪt',
     translation: 'яркий',
@@ -444,7 +444,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'loud',
+    term: 'loud',
     slug: 'loud',
     transcription: 'laʊd',
     translation: 'громкий',
@@ -454,7 +454,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'quiet',
+    term: 'quiet',
     slug: 'quiet',
     transcription: 'ˈkwaɪət',
     translation: 'тихий',
@@ -464,7 +464,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'soft',
+    term: 'soft',
     slug: 'soft',
     transcription: 'sɒft',
     translation: 'мягкий',
@@ -474,7 +474,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hard',
+    term: 'hard',
     slug: 'hard',
     transcription: 'hɑːd',
     translation: 'твердый',
@@ -484,7 +484,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sweet',
+    term: 'sweet',
     slug: 'sweet',
     transcription: 'swiːt',
     translation: 'сладкий',
@@ -494,7 +494,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sour',
+    term: 'sour',
     slug: 'sour',
     transcription: 'ˈsaʊə',
     translation: 'кислый',
@@ -504,7 +504,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fresh',
+    term: 'fresh',
     slug: 'fresh',
     transcription: 'freʃ',
     translation: 'свежий',
@@ -514,7 +514,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dry',
+    term: 'dry',
     slug: 'dry',
     transcription: 'draɪ',
     translation: 'сухой',
@@ -524,7 +524,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wet',
+    term: 'wet',
     slug: 'wet',
     transcription: 'wet',
     translation: 'мокрый',
@@ -534,7 +534,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'smooth',
+    term: 'smooth',
     slug: 'smooth',
     transcription: 'smuːð',
     translation: 'гладкий',
@@ -544,7 +544,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rough',
+    term: 'rough',
     slug: 'rough',
     transcription: 'rʌf',
     translation: 'шероховатый',
@@ -554,7 +554,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sharp',
+    term: 'sharp',
     slug: 'sharp',
     transcription: 'ʃɑːp',
     translation: 'острый',
@@ -564,7 +564,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dull',
+    term: 'dull',
     slug: 'dull',
     transcription: 'dʌl',
     translation: 'тупой',
@@ -574,7 +574,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'wide',
+    term: 'wide',
     slug: 'wide',
     transcription: 'waɪd',
     translation: 'широкий',
@@ -584,7 +584,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'narrow',
+    term: 'narrow',
     slug: 'narrow',
     transcription: 'ˈnærəʊ',
     translation: 'узкий',
@@ -594,7 +594,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'deep',
+    term: 'deep',
     slug: 'deep',
     transcription: 'diːp',
     translation: 'глубокий',
@@ -604,7 +604,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'shallow',
+    term: 'shallow',
     slug: 'shallow',
     transcription: 'ˈʃæləʊ',
     translation: 'мелкий',
@@ -614,7 +614,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thick',
+    term: 'thick',
     slug: 'thick',
     transcription: 'θɪk',
     translation: 'толстый',
@@ -624,7 +624,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thin',
+    term: 'thin',
     slug: 'thin',
     transcription: 'θɪn',
     translation: 'тонкий',
@@ -634,7 +634,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'round',
+    term: 'round',
     slug: 'round',
     transcription: 'raʊnd',
     translation: 'круглый',
@@ -644,7 +644,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'square',
+    term: 'square',
     slug: 'square',
     transcription: 'skweə',
     translation: 'квадратный',
@@ -654,7 +654,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'straight',
+    term: 'straight',
     slug: 'straight',
     transcription: 'streɪt',
     translation: 'прямой',
@@ -664,7 +664,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'curved',
+    term: 'curved',
     slug: 'curved',
     transcription: 'kɜːvd',
     translation: 'изогнутый',
@@ -674,7 +674,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'flat',
+    term: 'flat',
     slug: 'flat',
     transcription: 'flæt',
     translation: 'плоский',
@@ -684,7 +684,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bent',
+    term: 'bent',
     slug: 'bent',
     transcription: 'bent',
     translation: 'согнутый',
@@ -694,7 +694,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'broken',
+    term: 'broken',
     slug: 'broken',
     transcription: 'ˈbrəʊkən',
     translation: 'сломанный',
@@ -704,7 +704,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'fixed',
+    term: 'fixed',
     slug: 'fixed',
     transcription: 'fɪkst',
     translation: 'починенный',
@@ -714,7 +714,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'ready',
+    term: 'ready',
     slug: 'ready',
     transcription: 'ˈredi',
     translation: 'готовый',
@@ -724,7 +724,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'busy',
+    term: 'busy',
     slug: 'busy',
     transcription: 'ˈbɪzi',
     translation: 'занятый',
@@ -734,7 +734,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'free',
+    term: 'free',
     slug: 'free',
     transcription: 'friː',
     translation: 'свободный',
@@ -744,7 +744,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'safe',
+    term: 'safe',
     slug: 'safe',
     transcription: 'seɪf',
     translation: 'безопасный',
@@ -754,7 +754,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dangerous',
+    term: 'dangerous',
     slug: 'dangerous',
     transcription: 'ˈdeɪndʒərəs',
     translation: 'опасный',
@@ -764,7 +764,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'important',
+    term: 'important',
     slug: 'important',
     transcription: 'ɪmˈpɔːtnt',
     translation: 'важный',
@@ -774,7 +774,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'special',
+    term: 'special',
     slug: 'special',
     transcription: 'ˈspeʃl',
     translation: 'особенный',
@@ -784,7 +784,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'normal',
+    term: 'normal',
     slug: 'normal',
     transcription: 'ˈnɔːml',
     translation: 'обычный',
@@ -794,7 +794,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'strange',
+    term: 'strange',
     slug: 'strange',
     transcription: 'streɪndʒ',
     translation: 'странный',
@@ -804,7 +804,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'funny',
+    term: 'funny',
     slug: 'funny',
     transcription: 'ˈfʌni',
     translation: 'смешной',
@@ -814,7 +814,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'serious',
+    term: 'serious',
     slug: 'serious',
     transcription: 'ˈsɪəriəs',
     translation: 'серьезный',
@@ -824,7 +824,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'friendly',
+    term: 'friendly',
     slug: 'friendly',
     transcription: 'ˈfrendli',
     translation: 'дружелюбный',
@@ -834,7 +834,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'kind',
+    term: 'kind',
     slug: 'kind',
     transcription: 'kaɪnd',
     translation: 'добрый',
@@ -844,7 +844,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'mean',
+    term: 'mean',
     slug: 'mean',
     transcription: 'miːn',
     translation: 'злой',
@@ -854,7 +854,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'polite',
+    term: 'polite',
     slug: 'polite',
     transcription: 'pəˈlaɪt',
     translation: 'вежливый',
@@ -864,7 +864,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'rude',
+    term: 'rude',
     slug: 'rude',
     transcription: 'ruːd',
     translation: 'грубый',
@@ -874,7 +874,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'clever',
+    term: 'clever',
     slug: 'clever',
     transcription: 'ˈklevə',
     translation: 'умный',
@@ -884,7 +884,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'stupid',
+    term: 'stupid',
     slug: 'stupid',
     transcription: 'ˈstjuːpɪd',
     translation: 'глупый',
@@ -894,7 +894,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'lazy',
+    term: 'lazy',
     slug: 'lazy',
     transcription: 'ˈleɪzi',
     translation: 'ленивый',
@@ -904,7 +904,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hardworking',
+    term: 'hardworking',
     slug: 'hardworking',
     transcription: 'ˌhɑːdˈwɜːkɪŋ',
     translation: 'трудолюбивый',
@@ -914,7 +914,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'brave',
+    term: 'brave',
     slug: 'brave',
     transcription: 'breɪv',
     translation: 'храбрый',
@@ -924,7 +924,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'scared',
+    term: 'scared',
     slug: 'scared',
     transcription: 'skeəd',
     translation: 'испуганный',
@@ -934,7 +934,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'excited',
+    term: 'excited',
     slug: 'excited',
     transcription: 'ɪkˈsaɪtɪd',
     translation: 'взволнованный',
@@ -944,7 +944,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'bored',
+    term: 'bored',
     slug: 'bored',
     transcription: 'bɔːd',
     translation: 'скучающий',
@@ -954,7 +954,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'tired',
+    term: 'tired',
     slug: 'tired',
     transcription: 'ˈtaɪəd',
     translation: 'уставший',
@@ -964,7 +964,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'hungry',
+    term: 'hungry',
     slug: 'hungry',
     transcription: 'ˈhʌŋɡri',
     translation: 'голодный',
@@ -974,7 +974,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'thirsty',
+    term: 'thirsty',
     slug: 'thirsty',
     transcription: 'ˈθɜːsti',
     translation: 'жаждущий',
@@ -984,7 +984,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'sick',
+    term: 'sick',
     slug: 'sick',
     transcription: 'sɪk',
     translation: 'больной',
@@ -994,7 +994,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'healthy',
+    term: 'healthy',
     slug: 'healthy',
     transcription: 'ˈhelθi',
     translation: 'здоровый',
@@ -1004,7 +1004,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'married',
+    term: 'married',
     slug: 'married',
     transcription: 'ˈmærid',
     translation: 'женатый',
@@ -1014,7 +1014,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'single',
+    term: 'single',
     slug: 'single',
     transcription: 'ˈsɪŋɡl',
     translation: 'холостой',
@@ -1024,7 +1024,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'pregnant',
+    term: 'pregnant',
     slug: 'pregnant',
     transcription: 'ˈpreɡnənt',
     translation: 'беременная',
@@ -1034,7 +1034,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'dead',
+    term: 'dead',
     slug: 'dead',
     transcription: 'ded',
     translation: 'мертвый',
@@ -1044,7 +1044,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'alive',
+    term: 'alive',
     slug: 'alive',
     transcription: 'əˈlaɪv',
     translation: 'живой',
@@ -1054,7 +1054,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'asleep',
+    term: 'asleep',
     slug: 'asleep',
     transcription: 'əˈsliːp',
     translation: 'спящий',
@@ -1064,7 +1064,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'awake',
+    term: 'awake',
     slug: 'awake',
     transcription: 'əˈweɪk',
     translation: 'бодрствующий',
@@ -1074,7 +1074,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'angry',
+    term: 'angry',
     slug: 'angry',
     transcription: 'ˈæŋɡri',
     translation: 'злой',
@@ -1084,7 +1084,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'calm',
+    term: 'calm',
     slug: 'calm',
     transcription: 'kɑːm',
     translation: 'спокойный',
@@ -1094,7 +1094,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'nervous',
+    term: 'nervous',
     slug: 'nervous',
     transcription: 'ˈnɜːvəs',
     translation: 'нервный',
@@ -1104,7 +1104,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'relaxed',
+    term: 'relaxed',
     slug: 'relaxed',
     transcription: 'rɪˈlækst',
     translation: 'расслабленный',
@@ -1114,7 +1114,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'worried',
+    term: 'worried',
     slug: 'worried',
     transcription: 'ˈwʌrid',
     translation: 'обеспокоенный',
@@ -1124,7 +1124,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'surprised',
+    term: 'surprised',
     slug: 'surprised',
     transcription: 'səˈpraɪzd',
     translation: 'удивленный',
@@ -1134,7 +1134,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'confused',
+    term: 'confused',
     slug: 'confused',
     transcription: 'kənˈfjuːzd',
     translation: 'запутанный',
@@ -1144,7 +1144,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'interested',
+    term: 'interested',
     slug: 'interested',
     transcription: 'ˈɪntrəstɪd',
     translation: 'заинтересованный',
@@ -1154,7 +1154,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'boring',
+    term: 'boring',
     slug: 'boring',
     transcription: 'ˈbɔːrɪŋ',
     translation: 'скучный',
@@ -1164,7 +1164,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'interesting',
+    term: 'interesting',
     slug: 'interesting',
     transcription: 'ˈɪntrəstɪŋ',
     translation: 'интересный',
@@ -1174,7 +1174,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'expensive',
+    term: 'expensive',
     slug: 'expensive',
     transcription: 'ɪkˈspensɪv',
     translation: 'дорогой',
@@ -1184,7 +1184,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'cheap',
+    term: 'cheap',
     slug: 'cheap',
     transcription: 'tʃiːp',
     translation: 'дешевый',
@@ -1194,7 +1194,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'free',
+    term: 'free',
     slug: 'free',
     transcription: 'friː',
     translation: 'бесплатный',
@@ -1204,7 +1204,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'paid',
+    term: 'paid',
     slug: 'paid',
     transcription: 'peɪd',
     translation: 'оплаченный',
@@ -1214,7 +1214,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'public',
+    term: 'public',
     slug: 'public',
     transcription: 'ˈpʌblɪk',
     translation: 'общественный',
@@ -1224,7 +1224,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'private',
+    term: 'private',
     slug: 'private',
     transcription: 'ˈpraɪvət',
     translation: 'частный',
@@ -1234,7 +1234,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'local',
+    term: 'local',
     slug: 'local',
     transcription: 'ˈləʊkl',
     translation: 'местный',
@@ -1244,7 +1244,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'foreign',
+    term: 'foreign',
     slug: 'foreign',
     transcription: 'ˈfɒrən',
     translation: 'иностранный',
@@ -1254,7 +1254,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'national',
+    term: 'national',
     slug: 'national',
     transcription: 'ˈnæʃnəl',
     translation: 'национальный',
@@ -1264,7 +1264,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'international',
+    term: 'international',
     slug: 'international',
     transcription: 'ˌɪntəˈnæʃnəl',
     translation: 'международный',
@@ -1274,7 +1274,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'modern',
+    term: 'modern',
     slug: 'modern',
     transcription: 'ˈmɒdn',
     translation: 'современный',
@@ -1284,7 +1284,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'traditional',
+    term: 'traditional',
     slug: 'traditional',
     transcription: 'trəˈdɪʃənl',
     translation: 'традиционный',
@@ -1294,7 +1294,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'famous',
+    term: 'famous',
     slug: 'famous',
     transcription: 'ˈfeɪməs',
     translation: 'известный',
@@ -1304,7 +1304,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'popular',
+    term: 'popular',
     slug: 'popular',
     transcription: 'ˈpɒpjələ',
     translation: 'популярный',
@@ -1314,7 +1314,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'successful',
+    term: 'successful',
     slug: 'successful',
     transcription: 'səkˈsesfl',
     translation: 'успешный',
@@ -1324,7 +1324,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'famous',
+    term: 'famous',
     slug: 'famous',
     transcription: 'ˈfeɪməs',
     translation: 'известный',
@@ -1334,7 +1334,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'popular',
+    term: 'popular',
     slug: 'popular',
     transcription: 'ˈpɒpjələ',
     translation: 'популярный',
@@ -1344,7 +1344,7 @@ export const adjectivesData: AdjectiveData[] = [
     languageCode: 'en',
   },
   {
-    wordOrPhrase: 'successful',
+    term: 'successful',
     slug: 'successful',
     transcription: 'səkˈsesfl',
     translation: 'успешный',

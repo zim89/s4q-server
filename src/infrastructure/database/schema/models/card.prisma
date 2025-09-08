@@ -14,10 +14,13 @@ model Card {
   updatedAt     DateTime @updatedAt
 
   /// Слово или фраза для изучения
-  wordOrPhrase  String
+  term          String
   
   /// URL-дружественный идентификатор
   slug          String
+  
+  /// Определение (HTML из WYSIWYG редактора)
+  definition    String?
   
   /// Часть речи (NOUN, VERB, ADJECTIVE, etc.)
   partOfSpeech  PartOfSpeech?
@@ -107,7 +110,7 @@ model Card {
   @@map("cards")
   @@unique([slug, partOfSpeech, languageId])
   @@index([languageId, level, isGlobal])
-  @@index([wordOrPhrase])
+  @@index([term])
   @@index([userId, isGlobal])
   @@index([studyCount])
   @@index([viewCount])

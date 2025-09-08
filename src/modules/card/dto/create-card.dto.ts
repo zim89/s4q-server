@@ -20,12 +20,13 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * ```typescript
  * // Полный пример со всеми полями
  * // ОБЯЗАТЕЛЬНЫЕ поля (без ! не скомпилируется):
- * // - wordOrPhrase: string
+ * // - term: string
  *
  * // ОПЦИОНАЛЬНЫЕ поля (все остальные):
  * const createCardDto: CreateCardDto = {
  *   // 🔴 ОБЯЗАТЕЛЬНОЕ - слово или фраза для изучения
- *   wordOrPhrase: 'house',
+ *   term: 'house',
+ *   definition: '<p>A building for human habitation</p>', // определение
  *
  *   // 🟡 ОПЦИОНАЛЬНЫЕ - базовая информация
  *   languageId: 'clx1234567890abcdef',        // ID языка
@@ -40,7 +41,7 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  *   isGlobal: true,                           // глобальная карточка (по умолчанию true)
  *   grammaticalGender: 'NEUTER',              // грамматический род (для немецкого)
  *   difficulty: CardDifficulty.EASY,          // сложность карточки
- *   contentType: ContentType.TEXT,            // тип контента
+ *   contentType: ContentType.LANGUAGE,        // тип контента
  *   contentStatus: ContentStatus.DRAFT,       // статус контента (по умолчанию DRAFT)
  *   level: LanguageLevel.A1,                  // уровень сложности (A1-C2)
  *
@@ -61,7 +62,15 @@ export class CreateCardDto {
     example: 'hello',
   })
   @IsString()
-  wordOrPhrase!: string;
+  term!: string;
+
+  @ApiPropertyOptional({
+    description: 'Определение (HTML из WYSIWYG редактора)',
+    example: '<p>A greeting used when meeting someone</p>',
+  })
+  @IsOptional()
+  @IsString()
+  definition?: string;
 
   @ApiPropertyOptional({
     description: 'ID языка карточки',
@@ -134,7 +143,7 @@ export class CreateCardDto {
   @ApiPropertyOptional({
     description: 'Тип контента карточки',
     enum: ContentType,
-    example: ContentType.TEXT,
+    example: ContentType.LANGUAGE,
   })
   @IsOptional()
   @IsEnum(ContentType)
