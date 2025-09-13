@@ -9,6 +9,7 @@ import { DatabaseModule } from './infrastructure/database';
 import { DictionaryModule } from './integrations/dictionary';
 import { AuthModule } from './modules/auth/auth.module';
 import { CardModule } from './modules/card/card.module';
+import { LanguageModule } from './modules/language';
 import { SetModule } from './modules/set/set.module';
 import { UserModule } from './modules/user/user.module';
 import { AppThrottlerGuard } from './shared/guards';
@@ -45,6 +46,7 @@ import { VersionService } from './shared/services';
     UserModule,
     DictionaryModule,
     CardModule,
+    LanguageModule,
     SetModule,
   ],
   controllers: [AppController],

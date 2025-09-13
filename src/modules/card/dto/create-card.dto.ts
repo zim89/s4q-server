@@ -57,6 +57,7 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * ```
  */
 export class CreateCardDto {
+  // TERM FIELD
   @ApiProperty({
     description: 'Слово или фраза для изучения',
     example: 'hello',
@@ -64,6 +65,7 @@ export class CreateCardDto {
   @IsString()
   term!: string;
 
+  // DEFINITION FIELD
   @ApiPropertyOptional({
     description: 'Определение (HTML из WYSIWYG редактора)',
     example: '<p>A greeting used when meeting someone</p>',
@@ -72,6 +74,7 @@ export class CreateCardDto {
   @IsString()
   definition?: string;
 
+  // LANGUAGE ID FIELD
   @ApiPropertyOptional({
     description: 'ID языка карточки',
     example: 'clx1234567890abcdef',
@@ -80,6 +83,7 @@ export class CreateCardDto {
   @IsString()
   languageId?: string;
 
+  // PART OF SPEECH FIELD
   @ApiPropertyOptional({
     description: 'Часть речи',
     enum: PartOfSpeech,
@@ -89,6 +93,7 @@ export class CreateCardDto {
   @IsEnum(PartOfSpeech)
   partOfSpeech?: PartOfSpeech;
 
+  // TRANSCRIPTION FIELD
   @ApiPropertyOptional({
     description:
       'Фонетическая транскрипция. Если не указана, будет автоматически получена из словаря (только для отдельных слов). Поддерживает обычные слова, составные слова с дефисом, слова с апострофом и сокращения.',
@@ -98,6 +103,7 @@ export class CreateCardDto {
   @IsString()
   transcription?: string;
 
+  // IMAGE URL FIELD
   @ApiPropertyOptional({
     description: 'URL изображения для карточки',
     example: 'https://example.com/image.jpg',
@@ -106,6 +112,7 @@ export class CreateCardDto {
   @IsString()
   imageUrl?: string;
 
+  // AUDIO URL FIELD
   @ApiPropertyOptional({
     description: 'URL аудио файла с произношением',
     example: 'https://example.com/audio.mp3',
@@ -114,6 +121,7 @@ export class CreateCardDto {
   @IsString()
   audioUrl?: string;
 
+  // IS GLOBAL FIELD
   @ApiPropertyOptional({
     description: 'Глобальная карточка (доступна всем пользователям)',
     default: true,
@@ -122,6 +130,7 @@ export class CreateCardDto {
   @IsBoolean()
   isGlobal?: boolean;
 
+  // GRAMMATICAL GENDER FIELD
   @ApiPropertyOptional({
     description:
       'Грамматический род (для немецкого: MASCULINE, FEMININE, NEUTER)',
@@ -131,6 +140,7 @@ export class CreateCardDto {
   @IsString()
   grammaticalGender?: string;
 
+  // DIFFICULTY FIELD
   @ApiPropertyOptional({
     description: 'Сложность карточки',
     enum: CardDifficulty,
@@ -140,6 +150,7 @@ export class CreateCardDto {
   @IsEnum(CardDifficulty)
   difficulty?: CardDifficulty;
 
+  // CONTENT TYPE FIELD
   @ApiPropertyOptional({
     description: 'Тип контента карточки',
     enum: ContentType,
