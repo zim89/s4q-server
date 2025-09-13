@@ -22,8 +22,6 @@ model Set {
   /// Описание набора
   description String?
   
-  /// Тип набора (LANGUAGE, CUSTOM)
-  type        SetType @default(LANGUAGE)
   
   /// Базовый набор (системный)
   isBase      Boolean @default(false)
@@ -75,5 +73,5 @@ model Set {
   @@unique([slug, userId], name: "unique_slug_per_user")
   @@index([userId, languageId])
   @@index([isBase, isPublic])
-  @@index([type, level])
+  @@index([level])
 }

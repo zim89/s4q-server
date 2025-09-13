@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { LanguageLevel, SetType } from '@prisma/client';
+import { LanguageLevel } from '@prisma/client';
 import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 
 /**
@@ -13,7 +13,6 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * const createSetDto: CreateSetDto = {
  *   name: 'Базовые английские слова',
  *   description: 'Набор базовых английских слов для начинающих',
- *   type: SetType.LANGUAGE,
  *   level: LanguageLevel.A1,
  *   isPublic: true
  * };
@@ -25,7 +24,6 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * const createSetDto: CreateSetDto = {
  *   name: 'Мои любимые слова',
  *   description: 'Персональная коллекция интересных слов',
- *   type: SetType.CUSTOM,
  *   level: LanguageLevel.B2,
  *   isPublic: false
  * };
@@ -46,15 +44,6 @@ export class CreateSetDto {
   @IsOptional()
   @IsString()
   description?: string;
-
-  @ApiPropertyOptional({
-    description: 'Тип набора',
-    enum: SetType,
-    default: SetType.LANGUAGE,
-  })
-  @IsOptional()
-  @IsEnum(SetType)
-  type?: SetType;
 
   @ApiPropertyOptional({
     description: 'Базовый набор (системный)',

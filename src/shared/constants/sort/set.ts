@@ -6,7 +6,6 @@
 export const setSortFields = {
   createdAt: 'createdAt',
   name: 'name',
-  type: 'type',
   level: 'level',
 } as const;
 

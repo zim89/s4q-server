@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { LanguageLevel, Set, SetType } from '@prisma/client';
+import { LanguageLevel, Set } from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/database';
 import { setSortFields, sortOrders } from 'src/shared/constants/sort';
 import { PaginatedResponse } from 'src/shared/types';
@@ -21,7 +21,6 @@ export class SetService {
         ...createSetDto,
         slug,
         userId,
-        type: createSetDto.type ?? 'LANGUAGE',
         isBase: createSetDto.isBase ?? false,
         isPublic: createSetDto.isPublic ?? false,
       },
@@ -35,7 +34,6 @@ export class SetService {
     const {
       page = 1,
       limit = 10,
-      type,
       level,
       search,
       sort = setSortFields.createdAt,
@@ -45,14 +43,9 @@ export class SetService {
 
     // Строим условия фильтрации
     const where: {
-      type?: SetType;
       level?: LanguageLevel;
       name?: { contains: string; mode: 'insensitive' };
     } = {};
-
-    if (type) {
-      where.type = type;
-    }
 
     if (level) {
       where.level = level;

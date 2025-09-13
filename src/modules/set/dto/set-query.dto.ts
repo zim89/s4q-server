@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { LanguageLevel, SetType } from '@prisma/client';
+import { LanguageLevel } from '@prisma/client';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 import {
   SetSortField,
@@ -20,7 +20,6 @@ import { PaginationDto } from 'src/shared/dto';
  * const queryDto: SetQueryDto = {
  *   page: 1,
  *   limit: 20,
- *   type: SetType.LANGUAGE,
  *   level: LanguageLevel.A1,
  *   search: 'english',
  *   sort: 'createdAt',
@@ -30,9 +29,8 @@ import { PaginationDto } from 'src/shared/dto';
  *
  * @example
  * ```typescript
- * // Поиск по типу и уровню
+ * // Поиск по уровню
  * const queryDto: SetQueryDto = {
- *   type: SetType.CUSTOM,
  *   level: LanguageLevel.B2,
  *   sort: 'name',
  *   order: 'asc'
@@ -40,15 +38,6 @@ import { PaginationDto } from 'src/shared/dto';
  * ```
  */
 export class SetQueryDto extends PaginationDto {
-  @ApiPropertyOptional({
-    description: 'Тип набора',
-    enum: SetType,
-    example: SetType.LANGUAGE,
-  })
-  @IsOptional()
-  @IsEnum(SetType)
-  type?: SetType;
-
   @ApiPropertyOptional({
     description: 'Уровень сложности',
     enum: LanguageLevel,
