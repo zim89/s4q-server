@@ -19,6 +19,9 @@ model Card {
   /// URL-дружественный идентификатор
   slug          String
   
+  /// Перевод термина на другой язык (необязательное поле)
+  translate     String?
+  
   /// Определение (HTML из WYSIWYG редактора)
   definition    String?
   

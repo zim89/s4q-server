@@ -22,6 +22,7 @@ import {
  *   updatedAt: '2025-01-13T15:15:11.702Z',
  *   term: 'beautiful',
  *   slug: 'beautiful',
+ *   translate: 'красивый',
  *   definition: 'Pleasing to the senses or mind aesthetically',
  *   partOfSpeech: PartOfSpeech.ADJECTIVE,
  *   transcription: 'ˈbjuːtɪfəl',
@@ -62,6 +63,12 @@ export class CardResponseDto {
     example: 'beautiful',
   })
   slug!: string;
+
+  @ApiPropertyOptional({
+    description: 'Перевод термина на другой язык',
+    example: 'красивый',
+  })
+  translate?: string;
 
   @ApiPropertyOptional({
     description: 'Определение (HTML из WYSIWYG редактора)',

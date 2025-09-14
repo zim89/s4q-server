@@ -26,6 +26,7 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * const createCardDto: CreateCardDto = {
  *   // 🔴 ОБЯЗАТЕЛЬНОЕ - слово или фраза для изучения
  *   term: 'house',
+ *   translate: 'дом', // перевод на другой язык
  *   definition: '<p>A building for human habitation</p>', // определение
  *
  *   // 🟡 ОПЦИОНАЛЬНЫЕ - базовая информация
@@ -64,6 +65,15 @@ export class CreateCardDto {
   })
   @IsString()
   term!: string;
+
+  // TRANSLATE FIELD
+  @ApiPropertyOptional({
+    description: 'Перевод термина на другой язык (необязательное поле)',
+    example: 'привет',
+  })
+  @IsOptional()
+  @IsString()
+  translate?: string;
 
   // DEFINITION FIELD
   @ApiPropertyOptional({
