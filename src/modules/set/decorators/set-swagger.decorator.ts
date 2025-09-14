@@ -33,7 +33,9 @@ export const SetSwaggerDocs = {
       ApiOperation({ summary: 'Создать новый набор' }),
       ApiOkResponse({
         description: 'Набор успешно создан',
-        type: Set,
+        schema: {
+          $ref: '#/components/schemas/SetResponseDto',
+        },
       }),
       ApiUnauthorizedResponse({ description: 'Не авторизован' }),
       ApiForbiddenResponse({ description: 'Недостаточно прав' }),
@@ -46,7 +48,12 @@ export const SetSwaggerDocs = {
       ApiOperation({ summary: 'Получить все наборы' }),
       ApiOkResponse({
         description: 'Список наборов',
-        type: [Set],
+        schema: {
+          type: 'array',
+          items: {
+            $ref: '#/components/schemas/SetResponseDto',
+          },
+        },
       })
     ),
 
@@ -55,7 +62,9 @@ export const SetSwaggerDocs = {
       ApiOperation({ summary: 'Получить набор по ID' }),
       ApiOkResponse({
         description: 'Набор найден',
-        type: Set,
+        schema: {
+          $ref: '#/components/schemas/SetResponseDto',
+        },
       }),
       ApiNotFoundResponse({ description: 'Набор не найден' })
     ),
@@ -65,7 +74,9 @@ export const SetSwaggerDocs = {
       ApiOperation({ summary: 'Обновить набор' }),
       ApiOkResponse({
         description: 'Набор успешно обновлен',
-        type: Set,
+        schema: {
+          $ref: '#/components/schemas/SetResponseDto',
+        },
       }),
       ApiUnauthorizedResponse({ description: 'Не авторизован' }),
       ApiForbiddenResponse({ description: 'Недостаточно прав' }),

@@ -32,6 +32,9 @@ export const CardSwaggerDocs = {
       ApiOperation({ summary: 'Создать новую карточку' }),
       ApiOkResponse({
         description: 'Карточка успешно создана',
+        schema: {
+          $ref: '#/components/schemas/CardResponseDto',
+        },
       }),
       ApiUnauthorizedResponse({ description: 'Не авторизован' }),
       ApiForbiddenResponse({ description: 'Недостаточно прав' }),
@@ -44,6 +47,12 @@ export const CardSwaggerDocs = {
       ApiOperation({ summary: 'Получить все карточки' }),
       ApiOkResponse({
         description: 'Список карточек',
+        schema: {
+          type: 'array',
+          items: {
+            $ref: '#/components/schemas/CardResponseDto',
+          },
+        },
       })
     ),
 
@@ -52,6 +61,9 @@ export const CardSwaggerDocs = {
       ApiOperation({ summary: 'Получить карточку по ID' }),
       ApiOkResponse({
         description: 'Карточка найдена',
+        schema: {
+          $ref: '#/components/schemas/CardResponseDto',
+        },
       }),
       ApiNotFoundResponse({ description: 'Карточка не найдена' })
     ),
@@ -61,6 +73,9 @@ export const CardSwaggerDocs = {
       ApiOperation({ summary: 'Обновить карточку' }),
       ApiOkResponse({
         description: 'Карточка успешно обновлена',
+        schema: {
+          $ref: '#/components/schemas/CardResponseDto',
+        },
       }),
       ApiUnauthorizedResponse({ description: 'Не авторизован' }),
       ApiForbiddenResponse({ description: 'Недостаточно прав' }),

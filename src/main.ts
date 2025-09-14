@@ -4,12 +4,8 @@ import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import {
-  envKeys,
-  getDatabaseConfig,
-  getPrismaConfig,
-  setupSwaggerDocs,
-} from './config';
+import { envKeys, getDatabaseConfig, getPrismaConfig } from './config';
+import { setupSwaggerWithSchemas } from './config/swagger-schemas.config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const compression = require('compression');
 
@@ -57,7 +53,8 @@ async function bootstrap() {
     })
   );
 
-  setupSwaggerDocs(app);
+  // setupSwaggerDocs(app);
+  setupSwaggerWithSchemas(app);
 
   app.enableVersioning({
     type: VersioningType.URI,

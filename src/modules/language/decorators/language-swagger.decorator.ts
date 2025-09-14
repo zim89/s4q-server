@@ -11,6 +11,7 @@ import {
   ApiResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { LanguageResponseDto } from '../dto';
 
 export const LanguageSwaggerDocs = {
   create: () =>
@@ -27,16 +28,7 @@ export const LanguageSwaggerDocs = {
       ApiResponse({
         status: 201,
         description: 'Язык успешно создан',
-        schema: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', example: 'clx1234567890' },
-            name: { type: 'string', example: 'English' },
-            code: { type: 'string', example: 'en' },
-            isEnabled: { type: 'boolean', example: true },
-            createdAt: { type: 'string', format: 'date-time' },
-          },
-        },
+        type: LanguageResponseDto,
       }),
       ApiBadRequestResponse({ description: 'Некорректные данные' }),
       ApiConflictResponse({ description: 'Язык с таким кодом уже существует' }),
@@ -74,14 +66,7 @@ export const LanguageSwaggerDocs = {
             data: {
               type: 'array',
               items: {
-                type: 'object',
-                properties: {
-                  id: { type: 'string', example: 'clx1234567890' },
-                  name: { type: 'string', example: 'English' },
-                  code: { type: 'string', example: 'en' },
-                  isEnabled: { type: 'boolean', example: true },
-                  createdAt: { type: 'string', format: 'date-time' },
-                },
+                $ref: '#/components/schemas/LanguageResponseDto',
               },
             },
             pagination: {
