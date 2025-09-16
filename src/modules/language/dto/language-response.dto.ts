@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { LanguageSwaggerSchemas } from '../schemas/language-swagger.schemas';
 
 /**
  * DTO для ответа с данными языка
@@ -18,33 +19,18 @@ import { ApiProperty } from '@nestjs/swagger';
  * ```
  */
 export class LanguageResponseDto {
-  @ApiProperty({
-    description: 'Уникальный идентификатор языка',
-    example: 'cmfier0t20000p4hnsruuys01',
-  })
+  @ApiProperty(LanguageSwaggerSchemas.id)
   id!: string;
 
-  @ApiProperty({
-    description: 'Дата и время создания языка',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(LanguageSwaggerSchemas.createdAt)
   createdAt!: Date;
 
-  @ApiProperty({
-    description: 'Название языка',
-    example: 'English',
-  })
+  @ApiProperty(LanguageSwaggerSchemas.name)
   name!: string;
 
-  @ApiProperty({
-    description: 'Код языка (ISO 639-1)',
-    example: 'en',
-  })
+  @ApiProperty(LanguageSwaggerSchemas.code)
   code!: string;
 
-  @ApiProperty({
-    description: 'Включен ли язык в системе',
-    example: true,
-  })
+  @ApiProperty(LanguageSwaggerSchemas.isEnabled)
   isEnabled!: boolean;
 }

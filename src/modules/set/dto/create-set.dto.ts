@@ -1,6 +1,17 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { LanguageLevel } from '@prisma/client';
-import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { SetSwaggerSchemas } from '../schemas/set-swagger.schemas';
+import { CreateSetCardDto } from './create-set-card.dto';
 
 /**
  * DTO для создания нового набора карточек
@@ -30,23 +41,17 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  * ```
  */
 export class CreateSetDto {
-  @ApiProperty({
-    description: 'Название набора',
-    example: 'Базовые английские слова',
-  })
+  @ApiProperty(SetSwaggerSchemas.name)
   @IsString()
   name!: string;
 
-  @ApiPropertyOptional({
-    description: 'Описание набора',
-    example: 'Набор базовых английских слов для начинающих',
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.description)
   @IsOptional()
   @IsString()
   description?: string;
 
   @ApiPropertyOptional({
-    description: 'Базовый набор (системный)',
+    ...SetSwaggerSchemas.isBase,
     default: false,
   })
   @IsOptional()
@@ -54,19 +59,27 @@ export class CreateSetDto {
   isBase?: boolean;
 
   @ApiPropertyOptional({
-    description: 'Публичный набор (доступен всем)',
+    ...SetSwaggerSchemas.isPublic,
     default: false,
   })
   @IsOptional()
   @IsBoolean()
   isPublic?: boolean;
 
-  @ApiPropertyOptional({
-    description: 'Уровень сложности набора',
-    enum: LanguageLevel,
-    example: LanguageLevel.A1,
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.level)
   @IsOptional()
   @IsEnum(LanguageLevel)
   level?: LanguageLevel;
+
+  @ApiProperty({
+    description:
+      'Карточки для сета. Могут быть новыми или существующими (минимум 2)',
+    type: [CreateSetCardDto],
+    minItems: 2,
+  })
+  @IsArray()
+  @ArrayMinSize(2, { message: 'Сет должен содержать минимум 2 карточки' })
+  @ValidateNested({ each: true })
+  @Type(() => CreateSetCardDto)
+  cards!: CreateSetCardDto[];
 }

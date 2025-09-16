@@ -8,6 +8,7 @@ import {
   VerbType,
 } from '@prisma/client';
 import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import { CardSwaggerSchemas } from '../schemas/card-swagger.schema';
 
 /**
  * DTO для создания новой карточки
@@ -28,6 +29,7 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  *   term: 'house',
  *   translate: 'дом', // перевод на другой язык
  *   definition: '<p>A building for human habitation</p>', // определение
+ *   example: '<p>I live in a big house.</p><p>The house has three rooms.</p>', // пример использования
  *
  *   // 🟡 ОПЦИОНАЛЬНЫЕ - базовая информация
  *   languageId: 'clx1234567890abcdef',        // ID языка
@@ -59,74 +61,54 @@ import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
  */
 export class CreateCardDto {
   // TERM FIELD
-  @ApiProperty({
-    description: 'Слово или фраза для изучения',
-    example: 'hello',
-  })
+  @ApiProperty(CardSwaggerSchemas.term)
   @IsString()
   term!: string;
 
   // TRANSLATE FIELD
-  @ApiPropertyOptional({
-    description: 'Перевод термина на другой язык (необязательное поле)',
-    example: 'привет',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.translate)
   @IsOptional()
   @IsString()
   translate?: string;
 
   // DEFINITION FIELD
-  @ApiPropertyOptional({
-    description: 'Определение (HTML из WYSIWYG редактора)',
-    example: '<p>A greeting used when meeting someone</p>',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.definition)
   @IsOptional()
   @IsString()
   definition?: string;
 
+  // EXAMPLE FIELD
+  @ApiPropertyOptional(CardSwaggerSchemas.example)
+  @IsOptional()
+  @IsString()
+  example?: string;
+
   // LANGUAGE ID FIELD
-  @ApiPropertyOptional({
-    description: 'ID языка карточки',
-    example: 'clx1234567890abcdef',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.languageId)
   @IsOptional()
   @IsString()
   languageId?: string;
 
   // PART OF SPEECH FIELD
-  @ApiPropertyOptional({
-    description: 'Часть речи',
-    enum: PartOfSpeech,
-    example: PartOfSpeech.NOUN,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.partOfSpeech)
   @IsOptional()
   @IsEnum(PartOfSpeech)
   partOfSpeech?: PartOfSpeech;
 
   // TRANSCRIPTION FIELD
-  @ApiPropertyOptional({
-    description:
-      'Фонетическая транскрипция. Если не указана, будет автоматически получена из словаря (только для отдельных слов). Поддерживает обычные слова, составные слова с дефисом, слова с апострофом и сокращения.',
-    example: 'həˈloʊ',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.transcription)
   @IsOptional()
   @IsString()
   transcription?: string;
 
   // IMAGE URL FIELD
-  @ApiPropertyOptional({
-    description: 'URL изображения для карточки',
-    example: 'https://example.com/image.jpg',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.imageUrl)
   @IsOptional()
   @IsString()
   imageUrl?: string;
 
   // AUDIO URL FIELD
-  @ApiPropertyOptional({
-    description: 'URL аудио файла с произношением',
-    example: 'https://example.com/audio.mp3',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.audioUrl)
   @IsOptional()
   @IsString()
   audioUrl?: string;
@@ -141,90 +123,54 @@ export class CreateCardDto {
   isGlobal?: boolean;
 
   // GRAMMATICAL GENDER FIELD
-  @ApiPropertyOptional({
-    description:
-      'Грамматический род (для немецкого: MASCULINE, FEMININE, NEUTER)',
-    example: 'MASCULINE',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.grammaticalGender)
   @IsOptional()
   @IsString()
   grammaticalGender?: string;
 
   // DIFFICULTY FIELD
-  @ApiPropertyOptional({
-    description: 'Сложность карточки',
-    enum: CardDifficulty,
-    example: CardDifficulty.EASY,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.difficulty)
   @IsOptional()
   @IsEnum(CardDifficulty)
   difficulty?: CardDifficulty;
 
   // CONTENT TYPE FIELD
-  @ApiPropertyOptional({
-    description: 'Тип контента карточки',
-    enum: ContentType,
-    example: ContentType.LANGUAGE,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.contentType)
   @IsOptional()
   @IsEnum(ContentType)
   contentType?: ContentType;
 
-  @ApiPropertyOptional({
-    description: 'Статус контента карточки',
-    enum: ContentStatus,
-    example: ContentStatus.DRAFT,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.contentStatus)
   @IsOptional()
   @IsEnum(ContentStatus)
   contentStatus?: ContentStatus;
 
-  @ApiPropertyOptional({
-    description: 'Уровень сложности (A1, A2, B1, B2, C1, C2)',
-    enum: LanguageLevel,
-    example: LanguageLevel.A1,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.level)
   @IsOptional()
   @IsEnum(LanguageLevel)
   level?: LanguageLevel;
 
-  @ApiPropertyOptional({
-    description: 'ID грамматического правила',
-    example: 'clx1234567890abcdef',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.ruleId)
   @IsOptional()
   @IsString()
   ruleId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Тип глагола (только для partOfSpeech = VERB)',
-    enum: VerbType,
-    example: VerbType.REGULAR,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.verbType)
   @IsOptional()
   @IsEnum(VerbType)
   verbType?: VerbType;
 
-  @ApiPropertyOptional({
-    description: 'ID неправильного глагола',
-    example: 'clx1234567890abcdef',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.irregularVerbId)
   @IsOptional()
   @IsString()
   irregularVerbId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Провайдер источника данных',
-    example: 'dictionary-api',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.sourceProvider)
   @IsOptional()
   @IsString()
   sourceProvider?: string;
 
-  @ApiPropertyOptional({
-    description: 'ID в источнике данных',
-    example: 'hello',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.sourceId)
   @IsOptional()
   @IsString()
   sourceId?: string;

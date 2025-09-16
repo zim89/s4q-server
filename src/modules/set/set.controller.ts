@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Set, UserRole } from '@prisma/client';
+import { Card, Set, UserRole } from '@prisma/client';
 import {
   CurrentUser,
   JwtGuard,
@@ -35,7 +35,7 @@ export class SetController {
   async create(
     @Body(BodyRequiredPipe) createSetDto: CreateSetDto,
     @CurrentUser('id') userId: string
-  ): Promise<Set> {
+  ): Promise<Set & { cards: Card[] }> {
     return this.setService.create(createSetDto, userId);
   }
 

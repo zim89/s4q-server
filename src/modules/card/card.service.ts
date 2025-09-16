@@ -222,4 +222,51 @@ export class CardService {
       where: { id },
     });
   }
+
+  /**
+   * Поиск карточек по термину для автокомплита
+   */
+  async findManyByTerm(term: string, limit = 10): Promise<Partial<Card>[]> {
+    if (!term || term.length < 2) {
+      return [];
+    }
+
+    return this.prisma.card.findMany({
+      where: {
+        term: {
+          contains: term,
+          mode: 'insensitive',
+        },
+        isGlobal: true, // Только глобальные карточки
+      },
+      take: limit,
+      orderBy: [
+        { term: 'asc' }, // Сортировка по алфавиту
+        { createdAt: 'desc' }, // Новые карточки первыми
+      ],
+      select: {
+        id: true,
+        term: true,
+        translate: true,
+        definition: true,
+        example: true,
+        transcription: true,
+        slug: true,
+        partOfSpeech: true,
+        difficulty: true,
+        level: true,
+        language: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+        imageUrl: true,
+        audioUrl: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+  }
 }

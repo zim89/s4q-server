@@ -93,4 +93,42 @@ export const CardSwaggerDocs = {
       ApiNotFoundResponse({ description: 'Карточка не найдена' }),
       ApiBearerAuth()
     ),
+
+  search: () =>
+    applyDecorators(
+      ApiOperation({
+        summary: 'Поиск карточек по термину',
+        description:
+          'Поиск карточек для автокомплита при создании сета. Возвращает только глобальные карточки.',
+      }),
+      ApiOkResponse({
+        description: 'Найденные карточки',
+        schema: {
+          type: 'array',
+          items: {
+            $ref: '#/components/schemas/CardResponseDto',
+          },
+        },
+      }),
+      ApiBadRequestResponse({ description: 'Неверные параметры поиска' })
+    ),
+
+  searchByTerm: () =>
+    applyDecorators(
+      ApiOperation({
+        summary: 'Поиск карточек по термину',
+        description:
+          'Поиск карточек для автокомплита при создании сета. Возвращает только глобальные карточки.',
+      }),
+      ApiOkResponse({
+        description: 'Найденные карточки',
+        schema: {
+          type: 'array',
+          items: {
+            $ref: '#/components/schemas/CardResponseDto',
+          },
+        },
+      }),
+      ApiBadRequestResponse({ description: 'Неверные параметры поиска' })
+    ),
 };

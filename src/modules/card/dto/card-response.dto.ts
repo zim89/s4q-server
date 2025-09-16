@@ -7,6 +7,7 @@ import {
   PartOfSpeech,
   VerbType,
 } from '@prisma/client';
+import { CardSwaggerSchemas } from '../schemas/card-swagger.schema';
 
 /**
  * DTO для ответа с данными карточки
@@ -24,6 +25,7 @@ import {
  *   slug: 'beautiful',
  *   translate: 'красивый',
  *   definition: 'Pleasing to the senses or mind aesthetically',
+ *   example: 'The sunset is beautiful.<br>The beautiful garden is full of flowers.',
  *   partOfSpeech: PartOfSpeech.ADJECTIVE,
  *   transcription: 'ˈbjuːtɪfəl',
  *   isGlobal: true,
@@ -34,171 +36,89 @@ import {
  * ```
  */
 export class CardResponseDto {
-  @ApiProperty({
-    description: 'Уникальный идентификатор карточки',
-    example: 'cmfier0t20000p4hnsruuys01',
-  })
+  // === Базовые поля ===
+  @ApiProperty(CardSwaggerSchemas.id)
   id!: string;
 
-  @ApiProperty({
-    description: 'Дата и время создания карточки',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(CardSwaggerSchemas.createdAt)
   createdAt!: Date;
 
-  @ApiProperty({
-    description: 'Дата и время последнего обновления карточки',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(CardSwaggerSchemas.updatedAt)
   updatedAt!: Date;
 
-  @ApiProperty({
-    description: 'Слово или фраза для изучения',
-    example: 'beautiful',
-  })
+  // === Основные поля ===
+  @ApiProperty(CardSwaggerSchemas.term)
   term!: string;
 
-  @ApiProperty({
-    description: 'URL-дружественный идентификатор',
-    example: 'beautiful',
-  })
+  @ApiProperty(CardSwaggerSchemas.slug)
   slug!: string;
 
-  @ApiPropertyOptional({
-    description: 'Перевод термина на другой язык',
-    example: 'красивый',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.translate)
   translate?: string;
 
-  @ApiPropertyOptional({
-    description: 'Определение (HTML из WYSIWYG редактора)',
-    example: 'Pleasing to the senses or mind aesthetically',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.definition)
   definition?: string;
 
-  @ApiPropertyOptional({
-    description: 'Часть речи',
-    enum: PartOfSpeech,
-    example: PartOfSpeech.ADJECTIVE,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.example)
+  example?: string;
+
+  @ApiPropertyOptional(CardSwaggerSchemas.partOfSpeech)
   partOfSpeech?: PartOfSpeech;
 
-  @ApiPropertyOptional({
-    description: 'Фонетическая транскрипция',
-    example: 'ˈbjuːtɪfəl',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.transcription)
   transcription?: string;
 
-  @ApiPropertyOptional({
-    description: 'URL изображения для карточки',
-    example: 'https://example.com/image.jpg',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.imageUrl)
   imageUrl?: string;
 
-  @ApiPropertyOptional({
-    description: 'URL аудио файла с произношением',
-    example: 'https://example.com/audio.mp3',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.audioUrl)
   audioUrl?: string;
 
-  @ApiProperty({
-    description: 'Глобальная карточка (доступна всем пользователям)',
-    example: true,
-  })
+  @ApiProperty(CardSwaggerSchemas.isGlobal)
   isGlobal!: boolean;
 
-  @ApiPropertyOptional({
-    description: 'Грамматический род (для немецкого)',
-    example: 'MASCULINE',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.grammaticalGender)
   grammaticalGender?: string;
 
-  @ApiPropertyOptional({
-    description: 'Сложность карточки',
-    enum: CardDifficulty,
-    example: CardDifficulty.EASY,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.difficulty)
   difficulty?: CardDifficulty;
 
-  @ApiPropertyOptional({
-    description: 'Тип контента карточки',
-    enum: ContentType,
-    example: ContentType.LANGUAGE,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.contentType)
   contentType?: ContentType;
 
-  @ApiPropertyOptional({
-    description: 'Статус контента карточки',
-    enum: ContentStatus,
-    example: ContentStatus.PUBLISHED,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.contentStatus)
   contentStatus?: ContentStatus;
 
-  @ApiPropertyOptional({
-    description: 'ID пользователя, создавшего карточку',
-    example: 'cmfier0t20000p4hnsruuys02',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.userId)
   userId?: string;
 
-  @ApiPropertyOptional({
-    description: 'ID языка карточки',
-    example: 'cmfier0t20000p4hnsruuys03',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.languageId)
   languageId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Уровень сложности',
-    enum: LanguageLevel,
-    example: LanguageLevel.A1,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.level)
   level?: LanguageLevel;
 
-  @ApiPropertyOptional({
-    description: 'ID грамматического правила',
-    example: 'cmfier0t20000p4hnsruuys04',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.ruleId)
   ruleId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Тип глагола',
-    enum: VerbType,
-    example: VerbType.REGULAR,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.verbType)
   verbType?: VerbType;
 
-  @ApiPropertyOptional({
-    description: 'ID неправильного глагола',
-    example: 'cmfier0t20000p4hnsruuys05',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.irregularVerbId)
   irregularVerbId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Провайдер источника данных',
-    example: 'dictionary-api',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.sourceProvider)
   sourceProvider?: string;
 
-  @ApiPropertyOptional({
-    description: 'ID в источнике данных',
-    example: 'dict-12345',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.sourceId)
   sourceId?: string;
 
-  @ApiProperty({
-    description: 'Количество добавлений карточки в наборы для изучения',
-    example: 15,
-  })
+  @ApiProperty(CardSwaggerSchemas.studyCount)
   studyCount!: number;
 
-  @ApiProperty({
-    description: 'Количество просмотров карточки',
-    example: 42,
-  })
+  @ApiProperty(CardSwaggerSchemas.viewCount)
   viewCount!: number;
 
-  @ApiPropertyOptional({
-    description: 'Дата и время последнего использования',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.lastUsedAt)
   lastUsedAt?: Date;
 }

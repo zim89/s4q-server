@@ -48,6 +48,11 @@ export function setupSwaggerWithSchemas(app: INestApplication) {
         slug: { type: 'string', example: 'beautiful' },
         translate: { type: 'string', example: 'красивый' },
         definition: { type: 'string', example: 'Pleasing to the senses' },
+        example: {
+          type: 'string',
+          example:
+            'The sunset is beautiful.<br>The beautiful garden is full of flowers.',
+        },
         partOfSpeech: { $ref: '#/components/schemas/🔢 Enums - PartOfSpeech' },
         transcription: { type: 'string', example: 'ˈbjuːtɪfəl' },
         imageUrl: { type: 'string', example: 'https://example.com/image.jpg' },
@@ -182,6 +187,11 @@ export function setupSwaggerWithSchemas(app: INestApplication) {
         slug: { type: 'string', example: 'beautiful' },
         translate: { type: 'string', example: 'красивый' },
         definition: { type: 'string', example: 'Pleasing to the senses' },
+        example: {
+          type: 'string',
+          example:
+            'The sunset is beautiful.<br>The beautiful garden is full of flowers.',
+        },
         partOfSpeech: { $ref: '#/components/schemas/🔢 Enums - PartOfSpeech' },
         transcription: { type: 'string', example: 'ˈbjuːtɪfəl' },
         imageUrl: { type: 'string', example: 'https://example.com/image.jpg' },

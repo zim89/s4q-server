@@ -25,6 +25,9 @@ model Card {
   /// Определение (HTML из WYSIWYG редактора)
   definition    String?
   
+  /// Пример использования (HTML из WYSIWYG редактора)
+  example String?
+  
   /// Часть речи (NOUN, VERB, ADJECTIVE, etc.)
   partOfSpeech  PartOfSpeech?
   

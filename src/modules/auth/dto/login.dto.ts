@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { validationMessages as msg } from 'src/shared/constants';
+import { AuthSwaggerSchemas } from '../schemas/auth-swagger.schemas';
 
 /**
  * Data Transfer Object for user login
@@ -17,8 +18,7 @@ import { validationMessages as msg } from 'src/shared/constants';
  */
 export class LoginDto {
   @ApiProperty({
-    description: 'Email address of the user',
-    example: 'john.doe@example.com',
+    ...AuthSwaggerSchemas.email,
   })
   @IsString({ message: msg.mustBeString('Email') })
   @IsNotEmpty({ message: msg.required('Email') })
@@ -26,8 +26,7 @@ export class LoginDto {
   email!: string;
 
   @ApiProperty({
-    description: 'Password for the user account',
-    example: 'securePassword123',
+    ...AuthSwaggerSchemas.password,
     minLength: 6,
     maxLength: 20,
   })

@@ -8,6 +8,7 @@ import {
   sortOrderValues,
 } from 'src/shared/constants/sort';
 import { PaginationDto } from 'src/shared/dto';
+import { SetSwaggerSchemas } from '../schemas/set-swagger.schemas';
 
 /**
  * DTO для запросов с фильтрацией и пагинацией наборов
@@ -38,11 +39,7 @@ import { PaginationDto } from 'src/shared/dto';
  * ```
  */
 export class SetQueryDto extends PaginationDto {
-  @ApiPropertyOptional({
-    description: 'Уровень сложности',
-    enum: LanguageLevel,
-    example: LanguageLevel.A1,
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.level)
   @IsOptional()
   @IsEnum(LanguageLevel)
   level?: LanguageLevel;

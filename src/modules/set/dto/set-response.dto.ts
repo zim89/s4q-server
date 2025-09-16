@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ContentStatus, LanguageLevel } from '@prisma/client';
+import { SetSwaggerSchemas } from '../schemas/set-swagger.schemas';
 
 /**
  * DTO для ответа с данными набора
@@ -26,83 +27,42 @@ import { ContentStatus, LanguageLevel } from '@prisma/client';
  * ```
  */
 export class SetResponseDto {
-  @ApiProperty({
-    description: 'Уникальный идентификатор набора',
-    example: 'cmfier0t20000p4hnsruuys01',
-  })
+  @ApiProperty(SetSwaggerSchemas.id)
   id!: string;
 
-  @ApiProperty({
-    description: 'Дата и время создания набора',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(SetSwaggerSchemas.createdAt)
   createdAt!: Date;
 
-  @ApiProperty({
-    description: 'Дата и время последнего обновления набора',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(SetSwaggerSchemas.updatedAt)
   updatedAt!: Date;
 
-  @ApiProperty({
-    description: 'Название набора',
-    example: 'Базовые английские слова',
-  })
+  @ApiProperty(SetSwaggerSchemas.name)
   name!: string;
 
-  @ApiProperty({
-    description: 'URL-дружественный идентификатор',
-    example: 'basic-english-words',
-  })
+  @ApiProperty(SetSwaggerSchemas.slug)
   slug!: string;
 
-  @ApiPropertyOptional({
-    description: 'Описание набора',
-    example: 'Набор базовых английских слов для начинающих',
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.description)
   description?: string;
 
-  @ApiProperty({
-    description: 'Базовый набор (системный)',
-    example: false,
-  })
+  @ApiProperty(SetSwaggerSchemas.isBase)
   isBase!: boolean;
 
-  @ApiProperty({
-    description: 'Публичный набор (доступен всем)',
-    example: true,
-  })
+  @ApiProperty(SetSwaggerSchemas.isPublic)
   isPublic!: boolean;
 
-  @ApiPropertyOptional({
-    description: 'ID пользователя, создавшего набор',
-    example: 'cmfier0t20000p4hnsruuys02',
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.userId)
   userId?: string;
 
-  @ApiPropertyOptional({
-    description: 'ID языка набора',
-    example: 'cmfier0t20000p4hnsruuys03',
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.languageId)
   languageId?: string;
 
-  @ApiPropertyOptional({
-    description: 'Уровень сложности набора',
-    enum: LanguageLevel,
-    example: LanguageLevel.A1,
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.level)
   level?: LanguageLevel;
 
-  @ApiPropertyOptional({
-    description: 'Статус контента набора',
-    enum: ContentStatus,
-    example: ContentStatus.PUBLISHED,
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.contentStatus)
   contentStatus?: ContentStatus;
 
-  @ApiPropertyOptional({
-    description: 'ID оригинального набора (для форков)',
-    example: 'cmfier0t20000p4hnsruuys04',
-  })
+  @ApiPropertyOptional(SetSwaggerSchemas.originalSetId)
   originalSetId?: string;
 }

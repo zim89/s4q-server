@@ -6,11 +6,11 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { LanguageSwaggerSchemas } from '../schemas/language-swagger.schemas';
 
 export class CreateLanguageDto {
   @ApiProperty({
-    description: 'Название языка (например, "English", "Deutsch")',
-    example: 'English',
+    ...LanguageSwaggerSchemas.name,
     minLength: 2,
     maxLength: 50,
   })
@@ -21,8 +21,7 @@ export class CreateLanguageDto {
   name!: string;
 
   @ApiProperty({
-    description: 'Код языка по ISO 639-1 (например, "en", "de")',
-    example: 'en',
+    ...LanguageSwaggerSchemas.code,
     minLength: 2,
     maxLength: 5,
   })
@@ -33,8 +32,7 @@ export class CreateLanguageDto {
   code!: string;
 
   @ApiProperty({
-    description: 'Активен ли язык в системе',
-    example: true,
+    ...LanguageSwaggerSchemas.isEnabled,
     default: true,
     required: false,
   })

@@ -2,7 +2,14 @@
 
 ## Обзор
 
-Данное руководство описывает последовательность действий для работы с миграциями базы данных в проекте Space4Quiz. Миграции находятся в `src/infrastructure/database/schema/migrations/`.
+Данное руководство описывает правильную последовательность действий для работы с миграциями базы данных в проекте Space4Quiz. Миграции находятся в `src/infrastructure/database/schema/migrations/`.
+
+## ⚠️ Важные принципы
+
+1. **Всегда используйте `prisma migrate dev`** для создания миграций
+2. **Никогда не смешивайте `db push` и `migrate`** - это вызывает дрифт
+3. **Создавайте чистую init миграцию** при первом запуске
+4. **Всегда перегенерируйте типы** после миграций
 
 ## Последовательность действий при изменении схемы БД
 
@@ -25,14 +32,21 @@ model Card {
 # Перейти в папку сервера
 cd s4q-server
 
-# Создать и применить миграцию
-bunx prisma migrate dev --name описание_изменения --schema src/infrastructure/database/schema/schema.prisma
+# Создать и применить миграцию (БЕЗ указания пути к схеме!)
+bunx prisma migrate dev --name описание_изменения
 ```
 
-**Пример:**
+**Примеры:**
 
 ```bash
-bunx prisma migrate dev --name add_translate_field_to_card --schema src/infrastructure/database/schema/schema.prisma
+# Добавление нового поля
+bunx prisma migrate dev --name add_examples_content_to_card
+
+# Изменение типа поля
+bunx prisma migrate dev --name change_field_type
+
+# Добавление новой модели
+bunx prisma migrate dev --name add_new_model
 ```
 
 ### 3. Генерация типов Prisma
@@ -40,7 +54,8 @@ bunx prisma migrate dev --name add_translate_field_to_card --schema src/infrastr
 После успешного применения миграции сгенерируйте типы:
 
 ```bash
-bunx prisma generate --schema src/infrastructure/database/schema/schema.prisma
+# Перегенерировать Prisma Client (БЕЗ указания пути!)
+bunx prisma generate
 ```
 
 ### 4. Обновление DTO и Swagger
@@ -60,25 +75,31 @@ bunx prisma generate --schema src/infrastructure/database/schema/schema.prisma
 ### Проверка статуса миграций
 
 ```bash
-bunx prisma migrate status --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate status
 ```
 
 ### Применение существующих миграций (production)
 
 ```bash
-bunx prisma migrate deploy --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate deploy
 ```
 
 ### Сброс базы данных (только для разработки!)
 
 ```bash
-bunx prisma migrate reset --force --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate reset
 ```
 
 ### Просмотр базы данных
 
 ```bash
-bunx prisma studio --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma studio
+```
+
+### Перегенерирование Prisma Client
+
+```bash
+bunx prisma generate
 ```
 
 ## Структура миграций
@@ -96,6 +117,28 @@ src/infrastructure/database/schema/migrations/
 
 ## Решение проблем
 
+### Ошибка "Drift detected" - Схема не синхронизирована
+
+**Причина:** Смешивание `db push` и `migrate` команд или ручное изменение БД.
+
+**Решение:**
+
+```bash
+# 1. Сбросить БД
+bunx prisma migrate reset
+
+# 2. Очистить папку миграций
+cd src/infrastructure/database/schema/migrations
+rm -rf *
+
+# 3. Создать чистую init миграцию
+cd /Volumes/Work/GitHub/personal/space4quizlet/s4q-server
+bunx prisma migrate dev --name init
+
+# 4. Проверить результат
+bunx prisma migrate status
+```
+
 ### Ошибка "Could not find the migration file"
 
 Если папка миграции пустая или повреждена:
@@ -105,14 +148,14 @@ src/infrastructure/database/schema/migrations/
 rm -rf src/infrastructure/database/schema/migrations/YYYYMMDDHHMMSS_name
 
 # Создать миграцию заново
-bunx prisma migrate dev --name name --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate dev --name name
 ```
 
 ### Ошибка "migrate found failed migrations"
 
 ```bash
 # Сбросить базу данных (только для разработки!)
-bunx prisma migrate reset --force --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate reset
 ```
 
 ### Ошибка "The table does not exist in the current database" в Prisma Studio
@@ -235,13 +278,13 @@ pg_dump -h localhost -p 5433 -U postgres -d s4q_db_dev > backup_$(date +%Y%m%d_%
 
 # 2. Изменить схему в файлах .prisma
 # 3. Создать миграцию
-bunx prisma migrate dev --name add_new_field --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate dev --name add_new_field
 
 # 4. Сгенерировать типы
-bunx prisma generate --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma generate
 
 # 5. Заполнить тестовыми данными (если нужно)
-bunx prisma db seed --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma db seed
 
 # 6. Обновить DTO файлы
 # 7. Обновить Swagger схемы
@@ -254,17 +297,39 @@ bun run start:dev
 ```bash
 # Если Prisma Studio показывает ошибки:
 # 1. Проверить статус миграций
-bunx prisma migrate status --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate status
 
 # 2. Применить миграции
-bunx prisma migrate deploy --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma migrate deploy
 
 # 3. Перегенерировать клиент
-bunx prisma generate --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma generate
 
 # 4. Заполнить тестовыми данными
-bunx prisma db seed --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma db seed
 
 # 5. Запустить Prisma Studio
-bunx prisma studio --schema src/infrastructure/database/schema/schema.prisma
+bunx prisma studio
+```
+
+### Первоначальная настройка проекта
+
+```bash
+# 1. Перейти в папку сервера
+cd s4q-server
+
+# 2. Сбросить БД (если нужно)
+bunx prisma migrate reset
+
+# 3. Очистить папку миграций (если нужно)
+rm -rf src/infrastructure/database/schema/migrations/*
+
+# 4. Создать init миграцию
+bunx prisma migrate dev --name init
+
+# 5. Проверить статус
+bunx prisma migrate status
+
+# 6. Запустить Studio
+bunx prisma studio
 ```

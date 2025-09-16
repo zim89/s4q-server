@@ -71,4 +71,17 @@ export class CardController {
   async remove(@Param('id') id: string): Promise<void> {
     return this.cardService.remove(id);
   }
+
+  @Get('search')
+  @CardSwaggerDocs.search()
+  async searchByTerm(
+    @Query('term') term: string,
+    @Query('limit') limit = 10
+  ): Promise<Partial<Card>[]> {
+    try {
+      return await this.cardService.findManyByTerm(term, limit);
+    } catch (_error) {
+      return [];
+    }
+  }
 }

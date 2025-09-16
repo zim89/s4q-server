@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserRole } from '@prisma/client';
+import { UserSwaggerSchemas } from '../schemas/user-swagger.schemas';
 
 /**
  * DTO для ответа с данными пользователя
@@ -14,79 +15,41 @@ import { UserRole } from '@prisma/client';
  *   createdAt: '2025-01-13T15:15:11.702Z',
  *   updatedAt: '2025-01-13T15:15:11.702Z',
  *   email: 'user@example.com',
- *   username: 'john_doe',
  *   firstName: 'John',
  *   lastName: 'Doe',
- *   role: UserRole.USER,
+ *   rights: [UserRole.USER],
  *   isActive: true
  * };
  * ```
  */
 export class UserResponseDto {
-  @ApiProperty({
-    description: 'Уникальный идентификатор пользователя',
-    example: 'cmfier0t20000p4hnsruuys01',
-  })
+  @ApiProperty(UserSwaggerSchemas.id)
   id!: string;
 
-  @ApiProperty({
-    description: 'Дата и время создания пользователя',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(UserSwaggerSchemas.createdAt)
   createdAt!: Date;
 
-  @ApiProperty({
-    description: 'Дата и время последнего обновления пользователя',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiProperty(UserSwaggerSchemas.updatedAt)
   updatedAt!: Date;
 
-  @ApiProperty({
-    description: 'Email адрес пользователя',
-    example: 'user@example.com',
-  })
+  @ApiProperty(UserSwaggerSchemas.email)
   email!: string;
 
-  @ApiProperty({
-    description: 'Имя пользователя (уникальное)',
-    example: 'john_doe',
-  })
-  username!: string;
-
-  @ApiPropertyOptional({
-    description: 'Имя пользователя',
-    example: 'John',
-  })
+  @ApiPropertyOptional(UserSwaggerSchemas.firstName)
   firstName?: string;
 
-  @ApiPropertyOptional({
-    description: 'Фамилия пользователя',
-    example: 'Doe',
-  })
+  @ApiPropertyOptional(UserSwaggerSchemas.lastName)
   lastName?: string;
 
-  @ApiProperty({
-    description: 'Роль пользователя в системе',
-    enum: UserRole,
-    example: UserRole.USER,
-  })
-  role!: UserRole;
+  @ApiProperty(UserSwaggerSchemas.rights)
+  rights!: UserRole[];
 
-  @ApiProperty({
-    description: 'Активен ли пользователь',
-    example: true,
-  })
+  @ApiProperty(UserSwaggerSchemas.isActive)
   isActive!: boolean;
 
-  @ApiPropertyOptional({
-    description: 'Дата и время последнего входа',
-    example: '2025-01-13T15:15:11.702Z',
-  })
+  @ApiPropertyOptional(UserSwaggerSchemas.lastLoginAt)
   lastLoginAt?: Date;
 
-  @ApiPropertyOptional({
-    description: 'URL аватара пользователя',
-    example: 'https://example.com/avatar.jpg',
-  })
+  @ApiPropertyOptional(UserSwaggerSchemas.avatarUrl)
   avatarUrl?: string;
 }

@@ -8,6 +8,7 @@ import {
   sortOrderValues,
 } from 'src/shared/constants/sort';
 import { PaginationDto } from 'src/shared/dto';
+import { CardSwaggerSchemas } from '../schemas/card-swagger.schema';
 
 /**
  * DTO для запросов с фильтрацией и пагинацией карточек
@@ -39,20 +40,12 @@ import { PaginationDto } from 'src/shared/dto';
  * ```
  */
 export class CardQueryDto extends PaginationDto {
-  @ApiPropertyOptional({
-    description: 'Сложность карточки',
-    enum: CardDifficulty,
-    example: CardDifficulty.EASY,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.difficulty)
   @IsOptional()
   @IsEnum(CardDifficulty)
   difficulty?: CardDifficulty;
 
-  @ApiPropertyOptional({
-    description: 'Часть речи',
-    enum: PartOfSpeech,
-    example: PartOfSpeech.NOUN,
-  })
+  @ApiPropertyOptional(CardSwaggerSchemas.partOfSpeech)
   @IsOptional()
   @IsEnum(PartOfSpeech)
   partOfSpeech?: PartOfSpeech;

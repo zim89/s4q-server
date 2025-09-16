@@ -7,6 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { validationMessages as msg } from 'src/shared/constants';
+import { AuthSwaggerSchemas } from '../schemas/auth-swagger.schemas';
 
 /**
  * Data Transfer Object for user registration
@@ -25,8 +26,7 @@ import { validationMessages as msg } from 'src/shared/constants';
  */
 export class RegisterDto {
   @ApiProperty({
-    description: 'First name of the user',
-    example: 'John',
+    ...AuthSwaggerSchemas.firstName,
     maxLength: 50,
   })
   @IsString({ message: msg.mustBeString('First name') })
@@ -35,8 +35,7 @@ export class RegisterDto {
   firstName!: string;
 
   @ApiProperty({
-    description: 'Last name of the user',
-    example: 'Doe',
+    ...AuthSwaggerSchemas.lastName,
     maxLength: 50,
   })
   @IsString({ message: msg.mustBeString('Last name') })
@@ -45,8 +44,7 @@ export class RegisterDto {
   lastName!: string;
 
   @ApiProperty({
-    description: 'Email address of the user',
-    example: 'john.doe@example.com',
+    ...AuthSwaggerSchemas.email,
   })
   @IsString({ message: msg.mustBeString('Email') })
   @IsNotEmpty({ message: msg.required('Email') })
@@ -54,8 +52,7 @@ export class RegisterDto {
   email!: string;
 
   @ApiProperty({
-    description: 'Password for the user account',
-    example: 'securePassword123',
+    ...AuthSwaggerSchemas.password,
     minLength: 6,
     maxLength: 20,
   })
