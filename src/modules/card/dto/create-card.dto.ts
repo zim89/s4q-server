@@ -7,7 +7,14 @@ import {
   PartOfSpeech,
   VerbType,
 } from '@prisma/client';
-import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  IsString,
+  Validate,
+} from 'class-validator';
+import { IrregularVerbValidator } from '../../irregular-verb/validators/irregular-verb.validator';
 import { CardSwaggerSchemas } from '../schemas/card-swagger.schema';
 
 /**
@@ -174,4 +181,29 @@ export class CreateCardDto {
   @IsOptional()
   @IsString()
   sourceId?: string;
+
+  // PAST SIMPLE FIELD
+  @ApiPropertyOptional({
+    description: 'Past Simple форма глагола (только для IRREGULAR глаголов)',
+    example: 'went',
+    type: String,
+  })
+  @IsOptional()
+  @IsString()
+  pastSimple?: string;
+
+  // PAST PARTICIPLE FIELD
+  @ApiPropertyOptional({
+    description:
+      'Past Participle форма глагола (только для IRREGULAR глаголов)',
+    example: 'gone',
+    type: String,
+  })
+  @IsOptional()
+  @IsString()
+  pastParticiple?: string;
+
+  // Валидация для неправильных глаголов
+  @Validate(IrregularVerbValidator)
+  _?: unknown;
 }

@@ -7,19 +7,25 @@ import {
   Card,
   ContentStatus,
   LanguageLevel,
+  PartOfSpeech,
   Prisma,
   Set,
+  VerbType,
 } from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/database';
 import { setSortFields, sortOrders } from 'src/shared/constants/sort';
 import { PaginatedResponse } from 'src/shared/types';
 import { generateSlug } from 'src/shared/utils';
 import { CreateCardDto } from '../card/dto/create-card.dto';
+import { IrregularVerbService } from '../irregular-verb';
 import { CreateSetDto, SetQueryDto, UpdateSetDto } from './dto';
 
 @Injectable()
 export class SetService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly irregularVerbService: IrregularVerbService
+  ) {}
 
   /**
    * Создать новый набор с карточками
@@ -104,6 +110,28 @@ export class SetService {
   }
 
   /**
+   * Нормализация термина для глаголов - добавляет приставку "to" если её нет
+   * Исключает модальные и вспомогательные глаголы
+   */
+  private normalizeVerbTerm(term: string, verbType?: VerbType): string {
+    const normalizedTerm = term.trim();
+    const lowerTerm = normalizedTerm.toLowerCase();
+
+    // Исключаем модальные и вспомогательные глаголы - они не используют "to"
+    if (verbType === VerbType.MODAL || verbType === VerbType.AUXILIARY) {
+      return normalizedTerm;
+    }
+
+    // Если термин уже начинается с "to ", возвращаем как есть
+    if (lowerTerm.startsWith('to ')) {
+      return normalizedTerm;
+    }
+
+    // Добавляем "to " в начало для остальных типов глаголов
+    return `to ${normalizedTerm}`;
+  }
+
+  /**
    * Вспомогательный метод для создания карточки в транзакции
    */
   private async createCardInTransaction(
@@ -111,7 +139,13 @@ export class SetService {
     cardData: CreateCardDto,
     userId?: string
   ): Promise<Card> {
-    const slug = generateSlug(cardData.term);
+    // Нормализация термина для глаголов
+    const normalizedTerm =
+      cardData.partOfSpeech === PartOfSpeech.VERB
+        ? this.normalizeVerbTerm(cardData.term, cardData.verbType)
+        : cardData.term;
+
+    const slug = generateSlug(normalizedTerm);
 
     // Проверка на дубликат
     const existingCard = await tx.card.findFirst({
@@ -127,10 +161,38 @@ export class SetService {
       return existingCard;
     }
 
+    let irregularVerbId: string | undefined;
+
+    // Обработка неправильных глаголов
+    if (
+      cardData.partOfSpeech === PartOfSpeech.VERB &&
+      cardData.verbType === VerbType.IRREGULAR &&
+      cardData.pastSimple &&
+      cardData.pastParticiple
+    ) {
+      // Создать или найти неправильный глагол
+      const irregularVerb =
+        await this.irregularVerbService.createOrFindIrregularVerbInTransaction(
+          tx,
+          {
+            infinitive: normalizedTerm, // Используем нормализованный термин
+            pastSimple: cardData.pastSimple,
+            pastParticiple: cardData.pastParticiple,
+            translation: cardData.translate ?? '',
+            level: cardData.level,
+            transcription: cardData.transcription,
+          }
+        );
+
+      irregularVerbId = irregularVerb.id;
+    }
+
     // Создать новую карточку
     return tx.card.create({
       data: {
         ...cardData,
+        term: normalizedTerm, // Используем нормализованный термин
+        irregularVerbId,
         userId,
         slug,
         isGlobal: true,

@@ -9,6 +9,7 @@ import {
   ContentStatus,
   ContentType,
   PartOfSpeech,
+  VerbType,
 } from '@prisma/client';
 import { PrismaService } from 'src/infrastructure/database';
 import { DictionaryService } from 'src/integrations/dictionary';
@@ -19,6 +20,7 @@ import {
 } from 'src/shared/services';
 import { PaginatedResponse } from 'src/shared/types';
 import { generateSlug } from 'src/shared/utils';
+import { IrregularVerbService } from '../irregular-verb';
 import { CardQueryDto, CreateCardDto, UpdateCardDto } from './dto';
 
 @Injectable()
@@ -27,11 +29,40 @@ export class CardService {
     private readonly prisma: PrismaService,
     private readonly dictionaryService: DictionaryService,
     private readonly contentAnalyzer: ContentAnalyzerService,
-    private readonly difficultyCalculator: DifficultyCalculatorService
+    private readonly difficultyCalculator: DifficultyCalculatorService,
+    private readonly irregularVerbService: IrregularVerbService
   ) {}
 
+  /**
+   * Нормализация термина для глаголов - добавляет приставку "to" если её нет
+   * Исключает модальные и вспомогательные глаголы
+   */
+  private normalizeVerbTerm(term: string, verbType?: VerbType): string {
+    const normalizedTerm = term.trim();
+    const lowerTerm = normalizedTerm.toLowerCase();
+
+    // Исключаем модальные и вспомогательные глаголы - они не используют "to"
+    if (verbType === VerbType.MODAL || verbType === VerbType.AUXILIARY) {
+      return normalizedTerm;
+    }
+
+    // Если термин уже начинается с "to ", возвращаем как есть
+    if (lowerTerm.startsWith('to ')) {
+      return normalizedTerm;
+    }
+
+    // Добавляем "to " в начало для остальных типов глаголов
+    return `to ${normalizedTerm}`;
+  }
+
   async create(createCardDto: CreateCardDto, userId?: string): Promise<Card> {
-    const slug = generateSlug(createCardDto.term);
+    // Нормализация термина для глаголов
+    const normalizedTerm =
+      createCardDto.partOfSpeech === PartOfSpeech.VERB
+        ? this.normalizeVerbTerm(createCardDto.term, createCardDto.verbType)
+        : createCardDto.term;
+
+    const slug = generateSlug(normalizedTerm);
 
     // Получаем язык по умолчанию (английский) если не указан
     let languageId = createCardDto.languageId;
@@ -54,7 +85,7 @@ export class CardService {
 
     if (existingCard) {
       throw new ConflictException(
-        `Карточка со словом "${createCardDto.term}" уже существует`
+        `Карточка со словом "${normalizedTerm}" уже существует`
       );
     }
 
@@ -67,6 +98,7 @@ export class CardService {
       contentStatus?: ContentStatus;
     } = {
       ...createCardDto,
+      term: normalizedTerm, // Используем нормализованный термин
       slug,
       userId,
       languageId,
